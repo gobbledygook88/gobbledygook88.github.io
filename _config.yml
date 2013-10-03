@@ -3,7 +3,6 @@ description:      A place to collect my biscuit crumbs.
 url:              # Site url.
 signoff:          Marcus Mo
 disqus_shortname: # disqus comment thread for post header options. ( leave blank if unwanted. )
-facebook_appid:   # appid for like button, remove from /_includes/share.html if unwanted.
 google_analytics: # set tracking, remove from /javascripts/basic.js if unwanted.
 
 links:
@@ -11,12 +10,8 @@ links:
     url:          /about
   - name:         Blog
     url:          /
-  - name:         Email
-    url:          mailto:marcusmo88@gmail.com
-    external:     true
-  - name:         GitHub
-    url:          http://github.com/gobbledygook88
-    external:     true
+  - name:         Work
+    url:          /work
 pygments:         true
 permalink:        pretty
 markdown:         rdiscount
