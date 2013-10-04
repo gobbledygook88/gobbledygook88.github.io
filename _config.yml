@@ -14,6 +14,6 @@ links:
     url:          /work
 pygments:         true
 permalink:        pretty
-markdown:         rdiscount
-rdiscount:
-  extensions:     [smart]
+markdown:         kramdown
+#rdiscount:
+#  extensions:     [smart]
