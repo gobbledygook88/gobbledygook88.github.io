@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Picking up the crumbs
+disqus: y
 ---
 
 Having handed in my dissertation a few days ago, I thought it would be a good time to bring my personal website back to life!

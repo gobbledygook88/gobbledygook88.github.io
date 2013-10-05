@@ -2,7 +2,7 @@ title:            Biscuit Crumbs
 description:      A place to collect my biscuit crumbs.
 url:              # Site url.
 signoff:          Marcus Mo
-disqus_shortname: # disqus comment thread for post header options. ( leave blank if unwanted. )
+disqus_shortname: biscuitcrumbs
 google_analytics: # set tracking, remove from /javascripts/basic.js if unwanted.
 
 links:
