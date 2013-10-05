@@ -5,7 +5,7 @@ title: Picking up the crumbs
 
 Having handed in my dissertation a few days ago, I thought it would be a good time to bring my personal website back to life!
 
-I'm trying something new here by using Jekyll and hosting it on Github. So far it's been awesome. None more so since finding the Scribble theme by Mu-An Shiou. I opted for an existing Jekyll theme, rather than building my own, so that the site would be up as quickly as possible.
+I'm trying something new here by using Jekyll and hosting it on Github. So far it's been awesome. None more so since finding the [Scribble theme](http://scribble.muan.co/2013/05/06/scribble-the-jekyll-theme/) by [Mu-An Chiou](http://muan.co/). I opted for an existing Jekyll theme, rather than building my own, so that the site would be up as quickly as possible.
 
 Working in the command-line (git, ruby, vim) is also integrated in my current workflow. Perfect!
 
