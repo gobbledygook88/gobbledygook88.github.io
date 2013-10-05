@@ -326,8 +326,8 @@ pre {
 
 code {
   font-size: 13px;
-  color: #eee;
-  background: #39382e;
+  color: #93a1a1;
+  background: #002b36;
   padding: 2px 4px 3px;
   border-radius: 2px;
   line-height: 1.3em;
@@ -364,4 +364,21 @@ img {
 
 .footnotes {
   border-top: 1px #eee solid;
+}
+
+.highlighttable {
+  width: 100%;
+  padding: 0 60px 0 36px !important;
+  background: #002b36;
+  color: #93a1a1;
+}
+
+.highlighttable .linenos {
+  width: 24px;
+}
+
+.highlighttable pre {
+  padding: 10px 0;
+  color: #586e75;
+  line-height: 1.3em;
 }

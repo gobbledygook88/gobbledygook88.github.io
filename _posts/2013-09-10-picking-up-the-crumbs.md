@@ -3,13 +3,12 @@ layout: post
 title: Picking up the crumbs
 ---
 
-welcome message ...
-just finished dissertation
-get website back up
-first time using jekyll
-found Scribble theme ... awesome
+Having handed in my dissertation a few days ago, I thought it would be a good time to bring my personal website back to life!
 
-blog about small things (biscuit crumbs)
-collection of work
-blog about work upcoming ... current work
-and things i learn in past year while studying
+I'm trying something new here by using Jekyll and hosting it on Github. So far it's been awesome. None more so since finding the Scribble theme by Mu-An Shiou. I opted for an existing Jekyll theme, rather than building my own, so that the site would be up as quickly as possible.
+
+Working in the command-line (git, ruby, vim) is also integrated in my current workflow. Perfect!
+
+So here we have it: a simple, minimalistic blog where I store my biscuit crumbs of interesting tidbits. Call it a cookie jar if you will.
+
+I've learnt a lot over the past year, so I'm hoping to write up some posts before I forget. Hope you all enjoy it!
