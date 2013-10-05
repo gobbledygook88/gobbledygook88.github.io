@@ -6,7 +6,7 @@ disqus: y
 
 Confession: I am addicted to the [Solarized](http://ethanschoonover.com/solarized) colour palette.
 
-Here's how to integrate Solarized into Scribble theme (currently used Jekyll theme here on this blog at time of writing).
+Here's how to integrate Solarized into Scribble theme (the currently used Jekyll theme at time of writing).
 
 The following are prerequisites:
 
@@ -27,7 +27,7 @@ Now create a new `syntax.css` file and paste in the CSS styles with respect to t
 curl https://gist.github.com/nicolashery/5765395/raw/91ae32653fec817d26ba322cbe9d62192b07b851/solarized-dark.css -o stylesheets/syntax.css
 {% endhighlight %}
 
-Next, we need to update the default styles for verbatim text, i.e. text within `<code></code>` and `<pre><code></code></pre>` tags. Within `stylesheets/styles.css`, update the following:
+Next, we need to update the default styles for verbatim text, i.e. text within `<code>` and `<pre><code>` tags. Within `stylesheets/styles.css`, update the following:
 
 {% highlight css %}
 code {
