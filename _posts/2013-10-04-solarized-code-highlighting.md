@@ -59,7 +59,7 @@ As a result, code blocks look awesome when displayed with or without line number
 
 That should do it! We now have awesome code blocks, syntax highlighted with the help of Pygments and Solarized.
 
-In case you don't know how to declare a code block, here's a quick recap. There are effectively three basic options when creating a code block. 
+In case you forgot how to declare a code block, here's a quick recap. There are effectively three basic options when creating a code block. 
 
 The first is the default, and displays no line numbers. Replace `<lang>` with a suitable [code language](http://pygments.org/docs/lexers/). This is compulsory, otherwise Jekyll will not successfully build due to an error thrown by Pygments.
 
