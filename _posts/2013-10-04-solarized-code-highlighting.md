@@ -61,7 +61,7 @@ That should do it! We now have awesome code blocks, syntax highlighted with the 
 
 In case you forgot how to declare a code block, here's a quick recap. There are effectively three basic options when creating a code block. 
 
-The first is the default, and displays no line numbers. Replace `<lang>` with a suitable [code language](http://pygments.org/docs/lexers/). This is compulsory, otherwise Jekyll will not successfully build due to an error thrown by Pygments.
+The first is the default, and displays no line numbers. Replace `<lang>` with a [suitable code language](http://pygments.org/docs/lexers/). This is compulsory, otherwise Jekyll will not successfully build due to an error thrown by Pygments.
 
 <div class="highlight">
   <pre><code class="ruby"><span class="n">&#123;% highlight &lt;lang&gt; %&#125;</span>
