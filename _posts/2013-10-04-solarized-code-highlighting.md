@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Solarized Code Highlighting"
+title: "Solarized Code Highlighting for Scribble theme"
 disqus: y
 ---
 
@@ -21,18 +21,26 @@ First up, let's back-up the current stylesheet defining the colours for code blo
 mv stylesheets/syntax.css stylesheets/syntax-scribble.css
 {% endhighlight %}
 
-Now create a new `syntax.css` file and paste in the CSS styles with respect to the [Solarized colour scheme](https://gist.github.com/nicolashery/5765395), or use the following command.
+Now create a new `syntax.css` file and paste in the CSS styles with respect to the Solarized colour scheme: [Dark](https://gist.github.com/nicolashery/5765395#file-solarized-dark-css) and [Light](https://gist.github.com/nicolashery/5765395#file-solarized-light-css), courtesy of [Nicolas Hery](https://github.com/nicolashery), or use one of the following commands.
 
 {% highlight bash %}
+# Solarized Dark
 curl https://gist.github.com/nicolashery/5765395/raw/91ae32653fec817d26ba322cbe9d62192b07b851/solarized-dark.css -o stylesheets/syntax.css
+
+# Solarized Light
+curl https://gist.github.com/nicolashery/5765395/raw/168ea6851298cfd1d5e062ae742e18657b1c7a72/solarized-light.css -o stylesheets/syntax.css
 {% endhighlight %}
 
-Next, we need to update the default styles for verbatim text, i.e. text within `<code>` and `<pre><code>` tags. Within `stylesheets/styles.css`, update the following:
+Next, we need to update the default styles for verbatim text. Within `stylesheets/styles.css`, update the following, choosing the set of styles depending on whether you chose the Dark or Light scheme.
 
 {% highlight css %}
 code {
+  /* Dark */
   background: #002b36;
   color: #93a1a1;
+  /* Light */
+  background: #fdf6e3;
+  color: #586e75;
 }
 {% endhighlight %}
 
@@ -42,8 +50,12 @@ As a result, code blocks look awesome when displayed with or without line number
 .highlighttable {
   width: 100%;
   padding: 0 60px 0 36px !important;
+  /* Dark */
   background: #002b36;
   color: #93a1a1;
+  /* Light */
+  background: #fdf6e3;
+  color: #586e75;
 }
 
 .highlighttable .linenos {
