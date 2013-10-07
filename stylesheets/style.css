@@ -326,8 +326,12 @@ pre {
 
 code {
   font-size: 13px;
-  color: #93a1a1;
+  /* Dark */
   background: #002b36;
+  color: #93a1a1;
+  /* Light */
+  background: #fdf6e3;
+  color: #586e75;
   padding: 2px 4px 3px;
   border-radius: 2px;
   line-height: 1.3em;
@@ -369,8 +373,12 @@ img {
 .highlighttable {
   width: 100%;
   padding: 0 60px 0 36px !important;
+  /* Dark */
   background: #002b36;
   color: #93a1a1;
+  /* Light */
+  background: #fdf6e3;
+  color: #586e75;
 }
 
 .highlighttable .linenos {
@@ -382,3 +390,19 @@ img {
   color: #586e75;
   line-height: 1.3em;
 }
+
+/* FIX .highlighttable padding for mobile devices */
+
+.gallery {
+  /*
+    TODO static size of gallery (max-width 100%)
+    overflow hidden
+  */
+}
+
+/*
+  TODO child elements of gallery
+  nav_div same size as ul
+  position arrows, use same as page nav but smaller, cleaner
+  centralise image status text
+*/
