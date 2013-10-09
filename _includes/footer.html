@@ -4,3 +4,13 @@
   <br />
   <img src="/images/scribble2.png" alt="scribble" /> 
 </footer>
+
+{% if page.gallery %}
+<script type='text/javascript'>
+  gallery.init({
+    title: [{% for titles in page.gallery %}'{{ titles.title }}',{% endfor %}],
+  })
+</script>
+{% endif %}
+
+{% include ga.html %}
