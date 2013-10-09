@@ -17,7 +17,7 @@ Hello there!
 
 This is a small crevice of the internet where I store my biscuit crumbs: small tidbits of interesting findings, as well as some examples of my work.
 
-Primarily, this involves designing and coding websites with a [variety of tools]({% post_url 2013-10-09-current-workflow %}). But I do other things as well; I'll have you know I have a degree in Mathematics, somehow!
+Primarily, this involves designing and coding websites. But I do other things as well; believe it or not, I have a degree in Mathematics!
 
 If you are looking for some help with writing (scientific) programs in C or C++ (with STL and/or Boost), I may be of use. Data structures and parallel programming (OpenMP, MPI, Nvidia CUDA) are also my personal favourite areas of research. You might find some posts on these subjects over at my [blog.](/)
 
