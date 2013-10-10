@@ -4,7 +4,7 @@ title: "Image Gallery for Scribble theme"
 disqus: y
 ---
 
-While creating pages to showcase my work, I found the need for an image gallery. Since I had been away from web development for a long while, I set myself a challenge of creating a simple pure-JavaScript solution which suited the Scribble theme.
+While creating pages to showcase my work, I found the need for an image gallery. Since I had been away from web development for a long while, I set myself a challenge of creating a simple JavaScript solution (no jQuery!) which suited the Scribble theme.
 
 The resulting gallery JavaScript plugin can be found [here](/javascripts/gallery.js).
 
