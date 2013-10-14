@@ -227,6 +227,7 @@ ul.posts li {
 ul.posts .datetime {
   display: inline-block;
   vertical-align: baseline;
+  text-transform: uppercase;
   zoom: 1;
   *display: inline;
   *vertical-align: auto;
@@ -414,4 +415,8 @@ img {
 .gallery .gallery-title {
   display: inline-block;
   width: 70%;
+}
+
+#challenge-the-prize {
+  display: none;
 }
