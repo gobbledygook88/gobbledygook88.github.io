@@ -15,6 +15,6 @@ gallery: y
 
 TEDxWarwick is an independently organised TED event, run by students from the University of Warwick. 
 
-In 2011, while part of the TEDxWarwick Media Team, I was tasked to design and develop the event website. I also worked in conjunction with the Marketing Team to produce a wide range of advertising materials.
+<!-- In 2011, while part of the TEDxWarwick Media Team, I was tasked to design and develop the event website. I also worked in conjunction with the Marketing Team to produce a wide range of advertising materials.
 
-For TEDxWarwick 2012, I rejoined as a Design Consultant and was asked to design the annual motif, to be displayed on all marketing materials, as well as the event programme.
+For TEDxWarwick 2012, I rejoined as a Design Consultant and was asked to design the annual motif, to be displayed on all marketing materials, as well as the event programme. -->
