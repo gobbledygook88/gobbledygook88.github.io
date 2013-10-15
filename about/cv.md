@@ -1,0 +1,89 @@
+---
+layout: page
+title: "CV"
+---
+
+Since you've clicked through to this page, I can only guess you want to view my CV. But before that, let's have some fun!
+
+### Challenge
+
+In the environment below, write a few lines of JavaScript in order to create plain text output matching the content in the target box below.
+
+Once your output matches exactly that of the target, the _not-really-secure_ link to my CV will appear. 
+
+Remember, this is just for fun and uses no server-side scripts. Easy access can be gained via other means. But that is no where near as satisfying!
+
+It shouldn't take more than a few minutes; keep it simple!
+
+### Target
+
+> A _prime_ example of a bar-chart
+
+<div class="highlight">
+<pre><code id="challenge-the-target">                                |
+                                |
+                                |
+                                |
+                            |   |
+                            |   |
+                        |   |   |
+                        |   |   |
+                        |   |   |
+                        |   |   |
+                    |   |   |   |
+                    |   |   |   |
+                |   |   |   |   |
+                |   |   |   |   |
+                |   |   |   |   |
+                |   |   |   |   |
+            |   |   |   |   |   |
+            |   |   |   |   |   |
+        |   |   |   |   |   |   |
+        |   |   |   |   |   |   |
+    |   |   |   |   |   |   |   |
+|   |   |   |   |   |   |   |   |
+|   |   |   |   |   |   |   |   |
+2   3   5   7   11  13  17  19  23
+</code></pre>
+</div>
+
+Be careful with spacing and the numbers at the bottom. Rather than use a brute-force print out, try to come up with clever solutions, such as
+
+- using the shortest amount of code (number of characters)
+- the most efficient method (milliseconds or asymptotic analysis of algorithm)
+
+If you are particularly proud of your code, copy it over to [hastebin](http://hastebin.com/), or create a [gist](https://gist.github.com/), and send me a link. I'll showcase the best solutions in a future blog post.
+
+Without further ado, go forth and code! I've prepared the setup for you already. Just set the output of your code into the `<pre><code>` block below.
+
+### Your code
+
+<div class="highlight">
+  <textarea id="challenge-their-code">
+// Reference the &lt;code&gt; element with ID #awesomeness 
+// to display your output. e.g.
+// document.getElementById("#awesomeness").innerHTML;</textarea>
+</div>
+<input type="submit" value="Check" id="challenge-check">
+
+### Your result
+
+<div class="highlight">
+  <pre><code id="awesomeness">// The output of your code will appear here ...</code></pre>
+</div>
+
+### Status
+
+{:#challenge-status}
+Output does not match.
+
+<div id="challenge-the-prize" markdown="1">
+### The prize!
+
+{:#challenge-the-message}
+You didn't complete the challenge :(
+
+Here's the [link to my CV](/assets/cv.pdf) (it really isn't that special).
+</div>
+
+<script type="text/javascript" src="/javascripts/challenge.js"></script>

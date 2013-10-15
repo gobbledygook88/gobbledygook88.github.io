@@ -417,6 +417,23 @@ img {
   width: 70%;
 }
 
+#challenge-their-code {
+  width: 100%;
+  margin: 5px 0;
+  padding: 10px 60px;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 13px;
+  font-family: monospace;
+  line-height: 1.3em;
+  vertical-align: baseline;
+  display: inline-block;
+  zoom: 1;
+  color: #586e75;
+  background: none;
+}
+
 #challenge-the-prize {
   display: none;
 }

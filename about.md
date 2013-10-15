@@ -20,3 +20,5 @@ All the best,
 Marcus
 
 p.s. The quickest way to contact me is via Twitter [@marcus_mo](https://twitter.com/marcus_mo), or email me via [marcusmo88@gmail.com](mailto:marcusmo88@gmail.com). You can also view my public code over at [Github](https://github.com/gobbledygook88/).
+
+p.p.s. Click here to view my [CV](/about/cv).
