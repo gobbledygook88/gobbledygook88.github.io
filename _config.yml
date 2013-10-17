@@ -12,6 +12,9 @@ links:
     url:          /
   - name:         Work
     url:          /work
+  - name:         Github
+    url:          "https://github.com/gobbledygook88"
+    external:     true
 pygments:         true
 permalink:        pretty
 markdown:         kramdown
