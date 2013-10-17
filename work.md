@@ -2,8 +2,6 @@
 layout: index
 ---
 
-This page will be updated shortly. Check back soon!
-
 <ul class="posts">
   {% for page in site.pages %}
   {% if page.url contains '/work/' and page.title %}
