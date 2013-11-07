@@ -147,7 +147,7 @@ Finally, we can install ECLIB.
 git clone https://github.com/JohnCremona/eclib.git
 cd eclib
 ./autogen.sh
-./configure --prefix=/usr/local --with-ntl=/usr/local --with-pari=/usr/local --with-flint=/usr/local
+./configure CC=gcc-4.7 CXX=g++-4.7 --prefix=/usr/local --with-ntl=/usr/local --with-pari=/usr/local --with-flint=/usr/local
 make
 make check
 make install
@@ -170,7 +170,7 @@ brew install boost
 Note that we must now also specify the location of the Boost libraries during the configure stage of ECLIB
 
 {% highlight bash %}
-./configure --prefix=/usr/local --with-ntl=/usr/local --with-pari=/usr/local --with-flint=/usr/local --with-boost=/usr/local
+./configure CC=gcc-4.7 CXX=g++-4.7 --prefix=/usr/local --with-ntl=/usr/local --with-pari=/usr/local --with-flint=/usr/local --with-boost=/usr/local
 {% endhighlight %}
 
 ### Closing remarks
