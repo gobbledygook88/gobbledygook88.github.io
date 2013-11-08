@@ -437,3 +437,7 @@ img {
 #challenge-the-prize {
   display: none;
 }
+
+.MathJax_Display {
+  padding: 0 !important;
+}
