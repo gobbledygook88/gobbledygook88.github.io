@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Notes-On: C"
+title: "Notes-On: C++"
 categories: notes-on
 ---
 
