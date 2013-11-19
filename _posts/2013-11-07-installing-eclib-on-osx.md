@@ -10,6 +10,8 @@ disqus: y
 * Table of Contents
 {:toc}
 
+---
+
 ### Introduction
 
 ECLIB is a mathematical package for arithmetic on elliptic curves by John Cremona. It has various numerical package prerequisites which must be installed beforehand. These are
