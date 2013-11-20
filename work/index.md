@@ -1,5 +1,6 @@
 ---
 layout: index
+description: "A collection of work."
 ---
 
 <ul class="posts">

@@ -3,6 +3,7 @@ layout: post
 title: "Parallel Poisson solver"
 categories: blog
 disqus: y
+mathjax: y
 ---
 
 While organising various projects' code, I thought it was best to extract key components out into separate repositories. You can view them over on my [Github account](https://github.com/gobbledygook88/).
