@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Solarized Code Highlighting for Scribble theme"
+categories: blog
 disqus: y
 ---
 

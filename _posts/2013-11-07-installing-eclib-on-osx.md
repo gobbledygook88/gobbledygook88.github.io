@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Installing ECLIB on OS X"
+categories: blog
 disqus: y
 ---
 

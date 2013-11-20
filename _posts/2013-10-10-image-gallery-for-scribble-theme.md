@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Image Gallery for Scribble theme"
+categories: blog
 disqus: y
 ---
 

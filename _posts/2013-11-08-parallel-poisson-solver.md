@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Parallel Poisson solver"
+categories: blog
 disqus: y
 ---
 

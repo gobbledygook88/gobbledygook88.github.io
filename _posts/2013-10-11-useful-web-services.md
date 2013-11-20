@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Useful Web Services"
+categories: blog
 disqus: y
 ---
 

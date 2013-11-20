@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Picking up the crumbs
+categories: blog
 disqus: y
 ---
 

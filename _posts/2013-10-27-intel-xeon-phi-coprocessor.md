@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Intel Xeon Phi Coprocessor"
+categories: blog
 disqus: y
 ---
 

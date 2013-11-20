@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Tables in LaTeX"
+categories: blog
 disqus: y
 ---
 
