@@ -11,7 +11,7 @@ Primarily, this involves designing and coding websites. But I do other things as
 
 If you are looking into writing (scientific) programs in C or C++, I may be able to help. Data structures and high performance computing are also my personal favourite areas of research. You might find some posts on these subjects over at my [blog.](/)
 
-Currently, I'm planning on learning Ruby and Python, with applications to web development, and potentially software development. I always [keep notes](https://github.com/gobbledygook88/Notes-On) when I'm learning something new; you may also find them useful.
+Currently, I'm planning on learning Ruby and Python, with applications to web development, and potentially software development. I always [keep notes]({% post_url 2013-11-19-notes-on %}) when I'm learning something new; you may also find them useful.
 
 Aside from all that funny business, I also curate a small interactive tutorial site over at [LaTeX Tutorials](http://latextutorials.co.uk). It's aimed at beginners and first-year university students who want to typeset reports and assignments. Go check it out and have fun!
 

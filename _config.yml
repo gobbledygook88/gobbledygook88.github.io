@@ -10,8 +10,8 @@ links:
     url:          /about
   - name:         Blog
     url:          /
-  - name:         Work
-    url:          /work
+  - name:         Collections
+    url:          /collections
   - name:         Github
     url:          "https://github.com/gobbledygook88"
     external:     true
