@@ -16,7 +16,7 @@ links:
     url:          "https://github.com/gobbledygook88"
     external:     true
 pygments:         true
-permalink:        pretty
+permalink:        /:categories/:title/
 markdown:         kramdown
 #rdiscount:
 #  extensions:     [smart]

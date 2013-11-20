@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "TEDxWarwick"
+categories: work
 link: "tedxwarwick.com"
 gallery: y
 ---

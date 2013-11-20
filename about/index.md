@@ -21,4 +21,4 @@ Marcus
 
 p.s. The quickest way to contact me is via Twitter [@marcus_mo](https://twitter.com/marcus_mo), or email me via [me@marcusmo.co.uk](mailto:me@marcusmo.co.uk). You can also view my public code over at [Github](https://github.com/gobbledygook88/).
 
-p.p.s. Click here to view my [CV](/about/cv).
+p.p.s. Click here to view my [CV]({% post_url 2013-09-10-cv %}).

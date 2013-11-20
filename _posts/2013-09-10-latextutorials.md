@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "LaTeX Tutorials"
+categories: work
 link: "latextutorials.co.uk"
 gallery: y
 ---

@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "Virtual Futures"
+categories: work
 link: "virtualfutures.co.uk"
 gallery: y
 ---
