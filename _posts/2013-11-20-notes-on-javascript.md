@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Notes-On: JavsScript"
+title: "Notes-On: JavaScript"
 categories: notes-on
 ---
 
