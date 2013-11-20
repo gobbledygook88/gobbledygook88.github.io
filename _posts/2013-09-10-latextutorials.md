@@ -20,3 +20,11 @@ Many commonly used features of LaTeX have been broken down into manageable secti
 The Practice pages allow for interactive engagement via a database of mathematical equations and statements. There is a range of difficulty to cater for beginners, to those who want a real challenge.
 
 The site has gone through several design and development iterations. Currently, it is built on Jekyll, and uses MathJax for dynamic rendering of LaTeX.
+
+---
+
+### Information
+
+- Link: [latextutorials.co.uk](http://latextutorials.co.uk)
+- Front-end: [PureCSS](http://purecss.io/)
+- Back-end: [Jekyll](http://jekyllrb.com/)
