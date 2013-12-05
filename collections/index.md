@@ -21,7 +21,7 @@ description: "A collection of work and other tidbits."
   <li>
   	<a href="{{ post_url 2013-11-19-notes-on }}">Notes-On: Introduction</a>
   </li>
-  {% for page in site.categories.notes-on %}
+  {% for page in site.categories.notes-on reversed %}
   <li>
   	<a href="{{ page.url }}">{{ page.title }}</a>
   </li>
