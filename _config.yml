@@ -12,6 +12,8 @@ links:
     url:          /
   - name:         Collections
     url:          /collections
+  - name:         Notes On
+    url:          /blog/notes-on
   - name:         Github
     url:          "https://github.com/gobbledygook88"
     external:     true
