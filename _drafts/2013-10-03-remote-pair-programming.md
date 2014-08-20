@@ -31,6 +31,8 @@ might go in hand with flooty - for sharing terminal (linux and osx only)
 Linux only
 share terminal sessions
 
+http://blog.siyelo.com/remote-pair-programming-with-screen
+
 ## Summary links
 
 - [Screenhero](http://screenhero.com/)
