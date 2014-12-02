@@ -1,0 +1,156 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>Notes On: Python</title><meta name=viewport content="width=device-width"><link rel=stylesheet href="http://fonts.googleapis.com/css?family=Oxygen"><link rel=stylesheet href=/css/main.7c7d.css></head><body><div class=site><header class=banner><h1 class=title><a href="/blog/">Biscuit Crumbs</a></h1><a href=https://github.com/gobbledygook88><img class=svg-icon src=/img/svg/github2.6f15.svg alt=Github width=20px></a> <a href=https://twitter.com/marcus_mo><img class=svg-icon src=/img/svg/social19.757e.svg alt=Twitter width=20px></a> <a href=https://www.google.com/+MarcusMo><img class=svg-icon src=/img/svg/google109.d2c9.svg alt=Google+ width=20px></a></header><h3 class=no_toc id=table-of-contents>Table of Contents</h3><ul id=markdown-toc><li><a href=#installation>Installation</a></li><li><a href=#core-structure>Core structure</a><ul><li><a href=#comments>Comments</a></li><li><a href=#numbers-and-maths>Numbers and Maths</a></li><li><a href=#variables>Variables</a></li><li><a href=#strings>Strings</a></li><li><a href=#conversions>Conversions</a></li><li><a href=#raw-input>Raw Input</a></li><li><a href=#control-flow>Control Flow</a></li><li><a href=#loops>Loops</a></li><li><a href=#printing>Printing</a></li><li><a href=#files>Files</a></li><li><a href=#functions>Functions</a></li><li><a href=#data-structures>Data Structures</a><ul><li><a href=#tuples>Tuples</a></li><li><a href=#dictionaries>Dictionaries</a></li><li><a href=#lists>Lists</a></li><li><a href=#sets>Sets</a></li></ul></li><li><a href=#modules>Modules</a><ul><li><a href=#math>Math</a></li><li><a href=#urls>URLs</a></li></ul></li><li><a href=#parsing-xml>Parsing XML</a></li></ul></li><li><a href=#tips--tricks>Tips &amp; Tricks</a></li><li><a href=#bibliography--resources>Bibliography &amp; Resources</a></li></ul><hr><h2 id=installation>Installation</h2><p>Head to <a href="http://www.python.org/download/">the official Python website</a> and download the relevant installation package for your system. There are usually two production versions available. Either is fine.</p><h2 id=core-structure>Core structure</h2><p>Commands can be written and executed in the Python interpretor, or placed in a program file with the file extension of <code>.py</code>. Double-clicking on the Python file will then run it. Generally, lines starting with, and immediately following, <code>&gt;&gt;&gt;</code> are written in the interpretor.</p><p>First key point to remember is that Python does not need semi-colons at the end of expressions, and that whitespace is very important! Be sure to indent text when required, especially in statements and functions.</p><h3 id=comments>Comments</h3><p>Start single line comments with the hash key <code>#</code>. For multi-line comments use three consecutive double quotes, i.e.</p><div class=highlight><pre><code class=python><span class=sd>&quot;&quot;&quot; This is a </span>
+<span class=sd>multi-line comment &quot;&quot;&quot;</span>
+</code></pre></div><h3 id=numbers-and-maths>Numbers and Maths</h3><p>Numbers (integers or floats) behave similar to other programming languages, though take care with integer division. For example,</p><div class=highlight><pre><code class=python><span class=o>&gt;&gt;&gt;</span> <span class=mi>12</span><span class=o>/</span><span class=mi>3</span>
+<span class=mi>4</span>                   <span class=o>//</span> <span class=n>Correct</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=mi>13</span><span class=o>/</span><span class=mi>3</span>
+<span class=mi>4</span>                   <span class=o>//</span> <span class=n>Incorrect</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=mf>13.0</span><span class=o>/</span><span class=mf>3.0</span>
+<span class=mf>4.333333333333333</span>   <span class=o>//</span> <span class=n>Correct</span>    <span class=ow>or</span>    <span class=mf>13.0</span><span class=o>/</span><span class=mi>3</span>    <span class=ow>or</span>    <span class=mi>13</span><span class=o>/</span><span class=mf>3.0</span>    <span class=ow>or</span>    <span class=mi>13</span><span class=o>/</span><span class=mf>3.</span>
+</code></pre></div><p>Mathematical operators are the usual <code>+ - * / %</code>, with <code>**</code> to denote the exponential operator, such as</p><div class=highlight><pre><code class=python><span class=o>&gt;&gt;&gt;</span> <span class=mi>2</span> <span class=o>**</span> <span class=mi>3</span>
+<span class=mi>8</span>
+</code></pre></div><h3 id=variables>Variables</h3><p>Python variables are loosely-typed and case-sensitive. Be sure to capitalize the first letter of your booleans.</p><h3 id=strings>Strings</h3><p>Use the <code>+</code> key to concatenate strings, or string literals. The <code>print</code> command prints strings:</p><div class=highlight><pre><code class=python><span class=o>&gt;&gt;&gt;</span> <span class=k>print</span> <span class=s>&quot;This is a string&quot;</span>
+<span class=n>This</span> <span class=ow>is</span> <span class=n>a</span> <span class=n>string</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=k>print</span> <span class=s>&quot;This is the number &quot;</span> <span class=o>+</span> <span class=nb>str</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span>  <span class=c># Concatenate a string and a number with the str() function</span>
+<span class=n>This</span> <span class=ow>is</span> <span class=n>the</span> <span class=n>number</span> <span class=mi>10</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=k>print</span> <span class=s>&quot;This is the number &quot;</span> <span class=o>+</span> <span class=sb>`10`</span>     <span class=c># Use backticks instead of the str() function</span>
+<span class=n>This</span> <span class=ow>is</span> <span class=n>the</span> <span class=n>number</span> <span class=mi>10</span>
+</code></pre></div><p>The <code>str()</code> function performs <em>explicit string conversion</em>, so <em>explicitly</em> converts anything that isn’t a string, into a string. <em>Implicit</em> string conversion is literally putting quotes around a sequence of characters.</p><p>Another function is <code>len()</code> which returns the length of a sequence of characters. Other basic string-specific methods are <code>.upper()</code>, <code>.lower()</code>, noting that these use dot notation.</p><div class=highlight><pre><code class=python><span class=o>&gt;&gt;&gt;</span> <span class=n>a</span> <span class=o>=</span> <span class=s>&quot;Hello&quot;</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=n>b</span> <span class=o>=</span> <span class=s>&quot;World&quot;</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=nb>len</span><span class=p>(</span><span class=n>a</span><span class=p>)</span>
+<span class=mi>5</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=n>a</span> <span class=o>+</span> <span class=n>b</span>
+<span class=s>&quot;HelloWorld&quot;</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=n>a</span><span class=o>.</span><span class=n>upper</span><span class=p>()</span>
+<span class=s>&quot;HELLO&quot;</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=n>a</span><span class=o>.</span><span class=n>startswith</span><span class=p>(</span><span class=s>&quot;Hell&quot;</span><span class=p>)</span>
+<span class=bp>True</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=n>a</span><span class=o>.</span><span class=n>replace</span><span class=p>(</span><span class=s>&quot;H&quot;</span><span class=p>,</span><span class=s>&quot;M&quot;</span><span class=p>)</span>
+<span class=s>&quot;Mello&quot;</span>
+</code></pre></div><p>Remember that strings in Python are <em>immutable</em> meaning that you cannot change them once they have been created. Strings can be formatted with <code>%</code> via the following syntax</p><div class=highlight><pre><code class=python><span class=k>print</span> <span class=s>&quot;</span><span class=si>%s</span><span class=s>&quot;</span> <span class=o>%</span> <span class=p>(</span><span class=n>variable</span><span class=p>)</span>
+</code></pre></div><p>where <code>s</code> represents a string. For example,</p><div class=highlight><pre><code class=python><span class=k>print</span> <span class=s>&quot;My name is: </span><span class=si>%s</span><span class=s>, and likes </span><span class=si>%s</span><span class=s>&quot;</span> <span class=o>%</span> <span class=p>(</span><span class=n>name</span><span class=p>,</span> <span class=n>likes</span><span class=p>)</span>
+</code></pre></div><p>where <code>name</code> and <code>like</code> are variables of string type.</p><h3 id=conversions>Conversions</h3><p>Methods exist to convert variables between datatypes, e.g. <code>int()</code>, <code>float()</code>, and <code>str()</code>.</p><h3 id=raw-input>Raw Input</h3><p>To ask for user input use the following commands:</p><div class=highlight><pre><code class=python><span class=n>first_input</span>  <span class=o>=</span> <span class=nb>input</span><span class=p>(</span><span class=s>&quot;Your name please:&quot;</span><span class=p>)</span>                 <span class=c># Just for strings</span>
+<span class=n>second_input</span> <span class=o>=</span> <span class=nb>raw_input</span><span class=p>(</span><span class=s>&quot;Give me something, anything:&quot;</span><span class=p>)</span>  <span class=c># Any data type is accepted</span>
+</code></pre></div><h3 id=control-flow>Control Flow</h3><p>Syntax for conditional statements are</p><div class=highlight><pre><code class=python><span class=k>if</span> <span class=n>condition1</span><span class=p>:</span>
+    <span class=c># Do something</span>
+<span class=k>elif</span> <span class=n>condition2</span><span class=p>:</span>
+    <span class=c># Do something else</span>
+<span class=k>else</span><span class=p>:</span>
+    <span class=c># Do another thing if condition1 and condition2 both fail</span>
+</code></pre></div><p><em>Note: Remember the colons!</em></p><p>There are six comparators: <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, and <code>&gt;=</code>.</p><h3 id=loops>Loops</h3><p>There are two kep looping constructs</p><p>A while loop:</p><div class=highlight><pre><code class=python><span class=n>n</span> <span class=o>=</span> <span class=mi>10</span>
+<span class=k>while</span> <span class=n>n</span> <span class=o>&gt;</span> <span class=mi>10</span><span class=p>:</span>
+    <span class=k>print</span> <span class=s>&#39;T-minus&#39;</span><span class=p>,</span> <span class=n>n</span>
+    <span class=n>n</span> <span class=o>=</span> <span class=n>n</span> <span class=o>-</span> <span class=mi>1</span>
+<span class=k>print</span> <span class=s>&#39;Blastoff!&#39;</span>
+</code></pre></div><p>and a for loop:</p><div class=highlight><pre><code class=python><span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>5</span><span class=p>):</span>
+    <span class=k>print</span> <span class=n>i</span>
+
+<span class=n>names</span> <span class=o>=</span> <span class=p>[</span><span class=s>&#39;Dave&#39;</span><span class=p>,</span><span class=s>&#39;Paula&#39;</span><span class=p>,</span><span class=s>&#39;Thomas&#39;</span><span class=p>,</span><span class=s>&#39;Lewis&#39;</span><span class=p>]</span>
+<span class=k>for</span> <span class=n>name</span> <span class=ow>in</span> <span class=n>names</span><span class=p>:</span>
+    <span class=k>print</span> <span class=n>name</span>
+</code></pre></div><h3 id=printing>Printing</h3><p>To print to stdout, we use the <code>print</code> command (Python 2)</p><div class=highlight><pre><code class=python><span class=k>print</span> <span class=n>x</span>
+<span class=k>print</span> <span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>,</span> <span class=n>z</span>
+<span class=k>print</span> <span class=s>&quot;Your name is&quot;</span><span class=p>,</span> <span class=n>name</span>
+<span class=k>print</span> <span class=n>x</span><span class=p>,</span>                         <span class=c># Omits newline</span>
+</code></pre></div><p>or the print function (Python 3)</p><div class=highlight><pre><code class=python><span class=k>print</span><span class=p>(</span><span class=n>x</span><span class=p>)</span>
+<span class=k>print</span><span class=p>(</span><span class=n>x</span><span class=p>,</span><span class=n>y</span><span class=p>,</span><span class=n>z</span><span class=p>)</span>
+<span class=k>print</span><span class=p>(</span><span class=s>&quot;Your name is&quot;</span><span class=p>,</span> <span class=n>name</span><span class=p>)</span>
+<span class=k>print</span><span class=p>(</span><span class=n>x</span><span class=p>,</span><span class=n>end</span><span class=o>=</span><span class=s>&#39; &#39;</span><span class=p>)</span>                 <span class=c># Omits newline</span>
+</code></pre></div><h3 id=files>Files</h3><p>Opening a file</p><div class=highlight><pre><code class=python><span class=n>f</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=s>&quot;foo.txt&quot;</span><span class=p>,</span><span class=s>&quot;r&quot;</span><span class=p>)</span>          <span class=c># Open for reading</span>
+<span class=n>f</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=s>&quot;bar.txt&quot;</span><span class=p>,</span><span class=s>&quot;w&quot;</span><span class=p>)</span>          <span class=c># Open for writing</span>
+</code></pre></div><p>To read data</p><div class=highlight><pre><code class=python><span class=n>data</span> <span class=o>=</span> <span class=n>f</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>                  <span class=c># Read all data</span>
+</code></pre></div><p>To write text to a file</p><div class=highlight><pre><code class=python><span class=n>g</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=s>&quot;some text</span><span class=se>\n</span><span class=s>&quot;</span><span class=p>)</span>
+</code></pre></div><p>Reading a file one line at a time</p><div class=highlight><pre><code class=python><span class=n>f</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=s>&quot;foo.txt&quot;</span><span class=p>,</span><span class=s>&quot;r&quot;</span><span class=p>)</span>
+<span class=k>for</span> <span class=n>line</span> <span class=ow>in</span> <span class=n>f</span><span class=p>:</span>
+    <span class=c># Process the line</span>
+    <span class=o>...</span>
+<span class=n>f</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</code></pre></div><h3 id=functions>Functions</h3><p>Generally, there are three parts to a function in Python</p><div class=highlight><pre><code class=python><span class=c># This multi-line comment</span>
+<span class=c># is entirely optional, but describes</span>
+<span class=c># what the function does</span>
+<span class=k>def</span> <span class=nf>name_of_function</span><span class=p>():</span>           <span class=c># This is the Header</span>
+    <span class=c># Do something                # This is the Body</span>
+</code></pre></div><p>To call the function, just type <code>name_of_function()</code>. Parameters may be placed, as a comma separated list, in the parentheses.</p><p>Use <em>splat arguments</em> if you do not know how many arguments a function will take:</p><div class=highlight><pre><code class=python><span class=k>def</span> <span class=nf>many_arguments</span><span class=p>(</span><span class=o>*</span><span class=n>args</span><span class=p>):</span>
+    <span class=c># Do something</span>
+
+<span class=n>many_arguments</span><span class=p>(</span><span class=s>&quot;arg1&quot;</span><span class=p>,</span> <span class=s>&quot;arg2&quot;</span><span class=p>,</span> <span class=s>&quot;arg3&quot;</span><span class=p>)</span>
+</code></pre></div><p>To specific an optional argument, or provide a default value for a parameter, define it in the function header:</p><div class=highlight><pre><code class=python><span class=k>def</span> <span class=nf>function_name</span><span class=p>(</span><span class=n>req_arg</span><span class=p>,</span><span class=n>opt_arg</span><span class=o>=</span><span class=s>&quot;optional&quot;</span><span class=p>):</span>
+    <span class=c># Do something</span>
+</code></pre></div><h3 id=data-structures>Data Structures</h3><h4 id=tuples>Tuples</h4><p>A tuple is a read-only collection of related values grouped together</p><div class=highlight><pre><code class=python><span class=nb>tuple</span> <span class=o>=</span> <span class=p>(</span><span class=s>&#39;123&#39;</span><span class=p>,</span> <span class=mi>456</span><span class=p>,</span> <span class=mi>789</span><span class=p>)</span>
+</code></pre></div><p>You can then unpack the tuple in variables</p><div class=highlight><pre><code class=python><span class=n>a</span><span class=p>,</span> <span class=n>b</span><span class=p>,</span> <span class=n>c</span> <span class=o>=</span> <span class=nb>tuple</span>
+    <span class=c># a = &#39;123&#39;</span>
+    <span class=c># b = 456</span>
+    <span class=c># c = 789</span>
+</code></pre></div><h4 id=dictionaries>Dictionaries</h4><p>A dictionary is a collection of values indexed by ‘keys’</p><div class=highlight><pre><code class=python><span class=nb>dict</span> <span class=o>=</span> <span class=p>{</span>
+    <span class=s>&#39;alpha&#39;</span> <span class=o>=</span> <span class=s>&#39;123&#39;</span><span class=p>,</span>
+    <span class=s>&#39;beta&#39;</span>  <span class=o>=</span> <span class=mi>456</span><span class=p>,</span>
+    <span class=s>&#39;gamma&#39;</span> <span class=o>=</span> <span class=mi>789</span>
+<span class=p>}</span>
+
+<span class=o>&gt;&gt;&gt;</span> <span class=nb>dict</span><span class=p>[</span><span class=s>&#39;alpha&#39;</span><span class=p>]</span>
+<span class=s>&#39;123&#39;</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=nb>dict</span><span class=p>[</span><span class=s>&#39;beta&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=mi>1011</span>
+</code></pre></div><h4 id=lists>Lists</h4><p>A list is an ordered sequence of items (usually of the same type. Python does not care, but we do not normally do this.)</p><div class=highlight><pre><code class=python><span class=n>names</span> <span class=o>=</span> <span class=p>[</span><span class=s>&#39;Dave&#39;</span><span class=p>,</span> <span class=s>&#39;Paula&#39;</span><span class=p>,</span> <span class=s>&#39;Thomas&#39;</span><span class=p>]</span>
+
+<span class=o>&gt;&gt;&gt;</span> <span class=nb>len</span><span class=p>(</span><span class=n>names</span><span class=p>)</span>
+<span class=mi>3</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=n>names</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=s>&#39;Lewis&#39;</span><span class=p>)</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=n>names</span>
+<span class=p>[</span><span class=s>&#39;Dave&#39;</span><span class=p>,</span> <span class=s>&#39;Paula&#39;</span><span class=p>,</span> <span class=s>&#39;Thomas&#39;</span><span class=p>,</span> <span class=s>&#39;Lewis&#39;</span><span class=p>]</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=n>names</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+<span class=s>&#39;Dave&#39;</span>
+</code></pre></div><p>We can create a new list by applying an operation to each element of a sequence. This is called <em>list comprehensions</em></p><div class=highlight><pre><code class=python><span class=o>&gt;&gt;&gt;</span> <span class=n>a</span> <span class=o>=</span> <span class=p>[</span><span class=mi>1</span><span class=p>,</span><span class=mi>2</span><span class=p>,</span><span class=mi>3</span><span class=p>,</span><span class=mi>4</span><span class=p>,</span><span class=mi>5</span><span class=p>]</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=n>b</span> <span class=o>=</span> <span class=p>[</span><span class=mi>2</span><span class=o>*</span><span class=n>x</span> <span class=k>for</span> <span class=n>x</span> <span class=ow>in</span> <span class=n>a</span><span class=p>]</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=n>b</span> 
+<span class=p>[</span><span class=mi>2</span><span class=p>,</span><span class=mi>4</span><span class=p>,</span><span class=mi>6</span><span class=p>,</span><span class=mi>8</span><span class=p>,</span><span class=mi>10</span><span class=p>]</span>
+</code></pre></div><h4 id=sets>Sets</h4><p>A set is an unordered collection of unique items, useful for detecting duplicates or related tasks.</p><div class=highlight><pre><code class=python><span class=n>ids</span> <span class=o>=</span> <span class=nb>set</span><span class=p>([</span><span class=s>&#39;123&#39;</span><span class=p>,</span><span class=s>&#39;456&#39;</span><span class=p>,</span><span class=s>&#39;789&#39;</span><span class=p>])</span>
+
+<span class=o>&gt;&gt;&gt;</span> <span class=n>ids</span><span class=o>.</span><span class=n>add</span><span class=p>(</span><span class=s>&#39;101&#39;</span><span class=p>)</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=n>ids</span><span class=o>.</span><span class=n>remove</span><span class=p>(</span><span class=s>&#39;123&#39;</span><span class=p>)</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=s>&#39;456&#39;</span> <span class=ow>in</span> <span class=n>ids</span>
+<span class=bp>True</span>
+</code></pre></div><h3 id=modules>Modules</h3><p>A module is a file that contains definitions — including variables and functions — that you can use. You can import modules by using the <code>import</code> command, such as for <code>math</code> library</p><h4 id=math>Math</h4><div class=highlight><pre><code class=python><span class=o>&gt;&gt;&gt;</span> <span class=kn>import</span> <span class=nn>math</span>
+</code></pre></div><p>and call a function such as <code>math.sqrt()</code>, where the <code>math.</code> prefix tells python to look for the function <code>sqrt()</code> in the <code>math</code> module.</p><p>Note that in your program, you can assign a custom name to a function. For example,</p><div class=highlight><pre><code class=python><span class=o>&gt;&gt;&gt;</span> <span class=n>mysqrt</span> <span class=o>=</span> <span class=n>math</span><span class=o>.</span><span class=n>sqrt</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=n>mysqrt</span><span class=p>(</span><span class=mi>9</span><span class=p>)</span>               <span class=c># Use new custom name for function</span>
+<span class=mf>3.0</span>
+</code></pre></div><p>You can also just get a single function from a module by <em>function import</em> such as just the <code>sqrt</code> function</p><div class=highlight><pre><code class=python><span class=kn>from</span> <span class=nn>math</span> <span class=kn>import</span> <span class=n>sqrt</span>
+</code></pre></div><p>You can then call the function by <code>sqrt()</code>, noting that we do not need the <code>math.</code> prefix.</p><p>To import everything from a module use an asterisk</p><div class=highlight><pre><code class=python><span class=kn>from</span> <span class=nn>math</span> <span class=kn>import</span> <span class=o>*</span>
+</code></pre></div><p>but be careful with this. You have been warned.</p><h4 id=urls>URLs</h4><p>To read data from the web, we can import the <code>urllib</code> module.</p><div class=highlight><pre><code class=python><span class=kn>import</span> <span class=nn>urllib</span>                <span class=c># urllib.request on Python 3</span>
+
+<span class=n>u</span> <span class=o>=</span> <span class=n>urllib</span><span class=o>.</span><span class=n>urlopen</span><span class=p>(</span><span class=s>&quot;http://www.python.org&quot;</span><span class=p>)</span>
+<span class=n>data</span> <span class=o>=</span> <span class=n>u</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>
+</code></pre></div><h3 id=parsing-xml>Parsing XML</h3><p>Parsing a document into a tree</p><div class=highlight><pre><code class=python><span class=kn>from</span> <span class=nn>xml.etree.ElementTree</span> <span class=kn>import</span> <span class=n>parse</span>
+
+<span class=n>doc</span> <span class=o>=</span> <span class=n>parse</span><span class=p>(</span><span class=s>&#39;data.xml&#39;</span><span class=p>)</span>
+</code></pre></div><p>Useful methods include <code>findall('elname')</code>, <code>findtext('elname')</code></p><!-- ## Web Development
+packages, frameworks, how to build web application with python, tools required, best practices, --><!-- ## Computer Science
+web crawling, data structures --><!-- ## Notes --><h2 id=tips--tricks>Tips &amp; Tricks</h2><ul><li>Use the <code>-i</code> flag to enter an interactive session after running a Pythoon script file. Useful when debugging. i.e. <code>python -i helloworld.py</code></li><li>Counter objects for simplified tabulation</li></ul><div class=highlight><pre><code class=python><span class=kn>from</span> <span class=nn>collections</span> <span class=kn>import</span> <span class=n>Counter</span>
+
+<span class=n>words</span> <span class=o>=</span> <span class=p>[</span><span class=s>&#39;yes&#39;</span><span class=p>,</span><span class=s>&#39;but&#39;</span><span class=p>,</span><span class=s>&#39;no&#39;</span><span class=p>,</span><span class=s>&#39;but&#39;</span><span class=p>,</span><span class=s>&#39;yes&#39;</span><span class=p>]</span>
+<span class=n>wordcounts</span> <span class=o>=</span> <span class=n>Counter</span><span class=p>(</span><span class=n>words</span><span class=p>)</span>
+
+<span class=o>&gt;&gt;&gt;</span> <span class=n>wordcounts</span><span class=p>[</span><span class=s>&#39;yes&#39;</span><span class=p>]</span>
+<span class=mi>2</span>
+<span class=o>&gt;&gt;&gt;</span> <span class=n>wordcounts</span><span class=o>.</span><span class=n>most_common</span><span class=p>()</span>
+<span class=p>[(</span><span class=s>&#39;yes&#39;</span><span class=p>,</span><span class=mi>2</span><span class=p>),(</span><span class=s>&#39;but&#39;</span><span class=p>,</span><span class=mi>2</span><span class=p>),(</span><span class=s>&#39;no&#39;</span><span class=p>,</span><span class=mi>1</span><span class=p>)]</span>
+</code></pre></div><ul><li>Advanced sorting with key-functions. Lambdas, essentially, create small inline functions; the result of key-function determines sort order</li></ul><div class=highlight><pre><code class=python><span class=n>records</span><span class=o>.</span><span class=n>sort</span><span class=p>(</span><span class=n>key</span><span class=o>=</span><span class=k>lambda</span> <span class=n>p</span><span class=p>:</span> <span class=n>p</span><span class=p>[</span><span class=s>&#39;COMPLETION DATA&#39;</span><span class=p>])</span>
+<span class=n>records</span><span class=o>.</span><span class=n>sort</span><span class=p>(</span><span class=n>ley</span><span class=o>=</span><span class=k>lambda</span> <span class=n>p</span><span class=p>:</span> <span class=n>p</span><span class=p>[</span><span class=s>&#39;ZIP&#39;</span><span class=p>])</span>
+</code></pre></div><ul><li>Key-functions can also be used to iterate over groups of sorted data</li></ul><div class=highlight><pre><code class=python><span class=n>records</span><span class=o>.</span><span class=n>sort</span><span class=p>(</span><span class=n>key</span><span class=o>=</span><span class=k>lambda</span> <span class=n>r</span><span class=p>:</span> <span class=n>r</span><span class=p>[</span><span class=s>&#39;ZIP&#39;</span><span class=p>])</span>
+
+<span class=kn>from</span> <span class=nn>itertools</span> <span class=kn>import</span> <span class=n>groupby</span>
+<span class=n>groups</span> <span class=o>=</span> <span class=n>groupby</span><span class=p>(</span><span class=n>records</span><span class=p>,</span> <span class=n>key</span><span class=o>=</span><span class=k>lambda</span> <span class=n>r</span><span class=p>:</span> <span class=n>r</span><span class=p>[</span><span class=s>&#39;ZIP&#39;</span><span class=p>])</span>
+<span class=k>for</span> <span class=n>zipcode</span><span class=p>,</span> <span class=n>group</span> <span class=ow>in</span> <span class=n>groups</span><span class=p>:</span>
+    <span class=k>for</span> <span class=n>r</span> <span class=ow>in</span> <span class=n>group</span><span class=p>:</span>
+        <span class=c># All records with same zip-code</span>
+        <span class=o>...</span>
+</code></pre></div><ul><li>Building indices to data, which builds a dictionary</li></ul><div class=highlight><pre><code class=python><span class=kn>from</span> <span class=nn>collections</span> <span class=kn>import</span> <span class=n>defaultdict</span>
+
+<span class=n>zip_index</span> <span class=o>=</span> <span class=n>defaultdict</span><span class=p>(</span><span class=nb>list</span><span class=p>)</span>
+<span class=k>for</span> <span class=n>r</span> <span class=ow>in</span> <span class=n>records</span><span class=p>:</span>
+    <span class=n>zip_index</span><span class=p>[</span><span class=n>r</span><span class=p>[</span><span class=s>&#39;ZIP&#39;</span><span class=p>]]</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>r</span><span class=p>)</span>
+
+<span class=n>zip_index</span> <span class=o>=</span> <span class=p>{</span>
+    <span class=s>&#39;60640&#39;</span><span class=p>:</span> <span class=p>[</span> <span class=n>rec</span><span class=p>,</span> <span class=n>rec</span><span class=p>,</span> <span class=o>...</span> <span class=p>],</span>
+    <span class=s>&#39;60637&#39;</span><span class=p>:</span> <span class=p>[</span> <span class=n>rec</span><span class=p>,</span> <span class=n>rec</span><span class=p>,</span> <span class=n>rec</span><span class=p>,</span> <span class=o>...</span> <span class=p>],</span>
+    <span class=o>...</span>
+<span class=p>}</span>
+</code></pre></div><ul><li><p>There are a lot of third-party libraries which provide many out-of-the-box functionality. e.g.</p><ul><li>numpy/scipy (array processing)</li><li>matplotlib (plotting)</li><li>pandas (statistics, data analysis)</li><li>requests (interacting with APIs)</li><li>ipython (better interactive shell)</li></ul></li></ul><h2 id=bibliography--resources>Bibliography &amp; Resources</h2><ul><li><a href="http://docs.python.org/">The official Python documentation</a></li><li><a href="http://www.youtube.com/playlist?list=PLEA1FEF17E1E5C0DA">The New Boston</a> video tutorials</li><li><a href="http://shell.appspot.com/">Interactive server-side Python shell</a> for Google App Engine</li><li><a href=http://www.codecademy.com/tracks/python>CodeAcademy</a> interactive Python course</li><li><a href="http://www.youtube.com/watch?v=RrPZza_vZ3w">Learn Python Through Public Data Hacking</a></li></ul></div><script src=/js/scripts.2e6c.js></script></body></html>

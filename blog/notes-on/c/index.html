@@ -1,0 +1,138 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>Notes On: C</title><meta name=viewport content="width=device-width"><link rel=stylesheet href="http://fonts.googleapis.com/css?family=Oxygen"><link rel=stylesheet href=/css/main.7c7d.css></head><body><div class=site><header class=banner><h1 class=title><a href="/blog/">Biscuit Crumbs</a></h1><a href=https://github.com/gobbledygook88><img class=svg-icon src=/img/svg/github2.6f15.svg alt=Github width=20px></a> <a href=https://twitter.com/marcus_mo><img class=svg-icon src=/img/svg/social19.757e.svg alt=Twitter width=20px></a> <a href=https://www.google.com/+MarcusMo><img class=svg-icon src=/img/svg/google109.d2c9.svg alt=Google+ width=20px></a></header><h3 class=no_toc id=table-of-contents>Table of Contents</h3><ul id=markdown-toc><li><a href=#setup>Setup</a></li><li><a href=#basics>Basics</a><ul><li><a href=#starting-up>Starting up</a></li><li><a href=#variables>Variables</a></li><li><a href=#input--output>Input &amp; Output</a></li><li><a href=#strings>Strings</a></li><li><a href=#operators>Operators</a></li><li><a href=#conditionals>Conditionals</a></li><li><a href=#loops>Loops</a></li><li><a href=#arrays>Arrays</a></li><li><a href=#functions>Functions</a></li><li><a href=#pointers>Pointers</a></li><li><a href=#structures>Structures</a></li><li><a href=#libraries>Libraries</a></li></ul></li><li><a href=#resources>Resources</a></li></ul><hr><h2 id=setup>Setup</h2><p>We will be using the <code>gcc</code> compiler throughout.</p><h2 id=basics>Basics</h2><h3 id=starting-up>Starting up</h3><p>The most basic code-base for a program written in C is shown below, with annotations:</p><div class=highlight><pre><code class=c><span class=cp>#include &lt;stdio.h&gt;           </span><span class=c1>// Preprocessor Directives and Declarations</span>
+
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>                 <span class=c1>// Initiation function</span>
+    <span class=n>printf</span><span class=p>(</span><span class=s>&quot;Hello World!&quot;</span><span class=p>);</span>  <span class=c1>// Function body</span>
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><p>To compile and run the program, use the following commands in a terminal</p><div class=highlight><pre><code class=bash>&gt; gcc hello.c -o hello
+&gt; ./hello
+</code></pre></div><p>Here is a quick run-down of the syntax:</p><ul><li>Variables are strictly-typed, meaning you must specify the type of the variable.</li><li>So are functions.</li><li>Semi-colons are required at the end of each statement.</li><li>You will probably want to include the <code>stdio.h</code> header file in all your programs.</li><li>Comments are declared with <code>//</code> for single-line, and <code>/* ... */</code> for multi-line.</li><li>Every function must return something (?) and must be of the same type as what you declared.</li><li>Variables and functions are case-sensitive.</li></ul><h3 id=variables>Variables</h3><p>The standard types of variables are what you should expect, listed below, except there is no <code>string</code> variable type.</p><ul><li><code>char</code> - a Character</li><li><code>int</code> - an Integer (up to ± 32767 on a 32-bit system)</li><li><code>long int</code> - a larger Integer (up to ± 2147483647)</li><li><code>float</code> - a Floating Point Number</li><li><code>double</code> - a Floating Point Number with greater precision</li></ul><p>To declare a variable, we use the following syntax</p><div class=highlight><pre><code class=c><span class=kt>int</span> <span class=n>i</span><span class=p>;</span>      <span class=c1>// Single variable declaration</span>
+<span class=kt>int</span> <span class=n>i</span><span class=p>,</span><span class=n>j</span><span class=p>,</span><span class=n>k</span><span class=p>;</span>  <span class=c1>// Multiple variables separated with a comma</span>
+<span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>  <span class=c1>// Assign a value when declaring the variable</span>
+</code></pre></div><p>For strings, we use a character array whose length is one more than te length of the word. This takes into account the newline at the end of the string.</p><div class=highlight><pre><code class=c><span class=cp>#include &lt;stdio.h&gt;</span>
+
+<span class=kt>char</span> <span class=n>string</span><span class=p>[</span><span class=mi>10</span><span class=p>]</span> <span class=o>=</span> <span class=s>&quot;a string&quot;</span><span class=p>;</span>
+</code></pre></div><p>Variables declared outside any functions are called <em>global variables</em> and can be accessed by any function in the program. Variables declared inside a function are called <em>local variables</em> and are destroyed once the function exits. A <em>static variable</em> is a local variable but it’s value is preserved on exit of a function, and is available for use when the function is next called.</p><div class=highlight><pre><code class=c><span class=k>static</span> <span class=kt>int</span> <span class=n>name_of_static_var</span><span class=p>;</span>
+</code></pre></div><p><em>Constant variables</em> are declared in a similar way</p><div class=highlight><pre><code class=c><span class=k>const</span> <span class=kt>float</span> <span class=n>pi</span> <span class=o>=</span> <span class=mf>3.1415926</span><span class=p>;</span>
+</code></pre></div><p>Alternatively, you can use the C-proprocessor directive <code>#define</code>:</p><div class=highlight><pre><code class=c><span class=cp>#define pi 3.1415926</span>
+</code></pre></div><h3 id=input--output>Input &amp; Output</h3><p>Some standard library functions require a conversion specification for different types of variables.</p><div class=highlight><pre><code class=c><span class=o>%</span><span class=n>d</span>  <span class=c1>// int</span>
+<span class=o>%</span><span class=n>f</span>  <span class=c1>// float or double</span>
+<span class=o>%</span><span class=n>e</span>  <span class=c1>// float or double (in scientific notation)</span>
+<span class=o>%</span><span class=n>c</span>  <span class=c1>// character</span>
+<span class=o>%</span><span class=n>s</span>  <span class=c1>// character string</span>
+</code></pre></div><p>One function which uses these is <code>printf</code></p><div class=highlight><pre><code class=c><span class=cp>#include &lt;stdio.h&gt;</span>
+
+<span class=kt>char</span> <span class=n>str</span><span class=p>[]</span> <span class=o>=</span> <span class=s>&quot;a string&quot;</span><span class=p>;</span>
+
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+    <span class=n>printf</span><span class=p>(</span><span class=s>&quot;This is %s&quot;</span><span class=p>,</span><span class=n>str</span><span class=p>);</span>
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><p>Special characters can also be used, such as <code>\t</code> and <code>\n</code>, to indicate a tab or newline, respectively.</p><p>For integers, floats and doubles you can format the output.</p><div class=highlight><pre><code class=c><span class=kt>int</span> <span class=n>x</span> <span class=o>=</span> <span class=mi>5</span><span class=p>;</span>
+<span class=n>printf</span><span class=p>(</span><span class=s>&quot;%10.4d&quot;</span><span class=p>,</span><span class=n>x</span><span class=p>);</span>  <span class=c1>// prints out 0005</span>
+</code></pre></div><p>The <code>.</code> allows for precision. The number <code>10</code> puts <code>0005</code> over 10 spaces so that the number <code>5</code> is on the tenth spacing.</p><p>To capture input, from a keyboard for example, we use the <code>fgets(str,sizeof(str),stdin)</code> function, which takes three parameters: <code>str</code> is a character array, <code>sizeof(str)</code> is the maximum number of characters to be read (plus one for the newline), and <code>stdin</code> the source of the input (keyboard).</p><p><code>fgets()</code> returns the whole string. To remove the newline character use</p><div class=highlight><pre><code class=c><span class=n>str</span><span class=p>[</span><span class=n>strlen</span><span class=p>(</span><span class=n>str</span><span class=p>)</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span> <span class=o>=</span> <span class=s>&quot;</span><span class=se>\0</span><span class=s>&quot;</span><span class=p>;</span>  <span class=c1>// Set last character to `null`</span>
+</code></pre></div><p>To convert the text read in via <code>fgets()</code> we use the function <code>sscanf(line,"%d %d %d",&amp;num1,&amp;num2,&amp;num3)</code>, where <code>line</code> is the input from <code>fgets()</code>, and <code>&amp;num1</code>, <code>&amp;num2</code>, <code>&amp;num3</code> are points to already initiated integers.</p><p>To read input from a file, rather than a keyboard, just provide the filename in <code>fgets()</code></p><div class=highlight><pre><code class=c><span class=cp>#include &lt;stdio.h&gt;</span>
+
+<span class=k>const</span> <span class=kt>char</span> <span class=n>FILE_NAME</span><span class=p>[]</span> <span class=o>=</span> <span class=s>&quot;inputdata.dat&quot;</span><span class=p>;</span>
+      <span class=kt>char</span> <span class=n>line</span><span class=p>[</span><span class=mi>100</span><span class=p>];</span>
+      <span class=kt>int</span>  <span class=n>num1</span><span class=p>,</span> <span class=n>num2</span><span class=p>,</span> <span class=n>num3</span><span class=p>;</span>
+
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+    <span class=kt>FILE</span> <span class=o>*</span><span class=n>in_file</span><span class=p>;</span>                                              <span class=c1>// Indicate you want a file</span>
+    <span class=n>in_file</span> <span class=o>=</span> <span class=n>fopen</span><span class=p>(</span><span class=n>FILE_NAME</span><span class=p>,</span><span class=s>&quot;r&quot;</span><span class=p>);</span>                             <span class=c1>// Open the file</span>
+
+    <span class=n>fgets</span><span class=p>(</span><span class=n>line</span><span class=p>,</span><span class=k>sizeof</span><span class=p>(</span><span class=n>line</span><span class=p>),</span><span class=n>in_file</span><span class=p>);</span>                           <span class=c1>// Get input</span>
+    <span class=n>sscanf</span><span class=p>(</span><span class=n>line</span><span class=p>,</span><span class=s>&quot;%d %d %d&quot;</span><span class=p>,</span><span class=o>&amp;</span><span class=n>num1</span><span class=p>,</span><span class=o>&amp;</span><span class=n>num2</span><span class=p>,</span><span class=o>&amp;</span><span class=n>num3</span><span class=p>);</span>                  <span class=c1>// Convert to numbers</span>
+    <span class=n>printf</span><span class=p>(</span><span class=s>&quot;You inputted numbers: %d %d %d</span><span class=se>\n</span><span class=s>&quot;</span><span class=p>,</span><span class=n>num1</span><span class=p>,</span><span class=n>num2</span><span class=p>,</span><span class=n>num3</span><span class=p>);</span>  <span class=c1>// Print out input</span>
+
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><h3 id=strings>Strings</h3><p>There are several string specific functions which are good to know:</p><div class=highlight><pre><code class=c><span class=n>strcopy</span><span class=p>(</span><span class=n>new_str</span><span class=p>,</span><span class=n>str</span><span class=p>);</span>  <span class=c1>// Copies the string `str` to `new_str`</span>
+<span class=n>strcat</span><span class=p>(</span><span class=n>new_str</span><span class=p>,</span><span class=n>str</span><span class=p>);</span>   <span class=c1>// Adds the string `str to `new_str`</span>
+<span class=n>strlen</span><span class=p>(</span><span class=n>str</span><span class=p>);</span>           <span class=c1>// Returns the length of the string `str`</span>
+</code></pre></div><h3 id=operators>Operators</h3><p>The usual mathematical operators are present: <code>+</code>, <code>-</code>, <code>/</code>, <code>*</code>, <code>%</code>. Note (expecially when using division) that if both operands are integers, then the output will be an integer.</p><p>The comparision operators are <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, which return <code>0</code> or <code>1</code>. Note that when comparing two real numbers it is usually better to use a tolerance:</p><div class=highlight><pre><code class=c><span class=n>same</span> <span class=o>=</span> <span class=p>(</span><span class=n>abs</span><span class=p>(</span><span class=n>a</span><span class=o>-</span><span class=n>b</span><span class=p>)</span> <span class=o>&lt;</span> <span class=n>tol</span><span class=p>);</span>
+</code></pre></div><p>Boolean operators are <code>&amp;&amp;</code>, <code>||</code>, <code>!</code>.</p><p>It is often useful to know the order of precedence when using many operators in one statement.</p><div class=highlight><pre><code class=text>high    parentheses         ()
+        unary               !, ++, --
+        multiplication      *, /, %
+        addition            +, -
+        comparision         ==, !=, &lt;, &gt;, &lt;=, &gt;=
+        and                 &amp;&amp;
+        or                  ||
+low     assignment          +=, -=, *=, /=, %=
+</code></pre></div><h3 id=conditionals>Conditionals</h3><p><em>Statement block</em> are groups of code within a single set of curly braces <code>{ }</code>.</p><p><em>Conditional blocks</em> are similar to other programming languages:</p><div class=highlight><pre><code class=c><span class=k>if</span><span class=p>(</span> <span class=n>statement1</span> <span class=p>)</span> <span class=p>{</span>
+    <span class=c1>// Do something</span>
+<span class=p>}</span> <span class=k>else</span> <span class=k>if</span><span class=p>(</span> <span class=n>statement</span> <span class=mi>2</span> <span class=p>)</span> <span class=p>{</span>
+    <span class=c1>// Do something else</span>
+<span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+    <span class=c1>// Do another thing</span>
+<span class=p>}</span>
+</code></pre></div><h3 id=loops>Loops</h3><p>The usual loops are present:</p><div class=highlight><pre><code class=c><span class=k>while</span><span class=p>(</span> <span class=n>statement</span> <span class=p>)</span> <span class=p>{</span>          <span class=c1>// While loop</span>
+    <span class=c1>// Do something</span>
+<span class=p>}</span>
+
+<span class=k>do</span> <span class=p>{</span>                          <span class=c1>// Do-While loop</span>
+    <span class=c1>// Something</span>
+<span class=p>}</span> <span class=k>while</span><span class=p>(</span> <span class=n>statement</span> <span class=p>)</span>
+
+<span class=k>for</span><span class=p>(</span><span class=n>inits</span><span class=p>;</span> <span class=n>tests</span><span class=p>;</span> <span class=n>actions</span><span class=p>)</span> <span class=p>{</span>  <span class=c1>// For loop</span>
+    <span class=c1>// Do something</span>
+<span class=p>}</span>
+</code></pre></div><p>The keywords <code>break</code> and <code>continue</code> can be used in loops.</p><h3 id=arrays>Arrays</h3><p>Just like a character array, we can have arrays which hold other types of variables, such as an integer array: <code>int int_arr[]</code>. Arrays are zero-index-based. Be careful not to address array elements outside of the declared array, as this will result in errors. Writing to an index outside of the declared array means writing to a random memory slot, and may cause weird things to happen!</p><p>Multi-dimensional arrays are declared such as <code>int mul_arr[][]</code>. Since memory is linearly addressable, matrices in C are stored in <em>row-major order</em>.</p><h3 id=functions>Functions</h3><p>All functions must be declared, known as a function prototype, before the <code>main()</code> function. The general syntax is as follows</p><div class=highlight><pre><code class=c><span class=n>return_type</span> <span class=nf>function_name</span><span class=p>(</span> <span class=n>arg1_type</span> <span class=n>arg1</span><span class=p>,</span> <span class=n>arg2_type</span> <span class=n>arg2</span><span class=p>,</span> <span class=p>...</span> <span class=p>,</span> <span class=n>argn_type</span> <span class=n>argn</span> <span class=p>);</span>
+</code></pre></div><p>The <code>return_type</code> of a function is the variable type that the function returns. If a function doesn’t return anything, set <code>return_type</code> to <code>void</code>.</p><div class=highlight><pre><code class=c><span class=cp>#import &lt;stdio.h&gt;</span>
+
+<span class=kt>int</span> <span class=nf>product</span><span class=p>(</span><span class=kt>int</span> <span class=n>a</span><span class=p>,</span> <span class=kt>int</span> <span class=n>b</span><span class=p>);</span>
+
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+    <span class=kt>int</span> <span class=n>a</span> <span class=o>=</span> <span class=mi>2</span><span class=p>;</span>
+    <span class=kt>int</span> <span class=n>b</span> <span class=o>=</span> <span class=mi>3</span><span class=p>;</span>
+
+    <span class=n>printf</span><span class=p>(</span><span class=s>&quot;The product of %d and %d is %d</span><span class=se>\n</span><span class=s>&quot;</span><span class=p>,</span> <span class=n>a</span><span class=p>,</span> <span class=n>b</span><span class=p>,</span> <span class=n>product</span><span class=p>(</span><span class=n>a</span><span class=p>,</span><span class=n>b</span><span class=p>));</span>
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+
+<span class=kt>int</span> <span class=nf>product</span><span class=p>(</span><span class=kt>int</span> <span class=n>a</span><span class=p>,</span> <span class=kt>int</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span>
+    <span class=k>return</span> <span class=n>a</span> <span class=o>*</span> <span class=n>b</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><h3 id=pointers>Pointers</h3><p>Variables can be accessed, as before, by name. When variables are passed to functions as such, in fact, only its value is passed through as a local variable. Any changes made to an argument will not affect the original variable. If you wish to change the original variable by a function, you will need to pass through a variable <em>pointer</em>.</p><p>Pointers are objects that <em>points</em> to a memory address of another object. Pointers must be declared (since they are variables that store memory addresses).</p><div class=highlight><pre><code class=c><span class=kt>int</span> <span class=o>*</span><span class=n>point</span><span class=p>;</span>
+</code></pre></div><p>To recall the memory address of a variable, we use the <em>ampersand operator</em>.</p><div class=highlight><pre><code class=c><span class=kt>int</span> <span class=n>an_integer</span><span class=p>;</span>
+<span class=kt>int</span> <span class=o>*</span><span class=n>point</span><span class=p>;</span>
+
+<span class=n>an_integer</span> <span class=o>=</span> <span class=mi>10</span><span class=p>;</span>
+<span class=n>point</span>      <span class=o>=</span> <span class=o>&amp;</span><span class=n>an_integer</span><span class=p>;</span>
+</code></pre></div><p>To get the content of a memory address given by a pointer, we use an asterisk.</p><div class=highlight><pre><code class=c><span class=o>*</span><span class=n>point</span><span class=p>;</span>  <span class=c1>// 10</span>
+</code></pre></div><p>The name of an array is the same as a pointer to that array. So <code>*array</code> is the same as <code>array[0]</code>, and <code>*(array+1)</code> is the same as <code>array[1]</code>, etc.</p><p>Pointers allows us to allocate memory for a program at runtime, rather than compile time - this is called <em>dynamic memory allocation</em>. <code>malloc</code> stands for <em>memory allocation</em> and is a standard library function. It’s prototype is</p><div class=highlight><pre><code class=c><span class=kt>void</span> <span class=o>*</span><span class=nf>malloc</span><span class=p>(</span><span class=kt>size_t</span> <span class=n>nbytes</span><span class=p>);</span>
+</code></pre></div><p><code>malloc</code> returns a generic pointer, a pointer which points to any type of object. When <code>malloc</code> runs out of memory space, it returns a <em>null pointer</em>. Hence, we need to check for this condition at each <code>malloc</code> call.</p><p><code>calloc</code> and <code>realloc</code> are other dynamic memory allocation functions.</p><p>It is best to free up the memory. To do so, use the <code>free</code> function, and then set the relevant pointer to <code>NULL</code>.</p><div class=highlight><pre><code class=c><span class=cp>#import &lt;stdio.h&gt;</span>
+
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+    <span class=kt>char</span> <span class=o>*</span><span class=n>array_pointer</span><span class=p>;</span>
+    <span class=n>array_pointer</span> <span class=o>=</span> <span class=n>malloc</span><span class=p>(</span><span class=mi>5</span> <span class=o>*</span> <span class=k>sizeof</span><span class=p>(</span><span class=kt>int</span><span class=p>));</span>  <span class=c1>// Array of 5 integers</span>
+
+    <span class=k>if</span><span class=p>(</span> <span class=n>array_pointer</span> <span class=o>==</span> <span class=nb>NULL</span> <span class=p>)</span> <span class=p>{</span>
+        <span class=n>fprintf</span><span class=p>(</span><span class=n>stderr</span><span class=p>,</span> <span class=s>&quot;Out of memory</span><span class=se>\n</span><span class=s>&quot;</span><span class=p>);</span>
+        <span class=n>exit</span><span class=p>(</span><span class=mi>8</span><span class=p>);</span>
+    <span class=p>}</span>
+
+    <span class=n>free</span><span class=p>(</span><span class=n>array_pointer</span><span class=p>);</span>
+    <span class=n>array_pointer</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><h3 id=structures>Structures</h3><p>Structures allow you to organise related objects. These can be variables or functions, etc. The definition of a structure should be at the top of the program.</p><div class=highlight><pre><code class=c><span class=k>struct</span> <span class=n>a_structure</span> <span class=p>{</span>                       <span class=c1>// Define structure</span>
+    <span class=kt>char</span> <span class=n>a_string</span><span class=p>[];</span>
+    <span class=kt>int</span>  <span class=n>an_integer</span><span class=p>;</span>
+    <span class=kt>int</span>  <span class=n>another_integer</span><span class=p>;</span>
+<span class=p>}</span>
+
+<span class=p>...</span>
+
+<span class=k>struct</span> <span class=n>a_structure</span> <span class=n>structure_name</span><span class=p>;</span>         <span class=c1>// Declare a new variable</span>
+
+<span class=n>structure_name</span><span class=p>.</span><span class=n>a_string</span>        <span class=o>=</span> <span class=s>&quot;hello&quot;</span><span class=p>;</span>  <span class=c1>// Assign values with dot-notation</span>
+<span class=n>structure_name</span><span class=p>.</span><span class=n>an_integer</span>      <span class=o>=</span> <span class=mi>5</span><span class=p>;</span>
+<span class=n>structure_name</span><span class=p>.</span><span class=n>another_integer</span> <span class=o>=</span> <span class=mi>10</span><span class=p>;</span>
+</code></pre></div><p>When passing a structure to a function, we usually pass a pointer to the structure, and use the arrow symbol <code>-&gt;</code> to access the contents of a pointer.</p><div class=highlight><pre><code class=c><span class=kt>char</span>   <span class=n>str</span><span class=p>[];</span>
+<span class=k>struct</span> <span class=n>a_structure</span> <span class=o>*</span><span class=n>point</span><span class=p>;</span>  <span class=c1>// Declare pointer of variable type `a_structure`</span>
+
+<span class=n>point</span> <span class=o>=</span> <span class=o>&amp;</span><span class=n>structure_name</span><span class=p>;</span>    <span class=c1>// Point to `structure_name`</span>
+<span class=n>str</span>   <span class=o>=</span> <span class=n>point</span><span class=o>-&gt;</span><span class=n>a_string</span><span class=p>;</span>
+</code></pre></div><h3 id=libraries>Libraries</h3><p>As well as the standard input/output library, we have others. Most often, you will want to use mathematical functions. These are included in the math library.</p><div class=highlight><pre><code class=c><span class=cp>#import &lt;math.h&gt;</span>
+</code></pre></div><p>To compile a program, we now need to use the <code>-lm</code> parameter so that the compiler knows to look for the <code>libm.*.so</code> library in the directory <code>/lib/</code>.</p><div class=highlight><pre><code class=c><span class=n>gcc</span> <span class=n>program</span><span class=p>.</span><span class=n>c</span> <span class=o>-</span><span class=n>lm</span> <span class=o>-</span><span class=mi>0</span> <span class=n>program</span>
+</code></pre></div><h2 id=resources>Resources</h2><ul><li><a href="http://www2.warwick.ac.uk/fac/sci/csc/teaching/modules/cy900/current/">CY900 - Foundations of Scientific Computing</a></li><li><a href="http://www.physics.drexel.edu/courses/Comp_Phys/General/C_basics/">C Basics</a></li><li><a href=http://www.lemoda.net/c/boredzo-pointers/pointers.html>Pointers</a></li></ul></div><script src=/js/scripts.2e6c.js></script></body></html>

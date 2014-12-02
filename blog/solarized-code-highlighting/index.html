@@ -1,0 +1,44 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>Solarized Code Highlighting for Scribble theme</title><meta name=viewport content="width=device-width"><link rel=stylesheet href="http://fonts.googleapis.com/css?family=Oxygen"><link rel=stylesheet href=/css/main.7c7d.css></head><body><div class=site><header class=banner><h1 class=title><a href="/blog/">Biscuit Crumbs</a></h1><a href=https://github.com/gobbledygook88><img class=svg-icon src=/img/svg/github2.6f15.svg alt=Github width=20px></a> <a href=https://twitter.com/marcus_mo><img class=svg-icon src=/img/svg/social19.757e.svg alt=Twitter width=20px></a> <a href=https://www.google.com/+MarcusMo><img class=svg-icon src=/img/svg/google109.d2c9.svg alt=Google+ width=20px></a></header><h2>Solarized Code Highlighting for Scribble theme</h2><div class=post><p>Confession: I am addicted to the <a href=http://ethanschoonover.com/solarized>Solarized</a> colour palette.</p><p>Here’s how to integrate Solarized into Scribble theme (the currently used Jekyll theme at time of writing).</p><p>The following are prerequisites:</p><ul><li>Jekyll is installed, along with all the required gems.</li><li><a href=http://pygments.org>Pygments</a> is installed.</li><li>You have a working Jekyll site, using the Scribble theme.</li><li>We are working in the command-line. All paths are relative to the base directory of your blog.</li></ul><p>First up, let’s back-up the current stylesheet defining the colours for code blocks. Note that the file <code>syntax.css</code> is automatically detected and required by Pygments. If you want to use a different filename, define it in <code>_config.yml</code>.</p><div class=highlight><pre><code class=bash>mv stylesheets/syntax.css stylesheets/syntax-scribble.css
+</code></pre></div><p>Now create a new <code>syntax.css</code> file and paste in the CSS styles with respect to the Solarized colour scheme: <a href=https://gist.github.com/nicolashery/5765395#file-solarized-dark-css>Dark</a> and <a href=https://gist.github.com/nicolashery/5765395#file-solarized-light-css>Light</a>, courtesy of <a href=https://github.com/nicolashery>Nicolas Hery</a>, or use one of the following commands.</p><div class=highlight><pre><code class=bash><span class=c># Solarized Dark</span>
+curl https://gist.github.com/nicolashery/5765395/raw/91ae32653fec817d26ba322cbe9d62192b07b851/solarized-dark.css -o stylesheets/syntax.css
+
+<span class=c># Solarized Light</span>
+curl https://gist.github.com/nicolashery/5765395/raw/168ea6851298cfd1d5e062ae742e18657b1c7a72/solarized-light.css -o stylesheets/syntax.css
+</code></pre></div><p>Next, we need to update the default styles for verbatim text. Within <code>stylesheets/styles.css</code>, update the following, choosing the set of styles depending on whether you chose the Dark or Light scheme.</p><div class=highlight><pre><code class=css><span class=nt>code</span> <span class=p>{</span>
+  <span class=c>/* Dark */</span>
+  <span class=k>background</span><span class=o>:</span> <span class=m>#002b36</span><span class=p>;</span>
+  <span class=k>color</span><span class=o>:</span> <span class=m>#93a1a1</span><span class=p>;</span>
+  <span class=c>/* Light */</span>
+  <span class=k>background</span><span class=o>:</span> <span class=m>#fdf6e3</span><span class=p>;</span>
+  <span class=k>color</span><span class=o>:</span> <span class=m>#586e75</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><p>As a result, code blocks look awesome when displayed with or without line numbers. However, when we choose to use a table to integrate line numbers, we need to do some extra work. Add the following CSS code to the bottom of <code>styles.css</code>.</p><div class=highlight><pre><code class=css><span class=nc>.highlighttable</span> <span class=p>{</span>
+  <span class=k>width</span><span class=o>:</span> <span class=m>100</span><span class=o>%</span><span class=p>;</span>
+  <span class=k>padding</span><span class=o>:</span> <span class=m>0</span> <span class=m>60px</span> <span class=m>0</span> <span class=m>36px</span> <span class=cp>!important</span><span class=p>;</span>
+  <span class=c>/* Dark */</span>
+  <span class=k>background</span><span class=o>:</span> <span class=m>#002b36</span><span class=p>;</span>
+  <span class=k>color</span><span class=o>:</span> <span class=m>#93a1a1</span><span class=p>;</span>
+  <span class=c>/* Light */</span>
+  <span class=k>background</span><span class=o>:</span> <span class=m>#fdf6e3</span><span class=p>;</span>
+  <span class=k>color</span><span class=o>:</span> <span class=m>#586e75</span><span class=p>;</span>
+<span class=p>}</span>
+
+<span class=nc>.highlighttable</span> <span class=nc>.linenos</span> <span class=p>{</span>
+  <span class=k>width</span><span class=o>:</span> <span class=m>24px</span><span class=p>;</span>
+<span class=p>}</span>
+
+<span class=nc>.highlighttable</span> <span class=nt>pre</span> <span class=p>{</span>
+  <span class=k>padding</span><span class=o>:</span> <span class=m>10px</span> <span class=m>0</span><span class=p>;</span>
+  <span class=k>color</span><span class=o>:</span> <span class=m>#586e75</span><span class=p>;</span>
+  <span class=k>line-height</span><span class=o>:</span> <span class=m>1.3em</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><p>That should do it! We now have awesome code blocks, syntax highlighted with the help of Pygments and Solarized.</p><p>In case you forgot how to declare a code block, here’s a quick recap. There are effectively three basic options when creating a code block.</p><p>The first is the default, and displays no line numbers. Replace <code>&lt;lang&gt;</code> with a <a href="http://pygments.org/docs/lexers/">suitable code language</a>. This is compulsory, otherwise Jekyll will not successfully build due to an error thrown by Pygments.</p><div class=highlight><pre><code class=ruby><span class=n>&#123;% highlight &lt;lang&gt; %&#125;</span>
+  <span class=sr>//</span> <span class=n>code goes here</span>
+<span class=n>&#123;% endhighlight %&#125;</span>
+</code></pre></div><p>To display line numbers, add the <code>linenos</code> attribute after the language declaration, for example,</p><div class=highlight><pre><code class=ruby><span class=n>&#123;% highlight &lt;lang&gt; linenos %&#125;</span>
+  <span class=sr>//</span> <span class=n>code goes here</span>
+<span class=n>&#123;% endhighlight %&#125;</span>
+</code></pre></div><p>However, this prevents viewers from easily copying the code by highlighting the text; the line numbers are copied along with the code. To solve this, we specify that the line numbers and code be placed in a table element:</p><div class=highlight><pre><code class=ruby><span class=n>&#123;% highlight &lt;lang&gt; linenos=table %&#125;</span>
+  <span class=sr>//</span> <span class=n>code goes here</span>
+<span class=n>&#123;% endhighlight %&#125;</span>
+</code></pre></div><p>Our CSS styles above will ensure this last example be displayed correctly.</p></div></div><script src=/js/scripts.2e6c.js></script></body></html>
