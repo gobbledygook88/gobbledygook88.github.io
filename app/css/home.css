@@ -1,0 +1,40 @@
+body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Oxygen', sans-serif;
+}
+
+section {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  transform: translateY(-50%);
+  text-align: center;
+}
+
+h1 {
+  letter-spacing: 0.125em;
+  text-transform: uppercase;
+}
+
+nav {
+  list-style: none;
+}
+
+li {
+  line-height: 1.8em;
+}
+
+a {
+  text-decoration: none;
+  color: #aaa;
+  letter-spacing: 0.125em;
+}
+
+.svg-container {
+  position: fixed;
+  width: 100%;
+  max-width: 1000px;
+  right: 0;
+  bottom: 0;
+}
