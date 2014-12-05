@@ -2,5 +2,8 @@
   "name": "jekyll-test",
   "version": "0.0.0",
   "dependencies": {
+    "normalize.css": "~3.0.2",
+    "snap.svg": "~0.3.0",
+    "underscore": "~1.7.0"
   }
 }
