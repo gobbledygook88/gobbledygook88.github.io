@@ -148,7 +148,7 @@ This version has some slight differences to
 In particular, the back of the dragon's head appears to be more complicated
 than it needs to be.
 
-Overall, the dragon sits well on flat surfaces but does then to fall over
+Overall, the dragon sits well on flat surfaces but does tend to fall over
 if the head is not balanced sufficiently; it is a bit too heavy due to the 
 weight of paper used.
 
@@ -162,3 +162,5 @@ Here is a summary of all the pieces used in the final origami.
 | 1/64  |     |        | 16    | 
 | 1/128 | 6   | 44     |       | 
 |-------+-----+--------+-------|
+
+Altogether, 375 pieces are used and surprisingly not much time.
