@@ -81,7 +81,7 @@
     for(var i = 0; i < 10; i++) {
       draw();
     }
-  };
+  }
 
   // add event listener for click on body
   d.onclick = init;
