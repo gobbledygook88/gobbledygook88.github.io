@@ -294,7 +294,11 @@ module.exports = function (grunt) {
           remote: 'git@github.com:gobbledygook88/gobbledygook88.github.io.git',
           branch: 'master',
           commit: true,
-          push: true
+          push: true,
+          config: {
+            'user.name': 'Marcus Mo',
+            'user.email': 'marcusmo88@gmail.com'
+          }
         }
       }
     },
