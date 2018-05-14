@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>Tables in LaTeX</title><meta name=viewport content="width=device-width"><link rel=stylesheet href="http://fonts.googleapis.com/css?family=Oxygen"><link rel=stylesheet href=/css/main.e0ae.css></head><body><div class=site><header class=banner><h1 class=title><a href="/blog/">Biscuit Crumbs</a></h1><a href=https://github.com/gobbledygook88><img class=svg-icon src=/img/svg/github2.6f15.svg alt=Github width=20px></a> <a href=https://twitter.com/marcus_mo><img class=svg-icon src=/img/svg/social19.757e.svg alt=Twitter width=20px></a> <a href=https://www.google.com/+MarcusMo><img class=svg-icon src=/img/svg/google109.d2c9.svg alt=Google+ width=20px></a></header><h2>Tables in LaTeX</h2><div class=post><p>I came across on <a href="http://truben.no/latex/table/">online table editor</a> today which looked very useful. It provides a basic interface where you may enter content for your table, and the appropriate code is generated, ready to be copied into your LaTeX document.</p><p>It’s a great tool to have, and I wish I had found it sooner. The best feature is that the generated LaTeX code is kept aligned, no matter the content. Clean code!</p><p>Of course, after entering content, you can always edit the styles, such as column justification or adding more <code>\hline</code>s.</p><p>For much larger tables (over 100 rows), I still find it easier to adapt a copy of the raw data file into LaTeX code via the command line. Tools such as <code>awk</code> and <code>sed</code> are brilliant at parsing huge text files at great speed.</p><p>Say you had a data file of runtimes (<code>runtimes.dat</code>) on an increasing number of threads. The data is arranged in columns. We keep the example short here, but you can apply the same commands to larger datasets.</p><div class=highlight><pre><code class=text>1 4253.56
+<!DOCTYPE html><html><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>Tables in LaTeX</title><meta name=viewport content="width=device-width"><link rel=stylesheet href="http://fonts.googleapis.com/css?family=Oxygen"><link rel=stylesheet href=/css/main.e0ae.css></head><body><div class=site><header class=banner><h1 class=title><a href="/blog/">Biscuit Crumbs</a></h1><a href=https://github.com/gobbledygook88><img class=svg-icon src=/img/svg/github2.6f15.svg alt=Github width=20px></a> <a href=https://twitter.com/marcus_mo><img class=svg-icon src=/img/svg/social19.757e.svg alt=Twitter width=20px></a> <a href=https://www.google.com/+MarcusMo><img class=svg-icon src=/img/svg/google109.d2c9.svg alt=Google+ width=20px></a></header><h2>Tables in LaTeX</h2><div class=post><p>I came across on <a href="http://truben.no/latex/table/">online table editor</a> today which looked very useful. It provides a basic interface where you may enter content for your table, and the appropriate code is generated, ready to be copied into your LaTeX document.</p><p>It’s a great tool to have, and I wish I had found it sooner. The best feature is that the generated LaTeX code is kept aligned, no matter the content. Clean code!</p><p>Of course, after entering content, you can always edit the styles, such as column justification or adding more <code>\hline</code>s.</p><p>For much larger tables (over 100 rows), I still find it easier to adapt a copy of the raw data file into LaTeX code via the command line. Tools such as <code>awk</code> and <code>sed</code> are brilliant at parsing huge text files at great speed.</p><p>Say you had a data file of runtimes (<code>runtimes.dat</code>) on an increasing number of threads. The data is arranged in columns. We keep the example short here, but you can apply the same commands to larger datasets.</p><figure class=highlight><pre><code class=language-text data-lang=text><span></span>1 4253.56
 2 3582.56
 3 2544.45
 4 1919.31
@@ -7,9 +7,7 @@
 7 1203.19
 8 1063.37
 9 976.329
-10 959.633
-</code></pre></div><p>First, we want to calculate the parallel speedup of the program. We can do this by issuing the following command in a terminal</p><div class=highlight><pre><code class=bash>awk <span class=s1>&#39;{print $1,$2,4253.56/$2}&#39;</span> runtimes.dat &gt; speedup.dat
-</code></pre></div><p>We then get the following, found in <code>speedup.dat</code>.</p><div class=highlight><pre><code class=text>1 4253.56 1
+10 959.633</code></pre></figure><p>First, we want to calculate the parallel speedup of the program. We can do this by issuing the following command in a terminal</p><figure class=highlight><pre><code class=language-bash data-lang=bash><span></span>awk <span class=s1>&#39;{print $1,$2,4253.56/$2}&#39;</span> runtimes.dat &gt; speedup.dat</code></pre></figure><p>We then get the following, found in <code>speedup.dat</code>.</p><figure class=highlight><pre><code class=language-text data-lang=text><span></span>1 4253.56 1
 2 3582.56 1.1873
 3 2544.45 1.6717
 4 1919.31 2.21619
@@ -18,11 +16,7 @@
 7 1203.19 3.53524
 8 1063.37 4.00008
 9 976.329 4.35669
-10 959.633 4.43249
-</code></pre></div><p>We can then proceed to convert this data into a LaTeX table. Let’s create a backup of the raw data file in case something goes wrong.</p><div class=highlight><pre><code class=bash>cp speedup.dat speedup-backup.dat
-</code></pre></div><p>First we want to add ampersand symbols between each column of data. This is interpreted by LaTeX as the beginning of a new cell in the row.</p><div class=highlight><pre><code class=bash>sed -e <span class=s1>&#39;s/ / \&amp; /&#39;</span> -e <span class=s1>&#39;s/\(.*\) /\1 \&amp; /&#39;</span> &lt; speedup.dat &gt; speedup-amps.dat
-</code></pre></div><p>We then append double-backslashes to the end of the line.</p><div class=highlight><pre><code class=bash>sed -e <span class=s1>&#39;s/$/ \\\\/g&#39;</span> &lt; speedup-amps.dat &gt; speedup-slash.dat
-</code></pre></div><p>Now we have the following</p><div class=highlight><pre><code class=text>1 &amp; 4253.56 &amp; 1 \\
+10 959.633 4.43249</code></pre></figure><p>We can then proceed to convert this data into a LaTeX table. Let’s create a backup of the raw data file in case something goes wrong.</p><figure class=highlight><pre><code class=language-bash data-lang=bash><span></span>cp speedup.dat speedup-backup.dat</code></pre></figure><p>First we want to add ampersand symbols between each column of data. This is interpreted by LaTeX as the beginning of a new cell in the row.</p><figure class=highlight><pre><code class=language-bash data-lang=bash><span></span>sed -e <span class=s1>&#39;s/ / \&amp; /&#39;</span> -e <span class=s1>&#39;s/\(.*\) /\1 \&amp; /&#39;</span> &lt; speedup.dat &gt; speedup-amps.dat</code></pre></figure><p>We then append double-backslashes to the end of the line.</p><figure class=highlight><pre><code class=language-bash data-lang=bash><span></span>sed -e <span class=s1>&#39;s/$/ \\\\/g&#39;</span> &lt; speedup-amps.dat &gt; speedup-slash.dat</code></pre></figure><p>Now we have the following</p><figure class=highlight><pre><code class=language-text data-lang=text><span></span>1 &amp; 4253.56 &amp; 1 \\
 2 &amp; 3582.56 &amp; 1.1873 \\
 3 &amp; 2544.45 &amp; 1.6717 \\
 4 &amp; 1919.31 &amp; 2.21619 \\
@@ -31,12 +25,10 @@
 7 &amp; 1203.19 &amp; 3.53524 \\
 8 &amp; 1063.37 &amp; 4.00008 \\
 9 &amp; 976.329 &amp; 4.35669 \\
-10 &amp; 959.633 &amp; 4.43249 \\
-</code></pre></div><p>We’ve done the hard part. Now we format the data into nice columns, and add the opening and closing LaTeX environment tags for creating a table.</p><div class=highlight><pre><code class=bash>column -t &lt; speedup-slash.dat &gt; speedup-cols.dat
+10 &amp; 959.633 &amp; 4.43249 \\</code></pre></figure><p>We’ve done the hard part. Now we format the data into nice columns, and add the opening and closing LaTeX environment tags for creating a table.</p><figure class=highlight><pre><code class=language-bash data-lang=bash><span></span>column -t &lt; speedup-slash.dat &gt; speedup-cols.dat
 sed -e <span class=s1>&#39;s/^/    /g&#39;</span> &lt; speedup-cols.dat &gt; speedup-indent.dat
 <span class=nb>echo</span> <span class=s2>&quot;\\\begin{table}\n  \\\begin{tabular}{lll}&quot;</span> <span class=p>|</span> cat - speedup-indent.dat &gt; speedup-meta.dat
-<span class=nb>echo</span> <span class=s2>&quot;  \\\end{tabular}\n\\\end{table}&quot;</span> &gt;&gt; speedup-meta.dat
-</code></pre></div><p>The extra <code>sed</code> command simply indents the data columns by four spaces, and is optional.</p><p>So there we have it! We have created a valid LaTeX table from the command line (<code>speedup-meta.dat</code>).</p><div class=highlight><pre><code class=latex><span class=k>\begin</span><span class=nb>{</span>table<span class=nb>}</span>
+<span class=nb>echo</span> <span class=s2>&quot;  \\\end{tabular}\n\\\end{table}&quot;</span> &gt;&gt; speedup-meta.dat</code></pre></figure><p>The extra <code>sed</code> command simply indents the data columns by four spaces, and is optional.</p><p>So there we have it! We have created a valid LaTeX table from the command line (<code>speedup-meta.dat</code>).</p><figure class=highlight><pre><code class=language-latex data-lang=latex><span></span><span class=k>\begin</span><span class=nb>{</span>table<span class=nb>}</span>
   <span class=k>\begin</span><span class=nb>{</span>tabular<span class=nb>}{</span>lll<span class=nb>}</span>
     1  <span class=nb>&amp;</span> 4253.56 <span class=nb>&amp;</span> 1       <span class=k>\\</span>
     2  <span class=nb>&amp;</span> 3582.56 <span class=nb>&amp;</span> 1.1873  <span class=k>\\</span>
@@ -49,10 +41,8 @@ sed -e <span class=s1>&#39;s/^/    /g&#39;</span> &lt; speedup-cols.dat &gt; spe
     9  <span class=nb>&amp;</span> 976.329 <span class=nb>&amp;</span> 4.35669 <span class=k>\\</span>
     10 <span class=nb>&amp;</span> 959.633 <span class=nb>&amp;</span> 4.43249 <span class=k>\\</span>
   <span class=k>\end</span><span class=nb>{</span>tabular<span class=nb>}</span>
-<span class=k>\end</span><span class=nb>{</span>table<span class=nb>}</span>
-</code></pre></div><p>All that’s left (provided everystep was successful) is to manually add any table headings, tidy up and remove any temporary files from our directory.</p><div class=highlight><pre><code class=bash>mv speedup-meta.dat speedup.dat
-rm speedup-*
-</code></pre></div><p>As an added bonus, you can link in the table into your LaTeX document and not pollute the rest of your document. This is extremely useful if you have a table with many rows.</p><div class=highlight><pre><code class=latex><span class=k>\documentclass</span><span class=nb>{</span>article<span class=nb>}</span>
+<span class=k>\end</span><span class=nb>{</span>table<span class=nb>}</span></code></pre></figure><p>All that’s left (provided everystep was successful) is to manually add any table headings, tidy up and remove any temporary files from our directory.</p><figure class=highlight><pre><code class=language-bash data-lang=bash><span></span>mv speedup-meta.dat speedup.dat
+rm speedup-*</code></pre></figure><p>As an added bonus, you can link in the table into your LaTeX document and not pollute the rest of your document. This is extremely useful if you have a table with many rows.</p><figure class=highlight><pre><code class=language-latex data-lang=latex><span></span><span class=k>\documentclass</span><span class=nb>{</span>article<span class=nb>}</span>
 
 <span class=k>\begin</span><span class=nb>{</span>document<span class=nb>}</span>
 
@@ -62,5 +52,4 @@ Here is a table of speedups obtained by using a range of threads.
 
 Awesome!
 
-<span class=k>\end</span><span class=nb>{</span>document<span class=nb>}</span>
-</code></pre></div></div></div><script type=text/javascript src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script src=/js/scripts.2e6c.js></script></body></html>
+<span class=k>\end</span><span class=nb>{</span>document<span class=nb>}</span></code></pre></figure></div></div><script type=text/javascript src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script src=/js/scripts.2e6c.js></script></body></html>
