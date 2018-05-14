@@ -8,6 +8,7 @@ description: A collection of biscuit crumbs
 author:
   name: Marcus Mo
   email: marcusmo88@gmail.com
+url: http://marcusmo.co.uk
 
 # Grunt handles images and assets.
 exclude: ['img', 'css', 'js', 'fonts',
