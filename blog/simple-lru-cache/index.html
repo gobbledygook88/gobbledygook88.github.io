@@ -1,96 +1,88 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>Simple LRU Cache</title><meta name=viewport content="width=device-width"><link rel=stylesheet href="http://fonts.googleapis.com/css?family=Oxygen"><link rel=stylesheet href=/css/main.e0ae.css></head><body><div class=site><header class=banner><h1 class=title><a href="/blog/">Biscuit Crumbs</a></h1><a href=https://github.com/gobbledygook88><img class=svg-icon src=/img/svg/github2.6f15.svg alt=Github width=20px></a> <a href=https://twitter.com/marcus_mo><img class=svg-icon src=/img/svg/social19.757e.svg alt=Twitter width=20px></a> <a href=https://www.google.com/+MarcusMo><img class=svg-icon src=/img/svg/google109.d2c9.svg alt=Google+ width=20px></a></header><h2>Simple LRU Cache</h2><div class=post><p>For a bit of fun, I wanted to implement a simple LRU cache in Python. Here’s a short walk-through of my thought processes and general steps. This LRU cache is not a full implementation for anything you’d want to use in production, but just the core functionality. I may add more to it in the future though.</p><p>If you are looking for a complete LRU cache, consider the following:</p><ul><li><a href=https://docs.python.org/3/library/functools.html#functools.lru_cache>Python3’s <code>functools.lru_cache</code></a></li><li><a href=https://github.com/jlhutch/pylru>Python2.6+ compatible LRU cache</a></li></ul><p>Others are also available.</p><h2 id=what-is-an-lru-cache>What is an LRU cache?</h2><p>LRU stands for ‘least recently used’. An LRU cache is a cache which discards its least recently used items when it becomes full.</p><p>Some examples are with an LRU cache of size 2 applied to a function called <code>add</code> which simply adds two numbers together:</p><pre><code class=language-python>add(1, 1)  // Returns 2
-add(2, 2)  // Returns 4
-add(1, 1)  // Returns 2 but from the cache
-add(3, 3)  // Returns 6 and discards the cache entry for add(2, 2)
-</code></pre><h2 id=setting-up-the-function-decorator>Setting up the function decorator</h2><p>First step is to define how the end-user will interact with the LRU cache.</p><p>Typically, this is done via a function decorator. Here’s an example:</p><pre><code class=language-python>from functools import wraps
+<!DOCTYPE html><html><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>Simple LRU Cache</title><meta name=viewport content="width=device-width"><link rel=stylesheet href="http://fonts.googleapis.com/css?family=Oxygen"><link rel=stylesheet href=/css/main.e0ae.css></head><body><div class=site><header class=banner><h1 class=title><a href="/blog/">Biscuit Crumbs</a></h1><a href=https://github.com/gobbledygook88><img class=svg-icon src=/img/svg/github2.6f15.svg alt=Github width=20px></a> <a href=https://twitter.com/marcus_mo><img class=svg-icon src=/img/svg/social19.757e.svg alt=Twitter width=20px></a> <a href=https://www.google.com/+MarcusMo><img class=svg-icon src=/img/svg/google109.d2c9.svg alt=Google+ width=20px></a></header><h2>Simple LRU Cache</h2><div class=post><p>For a bit of fun, I wanted to implement a simple LRU cache in Python. Here’s a short walk-through of my thought processes and general steps. This LRU cache is not a full implementation for anything you’d want to use in production, but just the core functionality. I may add more to it in the future though.</p><p>If you are looking for a complete LRU cache, consider the following:</p><ul><li><a href=https://docs.python.org/3/library/functools.html#functools.lru_cache>Python3’s <code>functools.lru_cache</code></a></li><li><a href=https://github.com/jlhutch/pylru>Python2.6+ compatible LRU cache</a></li></ul><p>Others are also available.</p><h2 id=what-is-an-lru-cache>What is an LRU cache?</h2><p>LRU stands for ‘least recently used’. An LRU cache is a cache which discards its least recently used items when it becomes full.</p><p>Some examples are with an LRU cache of size 2 applied to a function called <code>add</code> which simply adds two numbers together:</p><figure class=highlight><pre><code class=language-python data-lang=python><span></span><span class=n>add</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span>  <span class=o>//</span> <span class=n>Returns</span> <span class=mi>2</span>
+<span class=n>add</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span> <span class=mi>2</span><span class=p>)</span>  <span class=o>//</span> <span class=n>Returns</span> <span class=mi>4</span>
+<span class=n>add</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span>  <span class=o>//</span> <span class=n>Returns</span> <span class=mi>2</span> <span class=n>but</span> <span class=kn>from</span> <span class=nn>the</span> <span class=nn>cache</span>
+<span class=n>add</span><span class=p>(</span><span class=mi>3</span><span class=p>,</span> <span class=mi>3</span><span class=p>)</span>  <span class=o>//</span> <span class=n>Returns</span> <span class=mi>6</span> <span class=ow>and</span> <span class=n>discards</span> <span class=n>the</span> <span class=n>cache</span> <span class=n>entry</span> <span class=k>for</span> <span class=n>add</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span> <span class=mi>2</span><span class=p>)</span></code></pre></figure><h2 id=setting-up-the-function-decorator>Setting up the function decorator</h2><p>First step is to define how the end-user will interact with the LRU cache.</p><p>Typically, this is done via a function decorator. Here’s an example:</p><figure class=highlight><pre><code class=language-python data-lang=python><span></span><span class=kn>from</span> <span class=nn>functools</span> <span class=kn>import</span> <span class=n>wraps</span>
 
 
-def lru_cache(N):
+<span class=k>def</span> <span class=nf>lru_cache</span><span class=p>(</span><span class=n>N</span><span class=p>):</span>
 
-    def wrapper(f):
-        cache = LRUCache(f, N)
+    <span class=k>def</span> <span class=nf>wrapper</span><span class=p>(</span><span class=n>f</span><span class=p>):</span>
+        <span class=n>cache</span> <span class=o>=</span> <span class=n>LRUCache</span><span class=p>(</span><span class=n>f</span><span class=p>,</span> <span class=n>N</span><span class=p>)</span>
 
-        @wraps(f)
-        def replacement(*args, **kwargs):
-            return cache.call(*args, **kwargs)
+        <span class=nd>@wraps</span><span class=p>(</span><span class=n>f</span><span class=p>)</span>
+        <span class=k>def</span> <span class=nf>replacement</span><span class=p>(</span><span class=o>*</span><span class=n>args</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+            <span class=k>return</span> <span class=n>cache</span><span class=o>.</span><span class=n>call</span><span class=p>(</span><span class=o>*</span><span class=n>args</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>)</span>
 
-        return replacement
+        <span class=k>return</span> <span class=n>replacement</span>
 
-    return wrapper
-</code></pre><p>So we expect the LRU cache to be used in the following way:</p><pre><code class=language-python>@lru_cache(10)
-def add(a, b):
-    return a + b
-</code></pre><h2 id=first-iteration>First iteration</h2><pre><code class=language-python>class LRUCache(object):
+    <span class=k>return</span> <span class=n>wrapper</span></code></pre></figure><p>So we expect the LRU cache to be used in the following way:</p><figure class=highlight><pre><code class=language-python data-lang=python><span></span><span class=nd>@lru_cache</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span>
+<span class=k>def</span> <span class=nf>add</span><span class=p>(</span><span class=n>a</span><span class=p>,</span> <span class=n>b</span><span class=p>):</span>
+    <span class=k>return</span> <span class=n>a</span> <span class=o>+</span> <span class=n>b</span></code></pre></figure><h2 id=first-iteration>First iteration</h2><figure class=highlight><pre><code class=language-python data-lang=python><span></span><span class=k>class</span> <span class=nc>LRUCache</span><span class=p>(</span><span class=nb>object</span><span class=p>):</span>
 
-    def __init__(self, f, N):
-        self.f = f
-        self.max = N
-        self.cache = {}
+    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>f</span><span class=p>,</span> <span class=n>N</span><span class=p>):</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>f</span> <span class=o>=</span> <span class=n>f</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>max</span> <span class=o>=</span> <span class=n>N</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>cache</span> <span class=o>=</span> <span class=p>{}</span>
 
-    def call(self, *args):
-        if args in self.cache:
-            return self.cache[args]
+    <span class=k>def</span> <span class=nf>call</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=o>*</span><span class=n>args</span><span class=p>):</span>
+        <span class=k>if</span> <span class=n>args</span> <span class=ow>in</span> <span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=p>:</span>
+            <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=p>[</span><span class=n>args</span><span class=p>]</span>
 
-        value = self.cache[args] = self.f(*args)
-        return value
-</code></pre><p>Here we perform the initial setup of our <code>LRUCache</code> class which is consistent with how we intend to use it. We also stub out an incredibly simple (and incomplete) <code>call</code> method; it just returns a cached value if the same arguments are used.</p><p>The underlying data structure of this LRU cache is a dictionary.</p><h2 id=adding-the-notion-of-orderedness>Adding the notion of orderedness</h2><p>To ensure only a maximum of <code>N</code> items are cached, we need to add a check after retriving the value.</p><p>At the same time, we can switch from using a dictionary to an ordered dictionary. This will allow us to remove the value of the earliest entry.</p><pre><code class=language-python>def call(self, *args):
-    if args in self.cache:
-        value = self.cache[args]
-    else:
-        value = self.cache[args] = self.f(*args)
+        <span class=n>value</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=p>[</span><span class=n>args</span><span class=p>]</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>f</span><span class=p>(</span><span class=o>*</span><span class=n>args</span><span class=p>)</span>
+        <span class=k>return</span> <span class=n>value</span></code></pre></figure><p>Here we perform the initial setup of our <code>LRUCache</code> class which is consistent with how we intend to use it. We also stub out an incredibly simple (and incomplete) <code>call</code> method; it just returns a cached value if the same arguments are used.</p><p>The underlying data structure of this LRU cache is a dictionary.</p><h2 id=adding-the-notion-of-orderedness>Adding the notion of orderedness</h2><p>To ensure only a maximum of <code>N</code> items are cached, we need to add a check after retriving the value.</p><p>At the same time, we can switch from using a dictionary to an ordered dictionary. This will allow us to remove the value of the earliest entry.</p><figure class=highlight><pre><code class=language-python data-lang=python><span></span><span class=k>def</span> <span class=nf>call</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=o>*</span><span class=n>args</span><span class=p>):</span>
+    <span class=k>if</span> <span class=n>args</span> <span class=ow>in</span> <span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=p>:</span>
+        <span class=n>value</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=p>[</span><span class=n>args</span><span class=p>]</span>
+    <span class=k>else</span><span class=p>:</span>
+        <span class=n>value</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=p>[</span><span class=n>args</span><span class=p>]</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>f</span><span class=p>(</span><span class=o>*</span><span class=n>args</span><span class=p>)</span>
 
-    if len(self.cache) &gt; self.max:
-        # Pop out the first item that was inserted
-        self.cache.popitem(last=False)
+    <span class=k>if</span> <span class=nb>len</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=p>)</span> <span class=o>&gt;</span> <span class=bp>self</span><span class=o>.</span><span class=n>max</span><span class=p>:</span>
+        <span class=c1># Pop out the first item that was inserted</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=o>.</span><span class=n>popitem</span><span class=p>(</span><span class=n>last</span><span class=o>=</span><span class=bp>False</span><span class=p>)</span>
 
-    return value
-</code></pre><p>Note that this is still incorrect - it does not follow the definition of ‘least recently used’.</p><h2 id=removing-the-correct-cached-value>Removing the correct cached value</h2><pre><code class=language-python>def call(self, *args):
-    value = self.cache.pop(args, self.f(*args))
+    <span class=k>return</span> <span class=n>value</span></code></pre></figure><p>Note that this is still incorrect - it does not follow the definition of ‘least recently used’.</p><h2 id=removing-the-correct-cached-value>Removing the correct cached value</h2><figure class=highlight><pre><code class=language-python data-lang=python><span></span><span class=k>def</span> <span class=nf>call</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=o>*</span><span class=n>args</span><span class=p>):</span>
+    <span class=n>value</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=o>.</span><span class=n>pop</span><span class=p>(</span><span class=n>args</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>f</span><span class=p>(</span><span class=o>*</span><span class=n>args</span><span class=p>))</span>
 
-    # Re-insert into OrderedDict to update order
-    self.cache[args] = value
+    <span class=c1># Re-insert into OrderedDict to update order</span>
+    <span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=p>[</span><span class=n>args</span><span class=p>]</span> <span class=o>=</span> <span class=n>value</span>
 
-    if len(self.cache) &gt; self.max:
-        self.cache.popitem(last=False)
+    <span class=k>if</span> <span class=nb>len</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=p>)</span> <span class=o>&gt;</span> <span class=bp>self</span><span class=o>.</span><span class=n>max</span><span class=p>:</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=o>.</span><span class=n>popitem</span><span class=p>(</span><span class=n>last</span><span class=o>=</span><span class=bp>False</span><span class=p>)</span>
 
-    return value
-</code></pre><p>Here we <code>pop</code> any already cached value or compute a new value given the arguments. This saves us a few lines of code for the earlier <code>if</code> statement.</p><p>We then re-insert the value so that the <code>OrderedDict</code> can update the order internally. This means the <code>popitem(last=False)</code> will remove the oldest used cache value, thus keeping only the most recently used items.</p><h2 id=supporting-kwargs>Supporting <code>kwargs</code></h2><p>The eagle-eyed amoungst us will have spotted that we only supported positional arguments earlier; the kwargs dictionary is not hashable so cannot be used as a dictionary key.</p><p>In order to create a key, we convert the dictionary into a list of sorted tuples.</p><p>We then use this key when getting and setting values in the cache.</p><p>Note this is just an extremely naive way of supporting <code>kwargs</code>. It is quite easy to construct test cases which break this.</p><pre><code class=language-python>def create_key(self, *args, **kwargs):
-    kws = tuple((k, kwargs[k]) for k in sorted(kwargs.keys()))
-    return (args, kws)
+    <span class=k>return</span> <span class=n>value</span></code></pre></figure><p>Here we <code>pop</code> any already cached value or compute a new value given the arguments. This saves us a few lines of code for the earlier <code>if</code> statement.</p><p>We then re-insert the value so that the <code>OrderedDict</code> can update the order internally. This means the <code>popitem(last=False)</code> will remove the oldest used cache value, thus keeping only the most recently used items.</p><h2 id=supporting-kwargs>Supporting <code>kwargs</code></h2><p>The eagle-eyed amoungst us will have spotted that we only supported positional arguments earlier; the kwargs dictionary is not hashable so cannot be used as a dictionary key.</p><p>In order to create a key, we convert the dictionary into a list of sorted tuples.</p><p>We then use this key when getting and setting values in the cache.</p><p>Note this is just an extremely naive way of supporting <code>kwargs</code>. It is quite easy to construct test cases which break this.</p><figure class=highlight><pre><code class=language-python data-lang=python><span></span><span class=k>def</span> <span class=nf>create_key</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=o>*</span><span class=n>args</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+    <span class=n>kws</span> <span class=o>=</span> <span class=nb>tuple</span><span class=p>((</span><span class=n>k</span><span class=p>,</span> <span class=n>kwargs</span><span class=p>[</span><span class=n>k</span><span class=p>])</span> <span class=k>for</span> <span class=n>k</span> <span class=ow>in</span> <span class=nb>sorted</span><span class=p>(</span><span class=n>kwargs</span><span class=o>.</span><span class=n>keys</span><span class=p>()))</span>
+    <span class=k>return</span> <span class=p>(</span><span class=n>args</span><span class=p>,</span> <span class=n>kws</span><span class=p>)</span>
 
-def call(self, *args, **kwargs):
-    key = self.create_key(*args, **kwargs)
-    value = self.cache.pop(key, self.f(*args, **kwargs))
+<span class=k>def</span> <span class=nf>call</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=o>*</span><span class=n>args</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+    <span class=n>key</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>create_key</span><span class=p>(</span><span class=o>*</span><span class=n>args</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>)</span>
+    <span class=n>value</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=o>.</span><span class=n>pop</span><span class=p>(</span><span class=n>key</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>f</span><span class=p>(</span><span class=o>*</span><span class=n>args</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>))</span>
 
-    self.cache[key] = value
+    <span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=p>[</span><span class=n>key</span><span class=p>]</span> <span class=o>=</span> <span class=n>value</span>
 
-    # ...
-</code></pre><h2 id=final-implementation>Final implementation</h2><p>Here we present the full implementation of a basic LRU cache.</p><p>As previously mentioned, this was just for some fun so its best to use a more fully-featured implementation.</p><pre><code class=language-python>from collections import OrderedDict
-from functools import wraps
+    <span class=c1># ...</span></code></pre></figure><h2 id=final-implementation>Final implementation</h2><p>Here we present the full implementation of a basic LRU cache.</p><p>As previously mentioned, this was just for some fun so its best to use a more fully-featured implementation.</p><figure class=highlight><pre><code class=language-python data-lang=python><span></span><span class=kn>from</span> <span class=nn>collections</span> <span class=kn>import</span> <span class=n>OrderedDict</span>
+<span class=kn>from</span> <span class=nn>functools</span> <span class=kn>import</span> <span class=n>wraps</span>
 
 
-class LRUCache(object):
+<span class=k>class</span> <span class=nc>LRUCache</span><span class=p>(</span><span class=nb>object</span><span class=p>):</span>
 
-    def __init__(self, f, N):
-        self.f = f
-        self.max = N
-        self.cache = OrderedDict()
+    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>f</span><span class=p>,</span> <span class=n>N</span><span class=p>):</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>f</span> <span class=o>=</span> <span class=n>f</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>max</span> <span class=o>=</span> <span class=n>N</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>cache</span> <span class=o>=</span> <span class=n>OrderedDict</span><span class=p>()</span>
 
-    def create_key(self, *args, **kwargs):
-        kws = tuple((k, kwargs[k]) for k in sorted(kwargs.keys()))
-        return (args, kws)
+    <span class=k>def</span> <span class=nf>create_key</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=o>*</span><span class=n>args</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+        <span class=n>kws</span> <span class=o>=</span> <span class=nb>tuple</span><span class=p>((</span><span class=n>k</span><span class=p>,</span> <span class=n>kwargs</span><span class=p>[</span><span class=n>k</span><span class=p>])</span> <span class=k>for</span> <span class=n>k</span> <span class=ow>in</span> <span class=nb>sorted</span><span class=p>(</span><span class=n>kwargs</span><span class=o>.</span><span class=n>keys</span><span class=p>()))</span>
+        <span class=k>return</span> <span class=p>(</span><span class=n>args</span><span class=p>,</span> <span class=n>kws</span><span class=p>)</span>
 
-    def call(self, *args, **kwargs):
-        key = self.create_key(*args, **kwargs)
-        value = self.cache.pop(key, self.f(*args, **kwargs))
+    <span class=k>def</span> <span class=nf>call</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=o>*</span><span class=n>args</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+        <span class=n>key</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>create_key</span><span class=p>(</span><span class=o>*</span><span class=n>args</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>)</span>
+        <span class=n>value</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=o>.</span><span class=n>pop</span><span class=p>(</span><span class=n>key</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>f</span><span class=p>(</span><span class=o>*</span><span class=n>args</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>))</span>
 
-        # Re-insert into OrderedDict to update order
-        self.cache[key] = value
+        <span class=c1># Re-insert into OrderedDict to update order</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=p>[</span><span class=n>key</span><span class=p>]</span> <span class=o>=</span> <span class=n>value</span>
 
-        # Ensure number of items in cache is managed
-        if len(self.cache) &gt; self.max:
-            # Pop out the first item that was inserted
-            self.cache.popitem(last=False)
+        <span class=c1># Ensure number of items in cache is managed</span>
+        <span class=k>if</span> <span class=nb>len</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=p>)</span> <span class=o>&gt;</span> <span class=bp>self</span><span class=o>.</span><span class=n>max</span><span class=p>:</span>
+            <span class=c1># Pop out the first item that was inserted</span>
+            <span class=bp>self</span><span class=o>.</span><span class=n>cache</span><span class=o>.</span><span class=n>popitem</span><span class=p>(</span><span class=n>last</span><span class=o>=</span><span class=bp>False</span><span class=p>)</span>
 
-        return value
-</code></pre></div></div><script type=text/javascript src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script src=/js/scripts.2e6c.js></script></body></html>
+        <span class=k>return</span> <span class=n>value</span></code></pre></figure></div></div><script type=text/javascript src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script src=/js/scripts.2e6c.js></script></body></html>
