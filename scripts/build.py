@@ -52,7 +52,7 @@ def parse_markdown_with_metadata(markdown_file):
     return metadata, html_content
 
 
-def build_site(site_config=None):
+def build_blog(site_config=None):
     if not site_config:
         site_config = {}
 
@@ -70,8 +70,11 @@ def build_site(site_config=None):
 
             html_output = render_template(template_name, context)
 
-            output_filename = filename.replace(".md", ".html")
-            output_path = os.path.join(OUTPUT_DIR, output_filename)
+            blog_output_dir = os.path.join(
+                OUTPUT_DIR, "blog", filename.removesuffix(".md")
+            )
+            os.makedirs(blog_output_dir)
+            output_path = os.path.join(blog_output_dir, "index.html")
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(html_output)
 
@@ -83,4 +86,4 @@ if __name__ == "__main__":
         os.makedirs(OUTPUT_DIR)
 
     empty_dir(OUTPUT_DIR)
-    build_site(config)
+    build_blog(config)
