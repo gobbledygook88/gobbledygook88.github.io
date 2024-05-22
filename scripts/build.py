@@ -63,11 +63,10 @@ def copy_static_assets(dirs):
             shutil.copytree(source_asset_dir, target_asset_dir)
 
 
-def build_blog(site_config=None):
-    if not site_config:
-        site_config = {}
+def build_blog(site_config):
+    titles = []
 
-    for filename in os.listdir(CONTENT_DIR):
+    for filename in sorted(os.listdir(CONTENT_DIR), reverse=True):
         if filename.endswith(".md"):
             markdown_path = os.path.join(CONTENT_DIR, filename)
             metadata, html_content = parse_markdown_with_metadata(markdown_path)
@@ -89,6 +88,35 @@ def build_blog(site_config=None):
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(html_output)
 
+            titles.append(
+                {"url": filename.removesuffix(".md"), "title": metadata["title"]}
+            )
+
+    return titles
+
+
+def build_blog_index(site_config, titles):
+    site_config["posts"] = titles
+    markdown_path = os.path.join("app", "blog", "index.html")
+    metadata, raw_html_content = parse_markdown_with_metadata(markdown_path)
+    html_content = env.from_string(raw_html_content).render(
+        {"site": site_config, "page": metadata}
+    )
+    context = {
+        "site": site_config,
+        "page": metadata,
+        "content": html_content,
+    }
+
+    template_name = f"{metadata.get('template', 'default')}.html"
+
+    html_output = render_template(template_name, context)
+    blog_output_dir = os.path.join(OUTPUT_DIR, "blog")
+    os.makedirs(blog_output_dir, exist_ok=True)
+    output_path = os.path.join(blog_output_dir, "index.html")
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(html_output)
+
 
 if __name__ == "__main__":
     config = load_config()
@@ -98,4 +126,5 @@ if __name__ == "__main__":
 
     empty_dir(OUTPUT_DIR)
     copy_static_assets(["assets", "css", "img", "js", "CNAME", "index.html"])
-    build_blog(config)
+    blogpost_titles = build_blog(config)
+    build_blog_index(config, blogpost_titles)
