@@ -60,10 +60,11 @@ def build_site(site_config=None):
         if filename.endswith(".md"):
             markdown_path = os.path.join(CONTENT_DIR, filename)
             metadata, html_content = parse_markdown_with_metadata(markdown_path)
-            context = {}
-            context["site"] = site_config
-            context["page"] = metadata
-            context["content"] = html_content
+            context = {
+                "site": site_config,
+                "page": metadata,
+                "content": html_content,
+            }
 
             template_name = f"{metadata.get('template', 'default')}.html"
 
