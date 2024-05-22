@@ -48,7 +48,7 @@ def parse_markdown_with_metadata(markdown_file):
         metadata = {}
         markdown_content = content
 
-    html_content = markdown.markdown(markdown_content)
+    html_content = markdown.markdown(markdown_content, extensions=["tables"])
     return metadata, html_content
 
 

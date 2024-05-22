@@ -10,7 +10,7 @@ any instructions or good references until I came across [Samuel Ferreira's drago
 That photo is the only reference, so here is my version. I have tried to keep the design
 and construction as close to the original as possible, but inevitably there will be differences.
 
-The usual A4 sized paper can be used. Normal printer paper at 80gsm is perfect. 
+The usual A4 sized paper can be used. Normal printer paper at 80gsm is perfect.
 For this particular origami, I used 150gsm red paper and 160gsm yellow paper.
 However, this is not recommended as it is too heavy and the pieces can bulk out
 easily. This makes it harder to assemble.
@@ -33,7 +33,7 @@ or [here](http://www.wikihow.com/Make-3D-Origami-Pieces).
 ![Close up of folded triangles](/img/origami/modular_dragon/folded_triangle_yellow.JPG)
 
 Construction of the dragon is shown below with the number of pieces required for each
-component detailed alongside. A summary of all the pieces used is given at the end 
+component detailed alongside. A summary of all the pieces used is given at the end
 of this post.
 
 ## Horns
@@ -98,7 +98,7 @@ The smaller white pieces become the dragon's teeth.
 
 ![Upper head](/img/origami/modular_dragon/head_top.JPG)
 
-The rest of the red 1/32 pieces form the back of the head and connects 
+The rest of the red 1/32 pieces form the back of the head and connects
 the lower jaw and upper sections. This component is experimental, so the top
 two pieces may not be needed depending on overall proportions of the dragon.
 
@@ -132,35 +132,33 @@ connectors sit within the two central pieces of the lower jaw.
 
 Finally place the horns on top of the head.
 
-Two long strips of yellow paper can be cut and rolled up to form the dragon's 
+Two long strips of yellow paper can be cut and rolled up to form the dragon's
 whiskers. Alternatively, use two yellow twist ties as in the original version.
 
 The dragon's eyes will need to be attached as well.
 
 If pieces keep falling off, use a dab of glue to hold them in place.
 
-## Finished Origami 
+## Finished Origami
 
 ![Finished origami](/img/origami/modular_dragon/full_dragon.JPG)
 
-This version has some slight differences to 
+This version has some slight differences to
 [Samuel Ferreira's original dragon](https://www.flickr.com/photos/75290001@N05/8707322038).
 In particular, the back of the dragon's head appears to be more complicated
 than it needs to be.
 
 Overall, the dragon sits well on flat surfaces but does tend to fall over
-if the head is not balanced sufficiently; it is a bit too heavy due to the 
+if the head is not balanced sufficiently; it is a bit too heavy due to the
 weight of paper used.
 
 Here is a summary of all the pieces used in the final origami.
 
-|-------+-----+--------+-------|
-| Size  | Red | Yellow | White |
-|-------|:---:|:------:|:-----:|
-| 1/16  | 15  | 3      |       |
-| 1/32  | 210 | 81     |       | 
-| 1/64  |     |        | 16    | 
-| 1/128 | 6   | 44     |       | 
-|-------+-----+--------+-------|
+ Size  | Red | Yellow | White
+-------|:---:|:------:|:-----:
+ 1/16  | 15  | 3      |
+ 1/32  | 210 | 81     |
+ 1/64  |     |        | 16
+ 1/128 | 6   | 44     |
 
 Altogether, 375 pieces are used and surprisingly not much time.
