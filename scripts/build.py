@@ -1,6 +1,7 @@
 import os
 import markdown
 from jinja2 import Environment, FileSystemLoader
+import yaml
 
 CONTENT_DIR = "content"
 TEMPLATE_DIR = "templates"
@@ -17,25 +18,36 @@ def render_template(template_name, context):
     return template.render(context)
 
 
-def convert_markdown_to_html(markdown_file):
+def parse_markdown_with_metadata(markdown_file):
     with open(markdown_file, "r", encoding="utf-8") as f:
-        text = f.read()
-    html = markdown.markdown(text)
-    return html
+        content = f.read()
+
+    parts = content.split("---", 2)
+    if len(parts) == 3:
+        metadata = yaml.safe_load(parts[1])
+        markdown_content = parts[2]
+    else:
+        metadata = {}
+        markdown_content = content
+
+    html_content = markdown.markdown(markdown_content)
+    return metadata, html_content
 
 
 def build_site():
     for filename in os.listdir(CONTENT_DIR):
         if filename.endswith(".md"):
             markdown_path = os.path.join(CONTENT_DIR, filename)
-            html_content = convert_markdown_to_html(markdown_path)
-            context = {"content": html_content}
+            metadata, html_content = parse_markdown_with_metadata(markdown_path)
+            context = metadata
+            context["content"] = html_content
 
-            template_name = filename.replace(".md", ".html")
+            template_name = metadata.get("template", "base.html")
 
             html_output = render_template(template_name, context)
 
-            output_path = os.path.join(OUTPUT_DIR, template_name)
+            output_filename = filename.replace(".md", ".html")
+            output_path = os.path.join(OUTPUT_DIR, output_filename)
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(html_output)
 
