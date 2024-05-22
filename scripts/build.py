@@ -52,6 +52,13 @@ def parse_markdown_with_metadata(markdown_file):
     return metadata, html_content
 
 
+def copy_static_assets(dirs):
+    for dir in dirs:
+        source_asset_dir = os.path.join("app", dir)
+        target_asset_dir = os.path.join(OUTPUT_DIR, dir)
+        shutil.copytree(source_asset_dir, target_asset_dir)
+
+
 def build_blog(site_config=None):
     if not site_config:
         site_config = {}
@@ -86,4 +93,5 @@ if __name__ == "__main__":
         os.makedirs(OUTPUT_DIR)
 
     empty_dir(OUTPUT_DIR)
+    copy_static_assets(["assets", "img"])
     build_blog(config)
