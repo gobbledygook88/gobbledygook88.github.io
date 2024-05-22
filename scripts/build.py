@@ -3,6 +3,7 @@ import markdown
 from jinja2 import Environment, FileSystemLoader
 import yaml
 
+CONFIG_FILE = "_config.yml"
 CONTENT_DIR = "app/_posts"
 TEMPLATE_DIR = "app/_layouts"
 OUTPUT_DIR = "build"
@@ -16,6 +17,13 @@ env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
 def render_template(template_name, context):
     template = env.get_template(template_name)
     return template.render(context)
+
+
+def load_config():
+    with open(CONFIG_FILE, "r") as f:
+        config = f.read()
+
+    return yaml.safe_load(config)
 
 
 def parse_markdown_with_metadata(markdown_file):
@@ -34,12 +42,17 @@ def parse_markdown_with_metadata(markdown_file):
     return metadata, html_content
 
 
-def build_site():
+def build_site(site_config=None):
+    if not site_config:
+        site_config = {}
+
     for filename in os.listdir(CONTENT_DIR):
         if filename.endswith(".md"):
             markdown_path = os.path.join(CONTENT_DIR, filename)
             metadata, html_content = parse_markdown_with_metadata(markdown_path)
-            context = metadata
+            context = {}
+            context["site"] = site_config
+            context["page"] = metadata
             context["content"] = html_content
 
             template_name = f"{metadata.get('template', 'default')}.html"
@@ -53,4 +66,5 @@ def build_site():
 
 
 if __name__ == "__main__":
-    build_site()
+    config = load_config()
+    build_site(config)
