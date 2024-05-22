@@ -1,4 +1,4 @@
-import os
+import os, shutil
 import markdown
 from jinja2 import Environment, FileSystemLoader
 import yaml
@@ -8,10 +8,20 @@ CONTENT_DIR = "app/_posts"
 TEMPLATE_DIR = "app/_layouts"
 OUTPUT_DIR = "build"
 
-if not os.path.exists(OUTPUT_DIR):
-    os.makedirs(OUTPUT_DIR)
 
 env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
+
+
+def empty_dir(folder):
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            print("Failed to delete %s. Reason: %s" % (file_path, e))
 
 
 def render_template(template_name, context):
@@ -67,4 +77,9 @@ def build_site(site_config=None):
 
 if __name__ == "__main__":
     config = load_config()
+
+    if not os.path.exists(OUTPUT_DIR):
+        os.makedirs(OUTPUT_DIR)
+
+    empty_dir(OUTPUT_DIR)
     build_site(config)
