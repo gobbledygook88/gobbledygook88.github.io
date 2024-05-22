@@ -3,8 +3,8 @@ import markdown
 from jinja2 import Environment, FileSystemLoader
 import yaml
 
-CONTENT_DIR = "content"
-TEMPLATE_DIR = "templates"
+CONTENT_DIR = "app/_posts"
+TEMPLATE_DIR = "app/_layouts"
 OUTPUT_DIR = "build"
 
 if not os.path.exists(OUTPUT_DIR):
@@ -42,7 +42,7 @@ def build_site():
             context = metadata
             context["content"] = html_content
 
-            template_name = metadata.get("template", "base.html")
+            template_name = f"{metadata.get('template', 'default')}.html"
 
             html_output = render_template(template_name, context)
 
