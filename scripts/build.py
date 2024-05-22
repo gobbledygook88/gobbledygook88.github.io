@@ -93,5 +93,5 @@ if __name__ == "__main__":
         os.makedirs(OUTPUT_DIR)
 
     empty_dir(OUTPUT_DIR)
-    copy_static_assets(["assets", "img", "js"])
+    copy_static_assets(["assets", "css", "img", "js"])
     build_blog(config)
