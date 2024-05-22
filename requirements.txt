@@ -4,3 +4,4 @@ mypy-extensions==1.0.0
 packaging==24.0
 pathspec==0.12.1
 platformdirs==4.2.2
+PyYAML==6.0.1
