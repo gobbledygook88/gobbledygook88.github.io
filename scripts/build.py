@@ -56,7 +56,11 @@ def copy_static_assets(dirs):
     for dir in dirs:
         source_asset_dir = os.path.join("app", dir)
         target_asset_dir = os.path.join(OUTPUT_DIR, dir)
-        shutil.copytree(source_asset_dir, target_asset_dir)
+
+        if os.path.isfile(source_asset_dir):
+            shutil.copyfile(source_asset_dir, target_asset_dir)
+        else:
+            shutil.copytree(source_asset_dir, target_asset_dir)
 
 
 def build_blog(site_config=None):
@@ -93,5 +97,5 @@ if __name__ == "__main__":
         os.makedirs(OUTPUT_DIR)
 
     empty_dir(OUTPUT_DIR)
-    copy_static_assets(["assets", "css", "img", "js"])
+    copy_static_assets(["assets", "css", "img", "js", "CNAME", "index.html"])
     build_blog(config)
