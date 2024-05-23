@@ -6,19 +6,18 @@ tags: latex quick-tip
 disqus: y
 ---
 
-When drafting a document, you may find it useful to leave short notes or hints which require further attention later on. Perhaps you do not want to disrupt your flow of inspiration, or an entire paragraph needs re-structuring. 
+When drafting a document, you may find it useful to leave short notes or hints which require further attention later on. Perhaps you do not want to disrupt your flow of inspiration, or an entire paragraph needs re-structuring.
 
 The following command definitions are a quick and dirty way of providing semantic colour-coded drafting tools.
 
-{% highlight latex %}
-{% raw %}
+<pre><code class="language-latex">{% raw %}
 \newcommand{\draftoutput}[2]{(#1\ifthenelse{\isempty{#2}}{#2}{ - #2})}
 \newcommand{\rephrase}[1]{{\color{solarized@orange}\draftoutput{REPHRASE}{#1}}}
 \newcommand{\reference}[1]{{\color{solarized@cyan}\draftoutput{REFERENCE}{#1}}}
 \newcommand{\aside}[1]{{\color{solarized@green}\draftoutput{ASIDE}{#1}}}
 \newcommand{\todo}[1]{{\color{solarized@magenta}\draftoutput{TODO}{#1}}}
 {% endraw %}
-{% endhighlight %}
+</code></pre>
 
 This exposes a set of commands which can be used in any text environment:
 
@@ -29,9 +28,8 @@ This exposes a set of commands which can be used in any text environment:
 
 These commands are used in similar fashion to other inline text commands:
 
-{% highlight latex %}
-\todo{insert an image of a dragon here}
-{% endhighlight %}
+<pre><code class="language-latex">\todo{insert an image of a dragon here}
+</code></pre>
 
 NB: The first command (`\draftoutput`) is a helper command to keep the code clean, and may be ignored.
 
