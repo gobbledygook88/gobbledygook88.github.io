@@ -63,6 +63,12 @@ def copy_static_assets(dirs):
             shutil.copytree(source_asset_dir, target_asset_dir)
 
 
+def create_blog_slug(filename):
+    slug = filename.removesuffix(".md")
+    slug = "-".join(slug.split("-")[3:])
+    return slug
+
+
 def build_blog(site_config):
     titles = []
 
@@ -80,17 +86,14 @@ def build_blog(site_config):
 
             html_output = render_template(template_name, context)
 
-            blog_output_dir = os.path.join(
-                OUTPUT_DIR, "blog", filename.removesuffix(".md")
-            )
+            blog_slug = create_blog_slug(filename)
+            blog_output_dir = os.path.join(OUTPUT_DIR, "blog", blog_slug)
             os.makedirs(blog_output_dir)
             output_path = os.path.join(blog_output_dir, "index.html")
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(html_output)
 
-            titles.append(
-                {"url": filename.removesuffix(".md"), "title": metadata["title"]}
-            )
+            titles.append({"url": blog_slug, "title": metadata["title"]})
 
     return titles
 
