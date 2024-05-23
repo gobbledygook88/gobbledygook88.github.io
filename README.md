@@ -5,11 +5,11 @@ A blog. My blog? Not really a blog. More, a collection of biscuit crumbs.
 
 ## Setup
 
-    apt install ruby-dev
+    pyenv local 3.12
+    python -m venv venv
 
-    gem install bundler
-    gem install ffi -v '1.9.18'
+    source venv/bin/activate
+    pip install -r requirements.txt
 
-    npm install
-    bower install
-    bundle install
+    python scripts/build.py
+    python scripts/serve.py

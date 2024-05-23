@@ -1,45 +1,6 @@
-# Jekyll configuration precedence:
-# 1. Gruntfile task
-# 2. config.build.yml
-# 3. config.yml
-
 name: Biscuit Crumbs
 description: A collection of biscuit crumbs
 author:
   name: Marcus Mo
   email: marcusmo88@gmail.com
 url: http://marcusmo.co.uk
-
-# Grunt handles images and assets.
-exclude: ['img', 'css', 'js', 'fonts',
-          '**.png', '**.jpg', '**.jpeg', '**.gif', '**.webp', '**.svg', '**.ico']
-
-include: ['.htaccess']
-
-# _config.build.yml sets future and show_drafts to false on `grunt build`
-future: true
-show_drafts: true
-
-permalink: /:categories/:title/
-paginate: 5
-paginate_path: 'page:num'
-
-# Markdown library
-markdown: kramdown
-#   auto_ids: true
-#   footnote_nr: 1
-#   entity_output: as_char
-#   toc_levels: 1..6
-#   use_coderay: false
-#   coderay:
-#     coderay_wrap: div
-#     coderay_line_numbers: inline
-#     coderay_line_numbers_start: 1
-#     coderay_tab_width: 4
-#     coderay_bold_every: 10
-#     coderay_css: style
-
-highlighter: pygments
-
-plugins:
-  - jekyll-paginate
