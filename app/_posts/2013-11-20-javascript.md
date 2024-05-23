@@ -4,14 +4,6 @@ title: "Notes On: JavaScript"
 categories: blog notes-on
 ---
 
-### Table of Contents
-{:.no_toc}
-
-* Table of Contents
-{:toc}
-
----
-
 ## Basics
 Javascript is awesome. Variables are loosely-typed. Curly braces (most of the time) and semi-colons are essential. Things just work like you expect them to ... or do they?
 
