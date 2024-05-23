@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Simple LRU Cache 
+title: Simple LRU Cache
 categories: blog
 disqus: y
 ---
@@ -12,7 +12,7 @@ I may add more to it in the future though.
 If you are looking for a complete LRU cache, consider the following:
 
 * [Python3's `functools.lru_cache`](https://docs.python.org/3/library/functools.html#functools.lru_cache)
-* [Python2.6+ compatible LRU cache](https://github.com/jlhutch/pylru) 
+* [Python2.6+ compatible LRU cache](https://github.com/jlhutch/pylru)
 
 Others are also available.
 
@@ -22,12 +22,11 @@ LRU stands for 'least recently used'. An LRU cache is a cache which discards its
 
 Some examples are with an LRU cache of size 2 applied to a function called `add` which simply adds two numbers together:
 
-{% highlight python %}
-add(1, 1)  // Returns 2
+<pre><code class="language-python">add(1, 1)  // Returns 2
 add(2, 2)  // Returns 4
 add(1, 1)  // Returns 2 but from the cache
 add(3, 3)  // Returns 6 and discards the cache entry for add(2, 2)
-{% endhighlight %}
+</code></pre>
 
 ## Setting up the function decorator
 
@@ -35,8 +34,7 @@ First step is to define how the end-user will interact with the LRU cache.
 
 Typically, this is done via a function decorator. Here's an example:
 
-{% highlight python %}
-from functools import wraps
+<pre><code class="language-python">from functools import wraps
 
 
 def lru_cache(N):
@@ -51,20 +49,18 @@ def lru_cache(N):
         return replacement
 
     return wrapper
-{% endhighlight %}
+</code></pre>
 
 So we expect the LRU cache to be used in the following way:
 
-{% highlight python %}
-@lru_cache(10)
+<pre><code class="language-python">@lru_cache(10)
 def add(a, b):
     return a + b
-{% endhighlight %}
+</code></pre>
 
 ## First iteration
 
-{% highlight python %}
-class LRUCache(object):
+<pre><code class="language-python">class LRUCache(object):
 
     def __init__(self, f, N):
         self.f = f
@@ -77,7 +73,7 @@ class LRUCache(object):
 
         value = self.cache[args] = self.f(*args)
         return value
-{% endhighlight %}
+</code></pre>
 
 Here we perform the initial setup of our `LRUCache` class which is consistent with how we intend to use it.
 We also stub out an incredibly simple (and incomplete) `call` method; it just returns a cached value if the same arguments are used.
@@ -90,8 +86,7 @@ To ensure only a maximum of `N` items are cached, we need to add a check after r
 
 At the same time, we can switch from using a dictionary to an ordered dictionary. This will allow us to remove the value of the earliest entry.
 
-{% highlight python %}
-def call(self, *args):
+<pre><code class="language-python">def call(self, *args):
     if args in self.cache:
         value = self.cache[args]
     else:
@@ -102,14 +97,13 @@ def call(self, *args):
         self.cache.popitem(last=False)
 
     return value
-{% endhighlight %}
+</code></pre>
 
 Note that this is still incorrect - it does not follow the definition of 'least recently used'.
 
 ## Removing the correct cached value
 
-{% highlight python %}
-def call(self, *args):
+<pre><code class="language-python">def call(self, *args):
     value = self.cache.pop(args, self.f(*args))
 
     # Re-insert into OrderedDict to update order
@@ -119,7 +113,7 @@ def call(self, *args):
         self.cache.popitem(last=False)
 
     return value
-{% endhighlight %}
+</code></pre>
 
 Here we `pop` any already cached value or compute a new value given the arguments. This saves us a few lines of code for the earlier `if` statement.
 
@@ -135,8 +129,7 @@ We then use this key when getting and setting values in the cache.
 
 Note this is just an extremely naive way of supporting `kwargs`. It is quite easy to construct test cases which break this.
 
-{% highlight python %}
-def create_key(self, *args, **kwargs):
+<pre><code class="language-python">def create_key(self, *args, **kwargs):
     kws = tuple((k, kwargs[k]) for k in sorted(kwargs.keys()))
     return (args, kws)
 
@@ -147,16 +140,15 @@ def call(self, *args, **kwargs):
     self.cache[key] = value
 
     # ...
-{% endhighlight %}
+</code></pre>
 
-## Final implementation 
+## Final implementation
 
 Here we present the full implementation of a basic LRU cache.
 
 As previously mentioned, this was just for some fun so its best to use a more fully-featured implementation.
 
-{% highlight python %}
-from collections import OrderedDict
+<pre><code class="language-python">from collections import OrderedDict
 from functools import wraps
 
 
@@ -184,4 +176,4 @@ class LRUCache(object):
             self.cache.popitem(last=False)
 
         return value
-{% endhighlight %}
+</code></pre>

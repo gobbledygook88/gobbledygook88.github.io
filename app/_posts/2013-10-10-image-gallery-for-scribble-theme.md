@@ -13,18 +13,16 @@ There really isn't anything special in the script. But it does excel in it's sim
 
 Since it's primary use is within the Jekyll environment, this means Markdown. To create an image gallery, we simply create an unordered list of images wrapped in a `div`.
 
-{% highlight html %}
-<div class="gallery" markdown="1">
+<pre><code class="language-html"><div class="gallery" markdown="1">
 - ![image description](/path/to/image)
 - ![image description](/path/to/image)
 - ![image description](/path/to/image)
 </div>
-{% endhighlight %}
+</code></pre>
 
 The resulting markup is thus
 
-{% highlight html %}
-<div class="gallery" data-current="1">
+<pre><code class="language-html"><div class="gallery" data-current="1">
   <ul>
     <li><img src="/path/to/image" alt="image description"></li>
     <li><img src="/path/to/image" alt="image description"></li>
@@ -39,7 +37,7 @@ The resulting markup is thus
   </div>
   <span class="gallery-title">&nbsp;</span>
 </div>
-{% endhighlight %}
+</code></pre>
 
 All navigation and gallery titles are dynamically created and inserted into the DOM. Particular care was taken to use JavaScript techniques which were efficient; performance would then scale well for large image sets.
 
@@ -47,33 +45,29 @@ Multiple galleries can appear on any single page; all navigation elements are cr
 
 To enable the gallery, add the following to the YAML front matter for any page or post. This creates galleries with no titles.
 
-{% highlight yaml %}
-gallery: y
-{% endhighlight %}
+<pre><code class="language-yaml">gallery: y
+</code></pre>
 
 If a gallery requires a title, use an array of key-value pairs, with `title` as the key.
 
-{% highlight yaml %}
-gallery:
+<pre><code class="language-yaml">gallery:
   - title: "Title for gallery 1"
   - title: "Title for gallery 2"
-{% endhighlight %}
+</code></pre>
 
 If only some galleries on the page have titles, you must also give the rest blank titles. Here, only galleries 1,3, and 4 have titles, whereas galleries 2 and 5 do not.
 
-{% highlight yaml %}
-gallery:
+<pre><code class="language-yaml">gallery:
   - title: "Title for gallery 1"
   - title: ""
   - title: "Title for gallery 3"
   - title: "Title for gallery 4"
   - title: ""
-{% endhighlight %}
+</code></pre>
 
 Most dynamically created elements have a class name attached to them. The styling used for Scribble theme is as follows
 
-{% highlight css %}
-.gallery {
+<pre><code class="language-css">.gallery {
   font-family: monospace;
   text-align: center;
 }
@@ -95,11 +89,11 @@ Most dynamically created elements have a class name attached to them. The stylin
   display: inline-block;
   width: 70%;
 }
-{% endhighlight %}
+</code></pre>
 
 Pretty simple! You can of course spice it up and use images for the navigation buttons, for example.
 
-In addition to changes in `stylessheets/styles.css`, we need to update `_includes/head.html` 
+In addition to changes in `stylessheets/styles.css`, we need to update `_includes/head.html`
 
 <div class="highlight">
 <pre><code class="ruby"><span class="n">&#123;% if page.gallery %&#125;</span></code>

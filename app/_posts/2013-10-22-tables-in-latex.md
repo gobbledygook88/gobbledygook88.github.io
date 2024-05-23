@@ -15,8 +15,7 @@ For much larger tables (over 100 rows), I still find it easier to adapt a copy o
 
 Say you had a data file of runtimes (`runtimes.dat`) on an increasing number of threads. The data is arranged in columns. We keep the example short here, but you can apply the same commands to larger datasets.
 
-{% highlight text %}
-1 4253.56
+<pre><code class="language-text">1 4253.56
 2 3582.56
 3 2544.45
 4 1919.31
@@ -26,18 +25,16 @@ Say you had a data file of runtimes (`runtimes.dat`) on an increasing number of 
 8 1063.37
 9 976.329
 10 959.633
-{% endhighlight %}
+</code></pre>
 
 First, we want to calculate the parallel speedup of the program. We can do this by issuing the following command in a terminal
 
-{% highlight bash %}
-awk '{print $1,$2,4253.56/$2}' runtimes.dat > speedup.dat
-{% endhighlight %}
+<pre><code class="language-bash">awk '{print $1,$2,4253.56/$2}' runtimes.dat > speedup.dat
+</code></pre>
 
 We then get the following, found in `speedup.dat`.
 
-{% highlight text %}
-1 4253.56 1
+<pre><code class="language-text">1 4253.56 1
 2 3582.56 1.1873
 3 2544.45 1.6717
 4 1919.31 2.21619
@@ -47,30 +44,26 @@ We then get the following, found in `speedup.dat`.
 8 1063.37 4.00008
 9 976.329 4.35669
 10 959.633 4.43249
-{% endhighlight %}
+</code></pre>
 
 We can then proceed to convert this data into a LaTeX table. Let's create a backup of the raw data file in case something goes wrong.
 
-{% highlight bash %}
-cp speedup.dat speedup-backup.dat
-{% endhighlight %}
+<pre><code class="language-bash">cp speedup.dat speedup-backup.dat
+</code></pre>
 
 First we want to add ampersand symbols between each column of data. This is interpreted by LaTeX as the beginning of a new cell in the row.
 
-{% highlight bash %}
-sed -e 's/ / \& /' -e 's/\(.*\) /\1 \& /' < speedup.dat > speedup-amps.dat
-{% endhighlight %}
+<pre><code class="language-bash">sed -e 's/ / \& /' -e 's/\(.*\) /\1 \& /' < speedup.dat > speedup-amps.dat
+</code></pre>
 
 We then append double-backslashes to the end of the line.
 
-{% highlight bash %}
-sed -e 's/$/ \\\\/g' < speedup-amps.dat > speedup-slash.dat
-{% endhighlight %}
+<pre><code class="language-bash">sed -e 's/$/ \\\\/g' < speedup-amps.dat > speedup-slash.dat
+</code></pre>
 
 Now we have the following
 
-{% highlight text %}
-1 & 4253.56 & 1 \\
+<pre><code class="language-text">1 & 4253.56 & 1 \\
 2 & 3582.56 & 1.1873 \\
 3 & 2544.45 & 1.6717 \\
 4 & 1919.31 & 2.21619 \\
@@ -80,23 +73,21 @@ Now we have the following
 8 & 1063.37 & 4.00008 \\
 9 & 976.329 & 4.35669 \\
 10 & 959.633 & 4.43249 \\
-{% endhighlight %}
+</code></pre>
 
 We've done the hard part. Now we format the data into nice columns, and add the opening and closing LaTeX environment tags for creating a table.
 
-{% highlight bash %}
-column -t < speedup-slash.dat > speedup-cols.dat
+<pre><code class="language-bash">column -t < speedup-slash.dat > speedup-cols.dat
 sed -e 's/^/    /g' < speedup-cols.dat > speedup-indent.dat
 echo "\\\begin{table}\n  \\\begin{tabular}{lll}" | cat - speedup-indent.dat > speedup-meta.dat
 echo "  \\\end{tabular}\n\\\end{table}" >> speedup-meta.dat
-{% endhighlight %}
+</code></pre>
 
 The extra `sed` command simply indents the data columns by four spaces, and is optional.
 
 So there we have it! We have created a valid LaTeX table from the command line (`speedup-meta.dat`).
 
-{% highlight latex %}
-\begin{table}
+<pre><code class="language-latex">\begin{table}
   \begin{tabular}{lll}
     1  & 4253.56 & 1       \\
     2  & 3582.56 & 1.1873  \\
@@ -110,19 +101,17 @@ So there we have it! We have created a valid LaTeX table from the command line (
     10 & 959.633 & 4.43249 \\
   \end{tabular}
 \end{table}
-{% endhighlight %}
+</code></pre>
 
 All that's left (provided everystep was successful) is to manually add any table headings, tidy up and remove any temporary files from our directory.
 
-{% highlight bash %}
-mv speedup-meta.dat speedup.dat
+<pre><code class="language-bash">mv speedup-meta.dat speedup.dat
 rm speedup-*
-{% endhighlight %}
+</code></pre>
 
 As an added bonus, you can link in the table into your LaTeX document and not pollute the rest of your document. This is extremely useful if you have a table with many rows.
 
-{% highlight latex %}
-\documentclass{article}
+<pre><code class="language-latex">\documentclass{article}
 
 \begin{document}
 
@@ -133,4 +122,4 @@ Here is a table of speedups obtained by using a range of threads.
 Awesome!
 
 \end{document}
-{% endhighlight %}
+</code></pre>
