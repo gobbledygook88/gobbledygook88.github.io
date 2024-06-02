@@ -1,4 +1,5 @@
-import os, shutil
+import os
+import shutil
 import markdown
 from jinja2 import Environment, FileSystemLoader
 import yaml
