@@ -57,7 +57,8 @@ def copy_assets(asset_dirs, output_dir):
 
 
 def create_slug(filename):
-    return "-".join(filename.removesuffix(".md").split("-")[3:])
+    slug = ".".join(filename.split(".")[:-1])
+    return "-".join(slug.split("-")[3:])
 
 
 def build_content(site_config, content_dir, output_subdir):
@@ -78,6 +79,13 @@ def build_content(site_config, content_dir, output_subdir):
                 f.write(html_output)
 
             titles.append({"url": slug, "title": metadata["title"]})
+        else:
+            # copy the file over statically
+            file_path = os.path.join(content_dir, filename)
+            slug = create_slug(filename)
+            output_path = os.path.join(output_subdir, slug, filename)
+            print(slug, output_path)
+            shutil.copyfile(file_path, output_path)
 
     return titles
 
