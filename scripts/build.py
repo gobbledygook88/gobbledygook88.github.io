@@ -68,7 +68,7 @@ def build_content(site_config, content_dir, output_subdir):
             markdown_path = os.path.join(content_dir, filename)
             metadata, html_content = parse_markdown(markdown_path)
             context = {"site": site_config, "page": metadata, "content": html_content}
-            template_name = f"{metadata.get('template', 'default')}.html"
+            template_name = f"{metadata.get('layout', 'default')}.html"
             html_output = render_template(template_name, context)
 
             slug = create_slug(filename)
