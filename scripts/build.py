@@ -122,6 +122,29 @@ def build_blog_index(site_config, titles):
         f.write(html_output)
 
 
+def build_walks_index(site_config, titles):
+    site_config["posts"] = titles
+    markdown_path = os.path.join("app", "walks", "index.html")
+    metadata, raw_html_content = parse_markdown_with_metadata(markdown_path)
+    html_content = env.from_string(raw_html_content).render(
+        {"site": site_config, "page": metadata}
+    )
+    context = {
+        "site": site_config,
+        "page": metadata,
+        "content": html_content,
+    }
+
+    template_name = f"{metadata.get('template', 'default')}.html"
+
+    html_output = render_template(template_name, context)
+    output_dir = os.path.join(OUTPUT_DIR, "walks")
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, "index.html")
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(html_output)
+
+
 if __name__ == "__main__":
     config = load_config()
 
@@ -132,3 +155,4 @@ if __name__ == "__main__":
     copy_static_assets(["assets", "css", "img", "js", "CNAME", "index.html"])
     blogpost_titles = build_blog(config)
     build_blog_index(config, blogpost_titles)
+    build_walks_index(config, [])
