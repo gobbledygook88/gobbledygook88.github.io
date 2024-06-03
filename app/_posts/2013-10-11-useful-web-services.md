@@ -2,7 +2,6 @@
 layout: post
 title: "Useful Web Services"
 categories: blog
-disqus: y
 ---
 
 Here is a list of useful web services, and links to references, which I find useful, regularly use, or look interesting.
@@ -22,7 +21,7 @@ In no particular order,
 - [inuit.css](http://inuitcss.com/)
 - [YUI Pure](http://purecss.io/)
 
-### Jekyll 
+### Jekyll
 
 - [Jekyll docs](http://jekyllrb.com/docs/home/)
 - [Liquid tags docs](http://docs.shopify.com/themes/liquid-basics)

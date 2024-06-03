@@ -2,7 +2,6 @@
 layout: post
 title: "Metal RX-78-2 Gundam kit"
 categories: blog
-disqus: y
 ---
 
 This delightful gundam kit was given as a gift a while back. I had been
@@ -66,7 +65,7 @@ With all that out of the way, let's move onto the fun!
 - Estimated difficulty: 2 stars
 
 We begin by twisting parts out of the stamped sheet metal and making sure it
-is in the correct orientation. There are minimal words on each step as the 
+is in the correct orientation. There are minimal words on each step as the
 diagrams are very easy to understand.
 
 ![Left arm - part 1](/img/gundam/metal_gundam/left_arm_1.JPG)

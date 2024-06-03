@@ -2,7 +2,6 @@
 layout: post
 title: "Parallel Poisson solver"
 categories: blog
-disqus: y
 mathjax: y
 ---
 
@@ -10,7 +9,7 @@ While organising various projects' code, I thought it was best to extract key co
 
 One such repository contains an implementation of a parallel solver for the Poisson equation, namely, for $$\mathbf{r} \in \mathbb{R}^2$$,
 
-$$\nabla \varphi(\mathbf{r}) = \rho(\mathbf{r})$$ 
+$$\nabla \varphi(\mathbf{r}) = \rho(\mathbf{r})$$
 
 on the domain $$[0,1]^2$$
 

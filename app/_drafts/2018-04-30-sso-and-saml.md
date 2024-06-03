@@ -1,8 +1,7 @@
 ---
 layout: post
-title: SSO and SAML 
+title: SSO and SAML
 categories: blog
-disqus: y
 ---
 
 Single Sign-On (SSO) is ...
@@ -16,7 +15,7 @@ SP  - Service Provider
 IdP - Identity Provider
 SSO - Single Sign On
 SLS - Single Logout Service
-ACS - 
+ACS -
 SLO - Single Logout
 Assertion - (what is an assertion)
 Signed - (what is signed)

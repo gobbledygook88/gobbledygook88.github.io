@@ -3,7 +3,6 @@ layout: post
 title: "LaTeX Syntax Highlighting"
 categories: blog
 tags: latex quick-tip
-disqus: y
 ---
 
 There are myriad ways of enabling syntax highlighting to a LaTeX document, either for pseudo code, or large chunks of scripts.

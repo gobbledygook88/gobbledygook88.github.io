@@ -2,7 +2,7 @@
 layout: post
 title: "Intel Xeon Phi Coprocessor"
 categories: blog
-disqus: y
+: y
 ---
 
 Having particular research interests in high performance computing meant that the release of the Intel Xeon Phi Coprocessor, earlier this year, was very big news. It's [1.2 teraflops of performance](http://www.intel.com/content/dam/www/public/us/en/documents/product-briefs/high-performance-xeon-phi-coprocessor-brief.pdf) certainly sounded exciting!

@@ -2,7 +2,7 @@
 layout: post
 title: "Solarized Code Highlighting for Scribble theme"
 categories: blog
-disqus: y
+: y
 ---
 
 Confession: I am addicted to the [Solarized](http://ethanschoonover.com/solarized) colour palette.

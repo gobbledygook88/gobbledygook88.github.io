@@ -3,7 +3,6 @@ layout: post
 title: "Simple LaTeX Drafting Commands"
 categories: blog
 tags: latex quick-tip
-disqus: y
 ---
 
 When drafting a document, you may find it useful to leave short notes or hints which require further attention later on. Perhaps you do not want to disrupt your flow of inspiration, or an entire paragraph needs re-structuring.
