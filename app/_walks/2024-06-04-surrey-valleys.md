@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: walk
 title: Surrey Valleys
 categories: walk
 ---
