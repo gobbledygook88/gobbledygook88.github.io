@@ -2,7 +2,6 @@
 layout: post
 title: "Image Gallery for Scribble theme"
 categories: blog
-disqus: y
 ---
 
 While creating pages to showcase my work, I found the need for an image gallery. Since I had been away from web development for a long while, I set myself a challenge of creating a simple JavaScript solution (no jQuery!) which suited the Scribble theme.

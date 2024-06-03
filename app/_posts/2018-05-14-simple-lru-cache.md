@@ -2,7 +2,6 @@
 layout: post
 title: Simple LRU Cache
 categories: blog
-disqus: y
 ---
 
 For a bit of fun, I wanted to implement a simple LRU cache in Python. Here's a short walk-through of my thought processes and general steps.

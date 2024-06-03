@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Remote Pair Programming
-disqus: y
 ---
 
 Introduction ...
