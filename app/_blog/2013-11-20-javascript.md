@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: blog
 title: "Notes On: JavaScript"
 categories: blog notes-on
 ---

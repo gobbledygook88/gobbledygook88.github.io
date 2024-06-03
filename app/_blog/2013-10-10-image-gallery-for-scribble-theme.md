@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: blog
 title: "Image Gallery for Scribble theme"
 categories: blog
 ---

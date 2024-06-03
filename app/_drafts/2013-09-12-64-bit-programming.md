@@ -1,10 +1,10 @@
 ---
-layout: post
+layout: blog
 title: "64-bit Programming"
 categories: blog
 ---
 
-Apple showcased iOS7 a few days ago and prompted developers to update their applications to utilise the 64-bit architecture introduced via the new A7 chip. 
+Apple showcased iOS7 a few days ago and prompted developers to update their applications to utilise the 64-bit architecture introduced via the new A7 chip.
 
 ... I wanted to find out why 64-bit programs are better ... more suited to the chip ... are there really any gains from this?
 

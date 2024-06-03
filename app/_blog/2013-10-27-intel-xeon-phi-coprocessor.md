@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: blog
 title: "Intel Xeon Phi Coprocessor"
 categories: blog
 ---

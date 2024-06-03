@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: blog
 title: "Metal RX-78-2 Gundam kit"
 categories: blog
 ---

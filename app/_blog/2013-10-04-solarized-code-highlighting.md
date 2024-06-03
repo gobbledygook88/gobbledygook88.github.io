@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: blog
 title: "Solarized Code Highlighting for Scribble theme"
 categories: blog
 ---
