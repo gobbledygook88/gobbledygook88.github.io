@@ -5,144 +5,75 @@ from jinja2 import Environment, FileSystemLoader
 import yaml
 
 CONFIG_FILE = "_config.yml"
-CONTENT_DIR = "app/_posts"
+CONTENT_DIRS = {"blog": "app/_posts", "walks": "app/_walks"}
 TEMPLATE_DIR = "app/_layouts"
 OUTPUT_DIR = "build"
-
+STATIC_ASSETS = ["assets", "css", "img", "js", "CNAME", "index.html"]
 
 env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
 
 
-def empty_dir(folder):
-    for filename in os.listdir(folder):
-        file_path = os.path.join(folder, filename)
+def clear_directory(directory):
+    for item in os.listdir(directory):
+        item_path = os.path.join(directory, item)
         try:
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
+            if os.path.isfile(item_path) or os.path.islink(item_path):
+                os.unlink(item_path)
+            elif os.path.isdir(item_path):
+                shutil.rmtree(item_path)
         except Exception as e:
-            print("Failed to delete %s. Reason: %s" % (file_path, e))
+            print(f"Failed to delete {item_path}. Reason: {e}")
 
 
 def render_template(template_name, context):
-    template = env.get_template(template_name)
-    return template.render(context)
+    return env.get_template(template_name).render(context)
 
 
-def load_config():
-    with open(CONFIG_FILE, "r") as f:
-        config = f.read()
-
-    return yaml.safe_load(config)
+def load_yaml_config(file_path):
+    with open(file_path, "r") as f:
+        return yaml.safe_load(f.read())
 
 
-def parse_markdown_with_metadata(markdown_file):
+def parse_markdown(markdown_file):
     with open(markdown_file, "r", encoding="utf-8") as f:
         content = f.read()
 
     parts = content.split("---", 2)
-    if len(parts) == 3:
-        metadata = yaml.safe_load(parts[1])
-        markdown_content = parts[2]
-    else:
-        metadata = {}
-        markdown_content = content
+    metadata = yaml.safe_load(parts[1]) if len(parts) == 3 else {}
+    markdown_content = parts[2] if len(parts) == 3 else content
 
-    html_content = markdown.markdown(markdown_content, extensions=["tables"])
-    return metadata, html_content
+    return metadata, markdown.markdown(markdown_content, extensions=["tables"])
 
 
-def copy_static_assets(dirs):
-    for dir in dirs:
-        source_asset_dir = os.path.join("app", dir)
-        target_asset_dir = os.path.join(OUTPUT_DIR, dir)
+def copy_assets(asset_dirs, output_dir):
+    for asset_dir in asset_dirs:
+        src_dir = os.path.join("app", asset_dir)
+        dest_dir = os.path.join(output_dir, asset_dir)
 
-        if os.path.isfile(source_asset_dir):
-            shutil.copyfile(source_asset_dir, target_asset_dir)
+        if os.path.isfile(src_dir):
+            shutil.copyfile(src_dir, dest_dir)
         else:
-            shutil.copytree(source_asset_dir, target_asset_dir)
+            shutil.copytree(src_dir, dest_dir)
 
 
-def create_blog_slug(filename):
-    slug = filename.removesuffix(".md")
-    slug = "-".join(slug.split("-")[3:])
-    return slug
+def create_slug(filename):
+    return "-".join(filename.removesuffix(".md").split("-")[3:])
 
 
-def build_blog(site_config):
+def build_content(site_config, content_dir, output_subdir):
     titles = []
 
-    for filename in sorted(os.listdir(CONTENT_DIR), reverse=True):
+    for filename in sorted(os.listdir(content_dir), reverse=True):
         if filename.endswith(".md"):
-            markdown_path = os.path.join(CONTENT_DIR, filename)
-            metadata, html_content = parse_markdown_with_metadata(markdown_path)
-            context = {
-                "site": site_config,
-                "page": metadata,
-                "content": html_content,
-            }
-
+            markdown_path = os.path.join(content_dir, filename)
+            metadata, html_content = parse_markdown(markdown_path)
+            context = {"site": site_config, "page": metadata, "content": html_content}
             template_name = f"{metadata.get('template', 'default')}.html"
-
             html_output = render_template(template_name, context)
 
-            blog_slug = create_blog_slug(filename)
-            blog_output_dir = os.path.join(OUTPUT_DIR, "blog", blog_slug)
-            os.makedirs(blog_output_dir)
-            output_path = os.path.join(blog_output_dir, "index.html")
-            with open(output_path, "w", encoding="utf-8") as f:
-                f.write(html_output)
-
-            titles.append({"url": blog_slug, "title": metadata["title"]})
-
-    return titles
-
-
-def build_blog_index(site_config, titles):
-    site_config["posts"] = titles
-    markdown_path = os.path.join("app", "blog", "index.html")
-    metadata, raw_html_content = parse_markdown_with_metadata(markdown_path)
-    html_content = env.from_string(raw_html_content).render(
-        {"site": site_config, "page": metadata}
-    )
-    context = {
-        "site": site_config,
-        "page": metadata,
-        "content": html_content,
-    }
-
-    template_name = f"{metadata.get('template', 'default')}.html"
-
-    html_output = render_template(template_name, context)
-    blog_output_dir = os.path.join(OUTPUT_DIR, "blog")
-    os.makedirs(blog_output_dir, exist_ok=True)
-    output_path = os.path.join(blog_output_dir, "index.html")
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(html_output)
-
-
-def build_walks(site_config):
-    titles = []
-
-    for filename in sorted(os.listdir("app/_walks"), reverse=True):
-        if filename.endswith(".md"):
-            markdown_path = os.path.join("app/_walks", filename)
-            metadata, html_content = parse_markdown_with_metadata(markdown_path)
-            context = {
-                "site": site_config,
-                "page": metadata,
-                "content": html_content,
-            }
-
-            template_name = f"{metadata.get('template', 'default')}.html"
-
-            html_output = render_template(template_name, context)
-
-            slug = create_blog_slug(filename)
-            output_dir = os.path.join(OUTPUT_DIR, "walks", slug)
-            os.makedirs(output_dir)
-            output_path = os.path.join(output_dir, "index.html")
+            slug = create_slug(filename)
+            output_path = os.path.join(output_subdir, slug, "index.html")
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(html_output)
 
@@ -151,38 +82,34 @@ def build_walks(site_config):
     return titles
 
 
-def build_walks_index(site_config, titles):
+def build_index(site_config, titles, content_subdir):
     site_config["posts"] = titles
-    markdown_path = os.path.join("app", "walks", "index.html")
-    metadata, raw_html_content = parse_markdown_with_metadata(markdown_path)
+    index_path = os.path.join("app", content_subdir, "index.html")
+    metadata, raw_html_content = parse_markdown(index_path)
     html_content = env.from_string(raw_html_content).render(
         {"site": site_config, "page": metadata}
     )
-    context = {
-        "site": site_config,
-        "page": metadata,
-        "content": html_content,
-    }
-
+    context = {"site": site_config, "page": metadata, "content": html_content}
     template_name = f"{metadata.get('template', 'default')}.html"
-
     html_output = render_template(template_name, context)
-    output_dir = os.path.join(OUTPUT_DIR, "walks")
-    os.makedirs(output_dir, exist_ok=True)
-    output_path = os.path.join(output_dir, "index.html")
+
+    output_path = os.path.join(OUTPUT_DIR, content_subdir, "index.html")
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html_output)
 
 
 if __name__ == "__main__":
-    config = load_config()
+    config = load_yaml_config(CONFIG_FILE)
 
     if not os.path.exists(OUTPUT_DIR):
         os.makedirs(OUTPUT_DIR)
 
-    empty_dir(OUTPUT_DIR)
-    copy_static_assets(["assets", "css", "img", "js", "CNAME", "index.html"])
-    blogpost_titles = build_blog(config)
-    build_blog_index(config, blogpost_titles)
-    walks_titles = build_walks(config)
-    build_walks_index(config, walks_titles)
+    clear_directory(OUTPUT_DIR)
+    copy_assets(STATIC_ASSETS, OUTPUT_DIR)
+
+    for content_type, content_dir in CONTENT_DIRS.items():
+        titles = build_content(
+            config, content_dir, os.path.join(OUTPUT_DIR, content_type)
+        )
+        build_index(config, titles, content_type)
