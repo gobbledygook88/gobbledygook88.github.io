@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: blog
 title: SSO and SAML
 categories: blog
 ---

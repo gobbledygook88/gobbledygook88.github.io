@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: blog
 title: "LaTeX Syntax Highlighting"
 categories: blog
 tags: latex quick-tip

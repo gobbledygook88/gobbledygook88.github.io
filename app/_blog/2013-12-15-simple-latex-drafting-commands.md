@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: blog
 title: "Simple LaTeX Drafting Commands"
 categories: blog
 tags: latex quick-tip

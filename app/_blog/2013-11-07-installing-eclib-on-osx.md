@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: blog
 title: "Installing ECLIB on OS X"
 categories: blog
 ---

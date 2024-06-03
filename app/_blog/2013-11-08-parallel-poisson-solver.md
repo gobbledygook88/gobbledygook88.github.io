@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: blog
 title: "Parallel Poisson solver"
 categories: blog
 mathjax: y

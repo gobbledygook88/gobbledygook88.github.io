@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: blog
 title: 3D Modular Origami Dragon
 categories: blog
 ---

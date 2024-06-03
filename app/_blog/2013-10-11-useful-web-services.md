@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: blog
 title: "Useful Web Services"
 categories: blog
 ---
