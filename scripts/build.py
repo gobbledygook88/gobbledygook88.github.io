@@ -84,7 +84,6 @@ def build_content(site_config, content_dir, output_subdir):
             file_path = os.path.join(content_dir, filename)
             slug = create_slug(filename)
             output_path = os.path.join(output_subdir, slug, filename)
-            print(slug, output_path)
             shutil.copyfile(file_path, output_path)
 
     return titles
