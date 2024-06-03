@@ -5,7 +5,7 @@ from jinja2 import Environment, FileSystemLoader
 import yaml
 
 CONFIG_FILE = "_config.yml"
-CONTENT_DIRS = {"blog": "app/_posts", "walks": "app/_walks"}
+CONTENT_DIRS = {"blog": "app/_blog", "walks": "app/_walks"}
 TEMPLATE_DIR = "app/_layouts"
 OUTPUT_DIR = "build"
 STATIC_ASSETS = ["assets", "css", "img", "js", "CNAME", "index.html"]
