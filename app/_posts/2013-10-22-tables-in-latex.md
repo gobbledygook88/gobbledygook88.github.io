@@ -2,7 +2,6 @@
 layout: post
 title: "Tables in LaTeX"
 categories: blog
-: y
 ---
 
 I came across on [online table editor](http://truben.no/latex/table/) today which looked very useful. It provides a basic interface where you may enter content for your table, and the appropriate code is generated, ready to be copied into your LaTeX document.
