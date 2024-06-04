@@ -36,8 +36,9 @@
         {{ page.route.start }} to {{ page.route.end }}
       </li>
       <li>
-        <img class="svg-icon" src="/img/svg/person-walking-arrow-loop-left-solid.svg" alt="Person walking icon"
-          width="20px" />
+        <img class="svg-icon"
+          src="/img/svg/person-walking-arrow-{{ 'loop-left' if page.route.type.lower() == 'circular' else 'right' }}-solid.svg"
+          alt="Person walking icon" width="20px" />
         {{ page.route.type }}
       </li>
       <li>
