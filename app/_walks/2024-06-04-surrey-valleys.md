@@ -10,10 +10,9 @@ route:
   start: Caterham
   end: Caterham
   type: Circular
-  distance: 20km
-  duration: 4 hours
+  distance: 19.2km
+  duration: 5 hours
   gpx_url_text: AllTrails
   gpx_url: https://www.alltrails.com/explore/map/surrey-valleys-3d387d2?u=m&sh=xr4vxe
 ---
 
-Testing
