@@ -144,3 +144,20 @@ td {
 #map {
   height: 400px;
 }
+
+.walk-metadata {
+  display: flex;
+  padding: 0;
+  list-style: none;
+}
+
+.walk-metadata li {
+  width: 50%;
+  text-align: center;
+}
+
+.walk-metadata .svg-icon {
+  display: block;
+  margin: 0 auto 1em;
+  height: 20px;
+}
