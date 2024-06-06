@@ -4,6 +4,7 @@
 
 html,
 body {
+  min-width: fit-content;
   height: 100%;
 }
 
@@ -67,11 +68,12 @@ td {
   font-size: 115%;
   text-align: justify;
   width: 42em;
-  margin: 3em auto 2em;
+  margin: 0 auto 2em;
   line-height: 1.5em;
 }
 
 .banner {
+  width: 100%;
   text-align: center;
   margin-bottom: 2em;
 }
@@ -86,8 +88,6 @@ td {
 .title a {
   color: #000;
 }
-
-.svg-icon {}
 
 /*****************************************************************************/
 /* Posts
@@ -141,6 +141,16 @@ td {
 /* Walks
 /*****************************************************************************/
 
+.walks-container {
+  display: flex;
+  width: 100%;
+  margin: 0 auto 2em;
+  padding: 0 1em;
+  font-size: 115%;
+  text-align: justify;
+  line-height: 1.5em;
+}
+
 #map {
   height: 400px;
 }
@@ -160,4 +170,39 @@ td {
   display: block;
   margin: 0 auto 1em;
   height: 20px;
+}
+
+@media (max-width: 767px) {
+
+  .hidden-on-mobile {
+    display: none;
+  }
+
+}
+
+@media (min-width: 768px) {
+
+  .walks-container #map {
+    width: 42em;
+    margin-right: 1em;
+    flex: 1;
+  }
+
+  .walks-container #home {
+    flex: 2;
+  }
+
+  .walks-container .posts li {
+    display: flex;
+    text-align: left;
+  }
+
+  ul.posts li span:first-child {
+    flex: 2;
+  }
+
+  ul.posts li span {
+    flex: 1;
+  }
+
 }

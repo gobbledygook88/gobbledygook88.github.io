@@ -17,16 +17,16 @@
 
 <body>
 
-  <div class="site">
-    <header class="banner">
-      <h1 class="title"><a href="/blog/">{{ site.name }}</a></h1>
-      <a href="https://www.alltrails.com/members/marcus-mo/maps"><img class="svg-icon" src="/img/svg/alltrails.svg"
-          alt="AllTrails" width="20px" /></a>
-      <a href="https://strava.app.link/C5jt2v2v8Jb"><img class="svg-icon" src="/img/svg/strava.svg" alt="Strava"
-          width="20px" /></a>
-    </header>
+  <header class="banner">
+    <h1 class="title"><a href="/blog/">{{ site.name }}</a></h1>
+    <a href="https://www.alltrails.com/members/marcus-mo/maps"><img class="svg-icon" src="/img/svg/alltrails.svg"
+        alt="AllTrails" width="20px" /></a>
+    <a href="https://strava.app.link/C5jt2v2v8Jb"><img class="svg-icon" src="/img/svg/strava.svg" alt="Strava"
+        width="20px" /></a>
+  </header>
 
-    <div id="map"></div>
+  <div class="walks-container">
+    <div id="map" class="hidden-on-mobile"></div>
 
     {{ content }}
   </div>
