@@ -62,7 +62,7 @@ def create_slug(filename):
 
 
 def build_content(site_config, content_dir, output_subdir):
-    titles = []
+    posts = []
 
     for filename in sorted(os.listdir(content_dir), reverse=True):
         if filename.endswith(".md"):
@@ -78,7 +78,7 @@ def build_content(site_config, content_dir, output_subdir):
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(html_output)
 
-            titles.append({"url": slug, "title": metadata["title"]})
+            posts.append({"url": slug, "page": metadata})
         else:
             # copy the file over statically
             file_path = os.path.join(content_dir, filename)
@@ -86,11 +86,11 @@ def build_content(site_config, content_dir, output_subdir):
             output_path = os.path.join(output_subdir, slug, filename)
             shutil.copyfile(file_path, output_path)
 
-    return titles
+    return posts
 
 
-def build_index(site_config, titles, content_subdir):
-    site_config["posts"] = titles
+def build_index(site_config, posts, content_subdir):
+    site_config["posts"] = posts
     index_path = os.path.join("app", content_subdir, "index.html")
     metadata, raw_html_content = parse_markdown(index_path)
     html_content = env.from_string(raw_html_content).render(
@@ -116,7 +116,7 @@ if __name__ == "__main__":
     copy_assets(STATIC_ASSETS, OUTPUT_DIR)
 
     for content_type, content_dir in CONTENT_DIRS.items():
-        titles = build_content(
+        posts = build_content(
             config, content_dir, os.path.join(OUTPUT_DIR, content_type)
         )
-        build_index(config, titles, content_type)
+        build_index(config, posts, content_type)
