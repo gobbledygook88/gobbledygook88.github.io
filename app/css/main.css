@@ -174,6 +174,10 @@ td {
 
 @media (max-width: 767px) {
 
+  .walks-container .posts {
+    flex: 1;
+  }
+
   .hidden-on-mobile {
     display: none;
   }
@@ -183,13 +187,12 @@ td {
 @media (min-width: 768px) {
 
   .walks-container #map {
-    width: 42em;
     margin-right: 1em;
-    flex: 1;
+    flex: 2;
   }
 
-  .walks-container #home {
-    flex: 2;
+  .walks-container .posts {
+    flex: 3;
   }
 
   .walks-container .posts li {
