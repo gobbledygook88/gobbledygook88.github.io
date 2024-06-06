@@ -196,6 +196,7 @@ td {
   }
 
   .walks-container .posts {
+    margin: 0;
     flex: 3;
   }
 
