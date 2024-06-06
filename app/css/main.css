@@ -148,8 +148,8 @@ td {
 .walks-container {
   display: flex;
   width: 100%;
-  margin: 0 auto 2em;
   padding: 0 1em;
+  gap: 1em;
   font-size: 115%;
   text-align: justify;
   line-height: 1.5em;
@@ -192,7 +192,6 @@ td {
 @media (min-width: 768px) {
 
   .walks-container #map {
-    margin-right: 1em;
     flex: 2;
   }
 
