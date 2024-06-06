@@ -6,16 +6,16 @@ title: Biscuit Crumbs - Walks
 <ul class="posts">
   <li>
     <span></span>
-    <span class="hidden-on-mobile">Type</span>
-    <span class="hidden-on-mobile">Distance</span>
-    <span class="hidden-on-mobile">Duration</span>
+    <span>Type</span>
+    <span>Distance</span>
+    <span>Duration</span>
   </li>
   {% for post in site.posts %}
   <li>
     <span><a href="{{ post.url }}">{{ post.page.title }}</a></span>
-    <span class="hidden-on-mobile">{{ post.page.route.type }}</span>
-    <span class="hidden-on-mobile">{{ post.page.route.distance }}</span>
-    <span class="hidden-on-mobile">{{ post.page.route.duration }}</span>
+    <span>{{ post.page.route.type }}</span>
+    <span>{{ post.page.route.distance }}</span>
+    <span>{{ post.page.route.duration }}</span>
   </li>
   {% endfor %}
 </ul>

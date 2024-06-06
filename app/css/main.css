@@ -178,7 +178,8 @@ td {
     flex: 1;
   }
 
-  .hidden-on-mobile {
+  .walks-container #map,
+  .walks-container .posts li span:not(:first-child) {
     display: none;
   }
 
