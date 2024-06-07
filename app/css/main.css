@@ -174,6 +174,15 @@ td {
   height: 20px;
 }
 
-.waypoints img {
+.waypoint {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border: 1px dashed grey;
+  margin-bottom: 1em;
+  background-color: rgb(248, 248, 248);
+  text-align: center;
+}
+
+.waypoint img {
   width: 100%;
 }
