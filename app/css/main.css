@@ -2,9 +2,14 @@
 /* Common
 /*****************************************************************************/
 
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   height: 100%;
+  min-width: fit-content;
 }
 
 body {
@@ -45,31 +50,8 @@ td {
 }
 
 /*****************************************************************************/
-/* Home
+/* Header / Banner
 /*****************************************************************************/
-
-.posts {
-  list-style-type: none;
-  margin-bottom: 2em;
-  padding-left: 0;
-}
-
-.posts li {
-  line-height: 2em;
-  text-align: center;
-}
-
-/*****************************************************************************/
-/* Site
-/*****************************************************************************/
-
-.site {
-  font-size: 115%;
-  text-align: justify;
-  width: 42em;
-  margin: 3em auto 2em;
-  line-height: 1.5em;
-}
 
 .banner {
   text-align: center;
@@ -87,13 +69,41 @@ td {
   color: #000;
 }
 
-.svg-icon {}
+/*****************************************************************************/
+/* Site
+/*****************************************************************************/
+
+.site {
+  font-size: 115%;
+  text-align: justify;
+  width: 42em;
+  margin: 3em 2em 2em;
+  line-height: 1.5em;
+}
+
+@media (min-width: 768px) {
+
+  .site {
+    margin: 3em auto 2em;
+  }
+
+}
 
 /*****************************************************************************/
 /* Posts
 /*****************************************************************************/
 
-/* standard */
+.posts {
+  list-style-type: none;
+  margin-bottom: 2em;
+  padding-left: 0;
+}
+
+.posts li {
+  line-height: 2em;
+  text-align: center;
+}
+
 .post pre {
   border: 1px solid #ddd;
   background-color: #fdf6e3;
