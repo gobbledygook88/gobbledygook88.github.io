@@ -50,6 +50,26 @@ td {
 }
 
 /*****************************************************************************/
+/* Header / Banner
+/*****************************************************************************/
+
+.banner {
+  text-align: center;
+  margin-bottom: 2em;
+}
+
+.title {
+  margin-top: 2em;
+  letter-spacing: 0.125em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.title a {
+  color: #000;
+}
+
+/*****************************************************************************/
 /* Site
 /*****************************************************************************/
 
@@ -67,22 +87,6 @@ td {
     margin: 3em auto 2em;
   }
 
-}
-
-.banner {
-  text-align: center;
-  margin-bottom: 2em;
-}
-
-.title {
-  margin-top: 2em;
-  letter-spacing: 0.125em;
-  text-transform: uppercase;
-  text-align: center;
-}
-
-.title a {
-  color: #000;
 }
 
 /*****************************************************************************/
