@@ -183,6 +183,14 @@ td {
   background-color: rgb(248, 248, 248);
 }
 
+.waypoint figure {
+  margin: 0;
+}
+
+.waypoint figcaption {
+  color: orange;
+}
+
 .waypoint img {
   width: 100%;
 }
@@ -196,5 +204,9 @@ td {
   padding: 1em;
   font-size: 2em;
   line-height: 1em;
-  color: orange;
+  /* color: orange; */
+  display: flex;
+  align-items: flex-end;
+  justify-content: right;
+  text-align: right;
 }
