@@ -152,6 +152,8 @@ td {
 /*****************************************************************************/
 
 #map {
+  position: sticky;
+  top: 0;
   height: 400px;
 }
 
@@ -170,4 +172,8 @@ td {
   display: block;
   margin: 0 auto 1em;
   height: 20px;
+}
+
+.waypoints img {
+  width: 100%;
 }
