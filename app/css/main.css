@@ -57,8 +57,16 @@ td {
   font-size: 115%;
   text-align: justify;
   width: 42em;
-  margin: 3em auto 2em;
+  margin: 3em 2em 2em;
   line-height: 1.5em;
+}
+
+@media (min-width: 768px) {
+
+  .site {
+    margin: 3em auto 2em;
+  }
+
 }
 
 .banner {
