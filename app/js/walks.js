@@ -6,7 +6,7 @@
     "CARTO": "https://carto.com/attributions",
   }
 
-  var mapEl = document.getElementById("map");
+  const mapEl = document.getElementById("map");
 
   if (mapEl) {
     var map = L.map('map').setView([51.505, -0.09], 13);
@@ -28,6 +28,30 @@
         }).addTo(map);
         map.fitBounds(geojsonLayer.getBounds());
       });
+  }
+
+  function isScrolledIntoView(el) {
+    var rect = el.getBoundingClientRect();
+    var elemTop = rect.top;
+    var elemBottom = rect.bottom;
+
+    // Only completely visible elements return true:
+    var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
+    // Partially visible elements return true:
+    //isVisible = elemTop < window.innerHeight && elemBottom >= 0;
+    return isVisible;
+  }
+
+  const waypoints = document.getElementsByClassName('waypoint');
+  let currentMarker;
+
+  for (let el of waypoints) {
+    el.addEventListener('mouseenter', (event) => {
+      if (currentMarker) {
+        currentMarker.remove();
+      }
+      currentMarker = L.marker([el.dataset.waypointLatitude, el.dataset.waypointLongitude]).addTo(map);
+    })
   }
 
 })();
