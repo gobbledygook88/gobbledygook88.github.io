@@ -15,19 +15,17 @@ route:
   gpx_url_text: AllTrails
   gpx_url: https://www.alltrails.com/explore/map/surrey-valleys-3d387d2?u=m&sh=xr4vxe
   waypoints:
-    - title: foo
-      longitude: foo
-      latitude: foo
-      text: foo
-      text_color: foo
+    - title: Some title goes here
+      longitude: -50.0
+      latitude: 9.04
+      text: Let's start talking
       image: https://placehold.co/600x400
       image_alt: Some placeholder image
-      image_caption: foo
+      image_caption: foo bar baz
     - title: foo
       longitude: foo
       latitude: foo
       text: foo
-      text_color: foo
       image: https://placehold.co/600x400
       image_alt: Some placeholder image
       image_caption: foo

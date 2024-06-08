@@ -32,7 +32,7 @@
 
     <ul class="walk-metadata">
       <li>
-        <img class="svg-icon" src="/img/svg/location-dot-solid.svg" alt="Location icon" width="20px" />
+        <img class="svg-icon" src="/img/svg/location-dot-solid.svg" alt="Location pin icon" width="20px" />
         {{ page.route.start }} to {{ page.route.end }}
       </li>
       <li>
@@ -60,32 +60,24 @@
     </div>
 
     <div class="waypoints">
+      <h3>Waypoints</h3>
+
+      {% for waypoint in page.route.waypoints %}
       <div class="waypoint">
+        <h4>
+          <img class="svg-icon" src="/img/svg/location-dot-solid.svg" alt="Location pin icon" />
+          {{ waypoint.longitude }} {{ waypoint.latitude }} - {{ waypoint.title }}
+        </h4>
         <figure>
-          <img src="https://placehold.co/600x400" alt="placeholder">
+          <img src="{{ waypoint.image }}" alt="{{ waypoint.image_alt }}">
           <figcaption>
             <img class="svg-icon" src="/img/svg/image-solid.svg" alt="Image icon" />
-            <i>hello</i>
+            <i>{{ waypoint.image_caption }}</i>
           </figcaption>
         </figure>
+        <p>{{ waypoint.text }}</p>
       </div>
-      <div class="waypoint">
-        <span>This box only has text</span>
-      </div>
-      <div class="waypoint">
-        <img src="https://placehold.co/600x400" alt="placeholder">
-        <span>This box has and image and text</span>
-      </div>
-      <div class="waypoint">
-        <img src="https://placehold.co/600x400" alt="placeholder">
-        <span>This box has and image and a lot of text. So much in fact it spans multiple lines.</span>
-      </div>
-      <div class="waypoint">
-        <img src="https://placehold.co/600x400" alt="placeholder">
-      </div>
-      <div class="waypoint">
-        <span>This box only has text</span>
-      </div>
+      {% endfor %}
     </div>
   </div>
 
