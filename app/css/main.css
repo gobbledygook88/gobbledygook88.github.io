@@ -175,6 +175,10 @@ td {
   height: 20px;
 }
 
+.waypoints {
+  margin-bottom: 20em;
+}
+
 .waypoint {
   width: 100%;
   margin-bottom: 1em;
