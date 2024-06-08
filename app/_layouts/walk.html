@@ -59,6 +59,7 @@
       {{ content }}
     </div>
 
+    {% if page.route.waypoints %}
     <div class="waypoints">
       <h3>Waypoints</h3>
 
@@ -87,6 +88,7 @@
       </div>
       {% endfor %}
     </div>
+    {% endif %}
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
