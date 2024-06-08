@@ -64,8 +64,9 @@
       <h3>Waypoints</h3>
 
       {% for waypoint in page.route.waypoints -%}
-      <div class="waypoint">
-        {% if waypoint.longitude and waypoint.latitude -%}
+      <div class="waypoint" data-waypoint-latitude="{{ waypoint.latitude }}"
+        data-waypoint-longitude="{{ waypoint.longitude }}">
+        {% if waypoint.latitude and waypoint.longitude -%}
         <h4>
           <img class="svg-icon" src="/img/svg/location-dot-solid.svg" alt="Location pin icon" />
           {{ waypoint.latitude | round(5) }}, {{ waypoint.longitude | round(5) }}
