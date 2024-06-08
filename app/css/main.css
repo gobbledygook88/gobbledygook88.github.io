@@ -152,7 +152,10 @@ td {
 /*****************************************************************************/
 
 #map {
+  position: sticky;
+  top: 0;
   height: 400px;
+  z-index: 100;
 }
 
 .walk-metadata {
@@ -170,4 +173,21 @@ td {
   display: block;
   margin: 0 auto 1em;
   height: 20px;
+}
+
+.waypoint {
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.waypoint figure {
+  margin: 0;
+}
+
+.waypoint img {
+  width: 100%;
+}
+
+.waypoint img.svg-icon {
+  width: 0.75em;
 }

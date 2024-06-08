@@ -32,7 +32,7 @@
 
     <ul class="walk-metadata">
       <li>
-        <img class="svg-icon" src="/img/svg/location-dot-solid.svg" alt="Location icon" width="20px" />
+        <img class="svg-icon" src="/img/svg/location-dot-solid.svg" alt="Location pin icon" width="20px" />
         {{ page.route.start }} to {{ page.route.end }}
       </li>
       <li>
@@ -58,6 +58,37 @@
     <div class="post">
       {{ content }}
     </div>
+
+    {% if page.route.waypoints %}
+    <div class="waypoints">
+      <h3>Waypoints</h3>
+
+      {% for waypoint in page.route.waypoints %}
+      <div class="waypoint">
+        {% if waypoint.longitude and waypoint.latitude %}
+        <h4>
+          <img class="svg-icon" src="/img/svg/location-dot-solid.svg" alt="Location pin icon" />
+          {{ waypoint.longitude }} {{ waypoint.latitude }} - {{ waypoint.title }}
+        </h4>
+        {% endif %}
+
+        {% if waypoint.image %}
+        <figure>
+          <img src="{{ waypoint.image }}" alt="{{ waypoint.image_alt }}">
+          <figcaption>
+            <img class="svg-icon" src="/img/svg/image-solid.svg" alt="Image icon" />
+            <i>{{ waypoint.image_caption }}</i>
+          </figcaption>
+        </figure>
+        {% endif %}
+
+        {% if waypoint.text %}
+        <p>{{ waypoint.text }}</p>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
