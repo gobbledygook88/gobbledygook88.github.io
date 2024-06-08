@@ -15,4 +15,3 @@ route:
   gpx_url_text: AllTrails
   gpx_url: https://www.alltrails.com/explore/map/map-may-10-2024-958c530?u=m&sh=xr4vxe
 ---
-

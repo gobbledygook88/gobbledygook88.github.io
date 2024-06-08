@@ -39,4 +39,3 @@ http://blog.siyelo.com/remote-pair-programming-with-screen
 - [MadEye](https://madeye.io/)
 - [floobits](https://floobits.com/)
 - [Termbeamer](http://termbeamer.com/)
-

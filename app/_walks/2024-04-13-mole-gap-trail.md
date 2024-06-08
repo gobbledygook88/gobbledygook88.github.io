@@ -15,4 +15,3 @@ route:
   gpx_url_text: AllTrails
   gpx_url: https://www.alltrails.com/trail/england/surrey/mole-gap-trail--2?u=m&sh=xr4vxe
 ---
-

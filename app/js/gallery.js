@@ -1,8 +1,8 @@
-/** 
+/**
  * gallery.js
  *
  * Simple JavaScript image gallery.
- * 
+ *
  * Tested on all modern browsers and IE6+ (getElementByTagName)
  *
  * Basic usage:
@@ -103,7 +103,7 @@
 
       // Add navigational elements
       addNav(container,numlis,(titles[i] === null) ? '&nbsp;' : titles[i]);
-      
+
       // Append gallery status (current image) [4]
       container.setAttribute('data-current','1');
 
@@ -144,7 +144,7 @@
     container.appendChild(fragment.cloneNode(true));
   }
 
-  // Add click events to navigation elements and browser window resize 
+  // Add click events to navigation elements and browser window resize
   function configureEventHandlers(container,numlis) {
     // Previous image button
     addEvent(container.getElementsByClassName('gallery-nav-left')[0],'click',function(e) {

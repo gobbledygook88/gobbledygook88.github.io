@@ -23,6 +23,7 @@ route:
       latitude: 51.281274677336235
       longitude: -0.10564969594969881
       text: When walking west on Rook Lane, stay on the left side pavement to avoid hopping back and forth. Seems short pavements are in vogue here. As you advance, keep your eyes peeled for an opening in the bushes across the road. The first one can be easy to miss, but there is another chance 20 metres further along. If walking in spring or summer, this is the beginnings of a day of thorns.
+      image: https://placehold.co/400x600
     - latitude: 51.284871086899
       longitude: -0.12109946065354461
       text: As you finish walking past Piles Wood on the right, you are greeted by a wonderful field of crops. Don't worry, you'll be back in here soon.

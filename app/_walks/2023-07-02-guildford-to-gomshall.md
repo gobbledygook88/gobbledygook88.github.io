@@ -15,4 +15,3 @@ route:
   gpx_url_text: AllTrails
   gpx_url: https://www.alltrails.com/explore/map/guildford-to-gomshall-f2617d0?u=m&sh=xr4vxe
 ---
-
