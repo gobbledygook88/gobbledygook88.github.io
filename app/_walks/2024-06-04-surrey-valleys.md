@@ -22,12 +22,12 @@ route:
       image: https://placehold.co/600x400
       image_alt: Some placeholder image
       image_caption: foo bar baz
-    - title: foo
-      longitude: foo
-      latitude: foo
-      text: foo
-      image: https://placehold.co/600x400
-      image_alt: Some placeholder image
-      image_caption: foo
+    - title:
+      longitude:
+      latitude:
+      text:
+      image:
+      image_alt:
+      image_caption:
 ---
 
