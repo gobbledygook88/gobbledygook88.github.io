@@ -68,7 +68,8 @@
         {% if waypoint.longitude and waypoint.latitude %}
         <h4>
           <img class="svg-icon" src="/img/svg/location-dot-solid.svg" alt="Location pin icon" />
-          {{ waypoint.latitude | round(5) }}, {{ waypoint.longitude | round(5) }} - {{ waypoint.title }}
+          {{ waypoint.latitude | round(5) }}, {{ waypoint.longitude | round(5) }}
+          {% if waypoint.title %} - {{ waypoint.title }}{% endif %}
         </h4>
         {% endif %}
 
