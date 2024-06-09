@@ -45,6 +45,8 @@ route:
       longitude: -0.11873334192281404
       text: As you pass between Figgs Wood on the left and the aforementioned Piles Wood on the right, you'll head down the valley. Keep walking straight into what looks like a bush. A path does exist, trust me. You'll be met with a steep climb up some steps which disappear as quickly as they appeared. Luckily, there is a bench two-thirds up the ascent giving a generous place to rest overlooking the valley you just crossed.
       images:
+      - url: 2024-06-04-surrey-valleys/happy-valley-bush.jpg
+        alt: Exit Happy Valley via a bush
       - url: 2024-06-04-surrey-valleys/happy-valley-steps.jpg
         alt: Steps leading up from Happy Valley
     - latitude: 51.29563423211698
@@ -53,6 +55,8 @@ route:
       images:
       - url: 2024-06-04-surrey-valleys/coulsdon-common-sign.jpg
         alt: Coulsdon Common sign
+      - url: 2024-06-04-surrey-valleys/coulsdon-common-bus.jpg
+        alt: Coulsdon Common bus
     - latitude: 51.30749421550536
       longitude: -0.10420517823485109
       text: Enter Betts Mead Recreation Ground.
@@ -70,6 +74,8 @@ route:
       images:
       - url: 2024-06-04-surrey-valleys/whyteleafe-steps.jpg
         alt: Steps leading up from Whyteleafe Recreation Ground
+      - url: 2024-06-04-surrey-valleys/whyteleafe-looking-back.jpg
+        alt: Looking back onto Whyteleafe Recreation Ground
     - title: A crawl through time
       latitude: 51.31605602479372
       longitude: -0.06823693218826866
