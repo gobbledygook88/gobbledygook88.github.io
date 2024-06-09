@@ -77,12 +77,14 @@
         {% if waypoint.image -%}
         <figure>
           <img src="/img/walks/{{ waypoint.image }}" alt="{{ waypoint.image_alt }}">
-          {% if waypoint.image_caption -%}
-          <figcaption>
-            <img class="svg-icon" src="/img/svg/image-solid.svg" alt="Image icon" />
-            <i>{{ waypoint.image_caption }}</i>
-          </figcaption>
-          {%- endif %}
+        </figure>
+        {%- endif %}
+
+        {% if waypoint.images -%}
+        <figure class="multiple">
+          {% for image in waypoint.images -%}
+          <img src="/img/walks/{{ image.url }}" alt="{{ image.alt }}">
+          {% endfor %}
         </figure>
         {%- endif %}
 

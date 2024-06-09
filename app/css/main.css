@@ -190,6 +190,11 @@ td {
   width: 100%;
 }
 
+.waypoint figure.multiple {
+  display: flex;
+  gap: 1em;
+}
+
 .waypoint img.svg-icon {
   width: 0.75em;
 }
