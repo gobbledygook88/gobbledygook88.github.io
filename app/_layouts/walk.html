@@ -74,14 +74,8 @@
         </h4>
         {%- endif %}
 
-        {% if waypoint.image -%}
-        <figure>
-          <img src="/img/walks/{{ waypoint.image }}" alt="{{ waypoint.image_alt }}">
-        </figure>
-        {%- endif %}
-
         {% if waypoint.images -%}
-        <figure class="multiple">
+        <figure>
           {% for image in waypoint.images -%}
           <img src="/img/walks/{{ image.url }}" alt="{{ image.alt }}">
           {% endfor %}

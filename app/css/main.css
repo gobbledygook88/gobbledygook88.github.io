@@ -183,16 +183,13 @@ td {
 }
 
 .waypoint figure {
+  display: flex;
+  gap: 1em;
   margin: 0;
 }
 
 .waypoint img {
   width: 100%;
-}
-
-.waypoint figure.multiple {
-  display: flex;
-  gap: 1em;
 }
 
 .waypoint img.svg-icon {
