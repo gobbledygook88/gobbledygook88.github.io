@@ -183,6 +183,8 @@ td {
 }
 
 .waypoint figure {
+  display: flex;
+  gap: 1em;
   margin: 0;
 }
 
