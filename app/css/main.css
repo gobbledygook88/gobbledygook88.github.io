@@ -152,7 +152,7 @@ td {
 #map {
   position: sticky;
   top: 0;
-  height: 400px;
+  aspect-ratio: 4/3;
   z-index: 100;
 }
 
