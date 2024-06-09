@@ -14,8 +14,7 @@ body {
 
 body {
   background-color: #FEFEFE;
-  font: 13.34px Oxygen, Helvetica, Arial, sans-serif;
-  font-size: small;
+  font: 14px Oxygen, Helvetica, Arial, sans-serif;
   text-align: center;
 }
 
@@ -74,9 +73,7 @@ td {
 /*****************************************************************************/
 
 .site {
-  font-size: 115%;
   text-align: justify;
-  width: 42em;
   margin: 3em 2em 2em;
   line-height: 1.5em;
 }
@@ -85,6 +82,7 @@ td {
 
   .site {
     margin: 3em auto 2em;
+    width: 42em;
   }
 
 }
