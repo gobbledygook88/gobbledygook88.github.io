@@ -1,10 +1,16 @@
 (function () {
 
-  var attributions = {
+  const attributions = {
     "OpenStreetMap contributers": "http://www.openstreetmap.org/copyright",
     "OpenMapTiles": "http://openmaptiles.org/",
     "CARTO": "https://carto.com/attributions",
   }
+
+  const marker = L.icon({
+    iconUrl: '/img/svg/location-dot-solid.svg',
+    iconSize: [12, 16],
+    iconAnchor: [6, 16],
+  });
 
   const mapEl = document.getElementById("map");
 
@@ -35,7 +41,7 @@
     if (currentMarker) {
       currentMarker.remove();
     }
-    currentMarker = L.marker([el.target.dataset.waypointLatitude, el.target.dataset.waypointLongitude]).addTo(map);
+    currentMarker = L.marker([el.target.dataset.waypointLatitude, el.target.dataset.waypointLongitude], { icon: marker }).addTo(map);
   }
 
   const waypoints = document.getElementsByClassName('waypoint');
