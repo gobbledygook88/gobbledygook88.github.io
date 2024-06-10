@@ -43,7 +43,7 @@ route:
     - title: Embrace jeopardy
       latitude: 51.293628018289596
       longitude: -0.11873334192281404
-      text: As you pass between Figgs Wood on the left and the aforementioned Piles Wood on the right, you'll head down the valley. Keep walking straight into what looks like a bush. A path does exist, trust me. You'll be met with a steep climb up some steps which disappear as quickly as they appeared. Luckily, there is a bench two-thirds up the ascent giving a generous place to rest overlooking the valley you just crossed.
+      text: As you pass between Figgs Wood on the left and the aforementioned Piles Wood on the right, you'll head down the valley. Keep walking straight into what looks like a bush. A path does exist, trust me. You'll be met with a steep climb up some steps which disappear as quickly as they appeared. Luckily, there is a generous bench two-thirds up the ascent giving a place to rest overlooking the valley you just crossed.
       images:
       - url: 2024-06-04-surrey-valleys/happy-valley-bush.jpg
         alt: Exit Happy Valley via a bush
@@ -70,7 +70,7 @@ route:
     - title: The pain begins...
       latitude: 51.31371151030815
       longitude: -0.07392073560849877
-      text: The book gives wonderful descriptions on the route so that this whole hike can be done without GPS. Here it mentions a path once you're parallel to the tennis courts. What it failed to mention was the ridiculous incline.
+      text: The book gives wonderful descriptions on the route so that this whole hike can be done without GPS. Here, it mentions a path once you're parallel to the tennis courts. What it failed to mention was the ridiculous incline.
       images:
       - url: 2024-06-04-surrey-valleys/whyteleafe-steps.jpg
         alt: Steps leading up from Whyteleafe Recreation Ground
@@ -79,7 +79,7 @@ route:
     - title: A crawl through time
       latitude: 51.31605602479372
       longitude: -0.06823693218826866
-      text: Though you'll encounter lots of signs saying driveways are private, ignore them. The ones you walk on today are also public footpaths. This one, however, is not as well kept as others. Running down the side of some Victorian houses, crawl through thorn bushes and trees. Again, trust me. As you pick off the thorns on your arms and legs, emerge into a small opening, you are greeted by a signpost signalling a public footpath of which hasn't seen daylight in many years. You can't help by give a wry smile. Eventually, you'll emerge into John Fisher's Sports Ground. Walk along the edge of the sports field to the other side.
+      text: You'll encounter lots of signs saying driveways are private, proceed with respect and you'll be fine. The ones you walk on today are public footpaths. This next one, unfortunately, is not as well kept as others. Running down the side of some Victorian houses, crawl through the thorn bushes and trees. Again, trust me. As you pick off the thorns on your arms and legs, emerge into a small opening, you are greeted by a signpost signalling a public footpath which hasn't seen daylight in many years. You can't help but give a wry smile. Eventually, you'll emerge into John Fisher's Sports Ground. Walk along the edge of the sports field to the other side.
     - title: Bug Hill
       latitude: 51.30249957126309
       longitude: -0.05316188144776937
@@ -87,7 +87,7 @@ route:
     - title: Something seems wrong...
       latitude: 51.30140687405973
       longitude: -0.05371141953981574
-      text: Here we have my favourite park of the walk (sarcasm). The book suggests walking forward down the hill across to the other side of the field and over some stiles. This no longer exists, but instead a golf course does. As is the running theme, a signpost does signal the public footpath still exists across the golf course. If you are confident in golf etiquette, feel free to walk on through. Alternatively, if you are up for risking your life take the dubious dirt path to the right. Skirt around the golf course on a steep slope, through thick thorns and dense trees. Take good care of where you place your feet.
+      text: Here is my favourite part of the walk (sarcasm). The book suggests walking forward down the hill across to the other side of the field and over some stiles. Unfortunately, what lies ahead these days is a golf course. A signpost does signal the public footpath still exists across the golf course. If you are confident in golf etiquette (I wasn't), feel free to walk on through. Alternatively, and if you are up for some jeopardy, take the dubious dirt path to the right. Skirt around the golf course on a steep slope, through thick thorns and dense trees. Take good care of where you place your feet.
       images:
       - url: 2024-06-04-surrey-valleys/golf-course.jpg
         alt: Golf course
@@ -111,7 +111,7 @@ route:
       text: After passing through a new housing estate you'll be greeted by the exhilerating sounds of cars at 60mph. A small opening in the trees takes you graciously down to the road side. Look right first. Spot an opening in the cars and commit. Then repeat while looking left. You've made it back to Caterham. Head back to the train station to finish the walk.
 ---
 
-This moderately challenging hike is from a Country Walks book published by London Transport. It passes through the towns of Caterham, Chaldon, Coulsdon, Whyteleafe, Warlingham and Woldingham. On a sunny day, this is a great walk through valleys and pass churches. Expect quite a bit of ascending and decending in the second half.
+This moderately challenging hike is from a Country Walks book published (1980) by London Transport. It passes through the towns of Caterham, Chaldon, Coulsdon, Whyteleafe, Warlingham and Woldingham. On a sunny day, this is a great walk through valleys and pass churches. Expect quite a bit of ascending and decending in the second half.
 
 Unfortunately, there is no convenient pub along the route for lunch, so pack a picnic and enjoy!
 
