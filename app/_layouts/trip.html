@@ -81,7 +81,7 @@
         {% if waypoint.images -%}
         <figure>
           {% for image in waypoint.images -%}
-          <img src="/img/walks/{{ image.url }}" alt="{{ image.alt }}">
+          <img src="/img/{{ image.url }}" alt="{{ image.alt }}">
           {% endfor %}
         </figure>
         {%- endif %}
