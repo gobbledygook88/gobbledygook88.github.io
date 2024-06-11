@@ -34,6 +34,7 @@ route:
   - title: First meal on board - lunch!
     latitude: 43.644391523965076
     longitude: -79.38092603013126
+    text: Having had a chance to settle into my room and explore a bit more of the train, of which it is certainly big, it was time for lunch. Both lunch and dinner are 3 course meals and cooked fresh on board the train. Each meal provides a chance to meet new people and discover new perspectives from all walks of life, while being united by a love of the train. After meals, most people head back to their rooms for a short rest. The kitchen certainly does not hold back on portion sizes!
   - title: Sudbury
     latitude: 10
     longitude: 10
