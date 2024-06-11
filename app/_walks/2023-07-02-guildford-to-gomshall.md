@@ -1,5 +1,5 @@
 ---
-layout: walk
+layout: trip
 title: Guildford to Gomshall
 categories: walk
 

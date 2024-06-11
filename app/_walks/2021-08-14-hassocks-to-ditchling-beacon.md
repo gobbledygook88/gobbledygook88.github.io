@@ -1,5 +1,5 @@
 ---
-layout: walk
+layout: trip
 title: Hassocks to Ditchling Beacon
 categories: walk
 

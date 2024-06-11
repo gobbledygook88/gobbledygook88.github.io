@@ -1,5 +1,5 @@
 ---
-layout: walk
+layout: trip
 title: Haslemere and Devil's Punch Bowl
 categories: walk
 

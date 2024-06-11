@@ -1,5 +1,5 @@
 ---
-layout: walk
+layout: trip
 title: Tring, Bridgewater and Ivinghoe Beacon
 categories: walk
 

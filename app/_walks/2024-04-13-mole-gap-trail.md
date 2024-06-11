@@ -1,5 +1,5 @@
 ---
-layout: walk
+layout: trip
 title: Mole Gap Trail
 categories: walk
 

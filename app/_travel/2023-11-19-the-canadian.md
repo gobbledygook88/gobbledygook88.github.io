@@ -1,5 +1,5 @@
 ---
-layout: walk
+layout: trip
 title: The Canadian train
 categories: travel train canada
 

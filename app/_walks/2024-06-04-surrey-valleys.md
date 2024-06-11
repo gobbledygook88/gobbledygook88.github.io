@@ -1,5 +1,5 @@
 ---
-layout: walk
+layout: trip
 title: Surrey Valleys
 categories: walk
 
