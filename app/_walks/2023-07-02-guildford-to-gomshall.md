@@ -4,7 +4,7 @@ title: Guildford to Gomshall
 categories: walk
 
 map:
-  data: 2023-07-02-guildford-to-gomshall.json
+  data: 2023-07-02-guildford-to-gomshall.geojson
 
 route:
   start: Guildford

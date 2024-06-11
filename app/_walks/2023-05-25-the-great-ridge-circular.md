@@ -4,7 +4,7 @@ title: The Great Ridge - Mam Tor, Peak District
 categories: walk
 
 map:
-  data: 2023-05-25-the-great-ridge-circular.json
+  data: 2023-05-25-the-great-ridge-circular.geojson
 
 route:
   start: Castleton

@@ -4,7 +4,7 @@ title: Arundel Wetlands and Castle
 categories: walk
 
 map:
-  data: 2023-05-01-arundel-wetlands-and-castle.json
+  data: 2023-05-01-arundel-wetlands-and-castle.geojson
 
 route:
   start: Arundel

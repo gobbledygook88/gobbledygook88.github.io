@@ -4,7 +4,7 @@ title: Mole Gap Trail
 categories: walk
 
 map:
-  data: 2024-04-13-mole-gap-trail.json
+  data: 2024-04-13-mole-gap-trail.geojson
 
 route:
   start: Leatherhead

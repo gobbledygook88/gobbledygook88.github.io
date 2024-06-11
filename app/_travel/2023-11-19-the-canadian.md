@@ -1,6 +1,6 @@
 ---
 layout: trip
-title: The Canadian train
+title: The Canadian - Toronto to Vancouver
 categories: travel train canada
 
 map:

@@ -4,7 +4,7 @@ title: Tring, Bridgewater and Ivinghoe Beacon
 categories: walk
 
 map:
-  data: 2021-09-11-tring-bridewater-ivinghoe-beacon.json
+  data: 2021-09-11-tring-bridewater-ivinghoe-beacon.geojson
 
 route:
   start: Tring
