@@ -1,5 +1,5 @@
 ---
-layout: walk
+layout: trip
 title: Arundel Wetlands and Castle
 categories: walk
 

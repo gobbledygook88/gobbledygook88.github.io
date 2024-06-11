@@ -1,5 +1,5 @@
 ---
-layout: walk
+layout: trip
 title: Seven Sisters
 categories: walk
 

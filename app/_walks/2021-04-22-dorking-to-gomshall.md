@@ -1,5 +1,5 @@
 ---
-layout: walk
+layout: trip
 title: Dorking to Gomshall
 categories: walk
 

@@ -5,7 +5,7 @@ from jinja2 import Environment, FileSystemLoader
 import yaml
 
 CONFIG_FILE = "_config.yml"
-CONTENT_DIRS = {"blog": "app/_blog", "walks": "app/_walks"}
+CONTENT_DIRS = {"blog": "app/_blog", "walks": "app/_walks", "travel": "app/_travel"}
 TEMPLATE_DIR = "app/_layouts"
 OUTPUT_DIR = "build"
 STATIC_ASSETS = ["assets", "css", "img", "js", "CNAME", "index.html"]
@@ -84,6 +84,7 @@ def build_content(site_config, content_dir, output_subdir):
             file_path = os.path.join(content_dir, filename)
             slug = create_slug(filename)
             output_path = os.path.join(output_subdir, slug, filename)
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
             shutil.copyfile(file_path, output_path)
 
     return posts

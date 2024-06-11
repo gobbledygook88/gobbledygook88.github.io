@@ -1,5 +1,5 @@
 ---
-layout: walk
+layout: trip
 title: The Great Ridge - Mam Tor, Peak District
 categories: walk
 

@@ -1,5 +1,5 @@
 ---
-layout: walk
+layout: trip
 title: Kingston, Barge Walk and Bushy Park
 categories: walk
 
