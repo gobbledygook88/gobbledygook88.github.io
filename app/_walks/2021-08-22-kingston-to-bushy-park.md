@@ -4,7 +4,7 @@ title: Kingston, Barge Walk and Bushy Park
 categories: walk
 
 map:
-  data: 2021-08-22-kingston-to-bushy-park.json
+  data: 2021-08-22-kingston-to-bushy-park.geojson
 
 route:
   start: Kingston

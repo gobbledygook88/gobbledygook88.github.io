@@ -4,7 +4,7 @@ title: Haslemere and Devil's Punch Bowl
 categories: walk
 
 map:
-  data: 2021-08-29-haslemere-devils-punch-bowl.json
+  data: 2021-08-29-haslemere-devils-punch-bowl.geojson
 
 route:
   start: Haslemere

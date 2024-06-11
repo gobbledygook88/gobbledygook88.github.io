@@ -4,7 +4,7 @@ title: Seven Sisters
 categories: walk
 
 map:
-  data: 2022-08-14-seven-sisters.json
+  data: 2022-08-14-seven-sisters.geojson
 
 route:
   start: Eastbourne

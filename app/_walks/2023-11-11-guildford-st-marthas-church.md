@@ -4,7 +4,7 @@ title: Guildford to St. Martha's Church
 categories: walk
 
 map:
-  data: 2023-11-11-guildford-st-marthas-church.json
+  data: 2023-11-11-guildford-st-marthas-church.geojson
 
 route:
   start: Guildford

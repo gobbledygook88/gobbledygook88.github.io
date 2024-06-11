@@ -4,7 +4,7 @@ title: Dorking to Gomshall
 categories: walk
 
 map:
-  data: 2021-04-22-dorking-to-gomshall.json
+  data: 2021-04-22-dorking-to-gomshall.geojson
 
 route:
   start: Dorking

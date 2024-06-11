@@ -4,7 +4,7 @@ title: Hassocks to Ditchling Beacon
 categories: walk
 
 map:
-  data: 2021-08-14-hassocks-to-ditchling-beacon.json
+  data: 2021-08-14-hassocks-to-ditchling-beacon.geojson
 
 route:
   start: Hassocks
