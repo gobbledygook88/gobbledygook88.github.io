@@ -27,11 +27,17 @@
         width="20px" /></a>
   </header>
 
+  <!-- this should change to 2 column layout on wide screens (> 1000px) -->
+  <!-- whole page can scroll, but left column should be sticky eventually and let right column scroll -->
+  <!-- mobile + medium screens should remain as it currently behaves: one column + map sticky -->
   <div class="site">
+    <!-- this should be full width -->
     <h2>{{ page.title }}</h2>
 
+    <!-- this should be on the left -->
     <div id="map" data-map-data="{{ page.map.data }}"></div>
 
+    <!-- this should be on the left under the map -->
     <ul class="walk-metadata">
       <li>
         <img class="svg-icon" src="/img/svg/location-dot-solid.svg" alt="Location pin icon" width="20px" />
@@ -59,10 +65,12 @@
       {% endif %}
     </ul>
 
+    <!-- this should be on the right -->
     <div class="post">
       {{ content }}
     </div>
 
+    <!-- this should be on the right -->
     {% if page.route.waypoints -%}
     <div class="waypoints">
       <h3>Waypoints</h3>
