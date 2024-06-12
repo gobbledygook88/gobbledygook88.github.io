@@ -32,8 +32,8 @@ route:
     - url: /travel/2023-11-19-the-canadian/setting-off-park-car.jpg
       alt: Meal ticket for The Canadian
   - title: First meal on board - lunch!
-    latitude: 43.644391523965076
-    longitude: -79.38092603013126
+    latitude: 46.487254358919635
+    longitude: -80.99231302952937
     text: Having had a chance to settle into my room and explore a bit more of the train, of which it is certainly big, it was time for lunch. Both lunch and dinner are 3 course meals and cooked fresh on board the train. Each meal provides a chance to meet new people and discover new perspectives from all walks of life, while being united by a love of the train. After meals, most people head back to their rooms for a short rest. The kitchen certainly does not hold back on portion sizes!
   - title: Sudbury
     latitude: 10
@@ -56,20 +56,20 @@ route:
     longitude: 10
     text: foo
   - title: Jasper National Park
-    latitude: 10
-    longitude: 10
+    latitude: 52.87615911534961
+    longitude: -118.07909278981076
     text: I had set my alarm for 5am. This gave me enough time to shower and get prepared for arrival into Jasper at 6am. I did not want to miss this for anything. Though it was pitch black when the doors were opened, I was the first off the train and so smiling from ear to ear; I had been longing to come back to Jasper for a very very long time. First things first, Tim Hortons for breakfast. Then a few hours exploring the small town watching the sun rise over the snowy mountains. The early cloud cover meant we weren't going to get clear views when we pass through the mountains later, but that didn't matter to me. Just being in Jasper with the sun and fresh snow falling was enough to make the whole trip perfect.
   - title: Kamloops
-    latitude: 10
-    longitude: 10
-    text: Since this was the last full day we have on board, I spent most of the time in the observation cars taking in yet more amazing scenery. 
+    latitude: 50.719224526944416
+    longitude: -120.34858373756599
+    text: Since this was the last full day we have on board, I spent most of the time in the observation cars taking in yet more amazing scenery.
   - title: Extra stop
     latitude: 10
     longitude: 10
     text: We were running a little ahead of schedule. The train staff announced we had time for a brief stop at X.
-  - title: Vancouver Central Pacific Station
-    latitude: 10
-    longitude: 10
+  - title: Vancouver Pacific Central Station
+    latitude: 49.27372037143575
+    longitude: -123.09744235530488
     text: Arriving at 8am. Collect luggage. Short metro ride into downtown Vancouver
 ---
 
