@@ -35,10 +35,18 @@ route:
     latitude: 46.487254358919635
     longitude: -80.99231302952937
     text: Having had a chance to settle into my room and explore a bit more of the train, of which it is certainly big, it was time for lunch. Both lunch and dinner are 3 course meals and cooked fresh on board the train. Each meal provides a chance to meet new people and discover new perspectives from all walks of life, while being united by a love of the train. After meals, most people head back to their rooms for a short rest. The kitchen certainly does not hold back on portion sizes!
-  - title: Sudbury
-    latitude: 10
-    longitude: 10
-    text: foo
+    images:
+    - url: /travel/2023-11-19-the-canadian/meal-lunch-main.jpg
+      alt: Main course
+    - url: /travel/2023-11-19-the-canadian/meal-lunch-dessert.jpg
+      alt: Dessert
+  - title: The end of the first day
+    latitude: 49.211342624905996
+    longitude: -84.70356207756397
+    text: The first day took us through most of Ontario. In fact, we'll still be in Ontario tomorrow morning, despite the train moving through the night. Ontario is just that big. We snaked between lots of lakes (there are over 250,000 lakes in Ontario!), and it was fascinating to hear how the railway came about from knowledgeable passengers and staff. Dinner was served around 5-6pm. Sitting in the pitch black observation car afterwards was a surreal experience. Passengers retired to their rooms shortly after the sun went down. We've been moving non-stop for 10 hours by this point since leaving Toronto, and I couldn't be in a happier place.
+    images:
+    - url: /travel/2023-11-19-the-canadian/ontario-lakes.jpg
+      alt: A lake in Ontario
   - title: Sioux Lookout
     latitude: 10
     longitude: 10
