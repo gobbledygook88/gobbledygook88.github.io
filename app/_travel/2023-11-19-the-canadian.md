@@ -69,11 +69,11 @@ route:
     text: After dinner on the second day, we arrived at Winnipeg at 7pm in the province of Manitoba. We were more or less running on schedule, so we had the full 4 hours here. Many left the station and went to The Forks, a pub nearby. It is also here that the train crew changes; we'll be greeted by fresh new faces tomorrow morning at breakfast. After exploring the train station for a while, I decided to head back to the train instead and get into bed.
     images:
     - url: /travel/2023-11-19-the-canadian/winnipeg.jpg
-      alt: Winniepeg Union Station
+      alt: Winnipeg Union Station
   - title: Sunrise on Day 3
     latitude: 51.62925830867803
     longitude: -105.351364357881
-    text: Since we're travelling East to West, our mornings were progressively getting darker. Breakfast for me was always at 6:30am. I just prefer to start the day early. This also gave me a good few hours alone in the Park car to watch the sunrise. This morning, it was incredible.
+    text: Since we're traveling East to West, our mornings were progressively getting darker. Breakfast for me was always at 6:30am. I just prefer to start the day early. This also gave me a good few hours alone in the Park car to watch the sunrise. This morning, it was incredible.
     images:
     - url: /travel/2023-11-19-the-canadian/day3-sunrise.jpg
       alt: The sun rising on day 3
@@ -87,7 +87,7 @@ route:
   - title: Jasper National Park
     latitude: 52.87615911534961
     longitude: -118.07909278981076
-    text: I had set my alarm for 5am. This gave me enough time to shower and get prepared for arrival into Jasper at 6am. I did not want to miss this for anything. Though it was pitch black when the doors were opened, I was the first off the train and so smiling from ear to ear; I had been longing to come back to Jasper for a very very long time. First things first, Tim Hortons for breakfast. Then a few hours exploring the small town watching the sun rise over the snowy mountains. The early cloud cover meant we weren't going to get clear views when we pass through the mountains later, but that didn't matter to me. Just being in Jasper with the sun and fresh snow falling was enough to make the whole trip perfect.
+    text: I had set my alarm for 5am. This gave me enough time to shower and get prepared for arrival into Jasper at 6am. I did not want to miss this for anything. Though it was pitch black when the doors were opened, I was the first off the train and smiling from ear to ear; I had been longing to come back to Jasper for a very very long time. First things first, Tim Hortons for breakfast. Then a few hours exploring the small town watching the sun rise over the snowy mountains. The early cloud cover meant we weren't going to get clear views when we pass through the mountains later, but that didn't matter to me. Just being in Jasper with the sun and fresh snow falling was enough to make the whole trip perfect.
     images:
     - url: /travel/2023-11-19-the-canadian/jasper-poster-1.jpg
       alt: Poster
@@ -126,7 +126,7 @@ route:
       alt: Vancouver Pacific Central station
 ---
 
-One of the longest single train journeys in the world, travelling across Cannada from Toronto to Vancouver. I chose this direction because I wanted to end in Jasper National Park and spend a few days in Vancouver too. I had been to Vancouver before and vowed to come back as it is an amazing place.
+One of the longest single train journeys in the world, travelling across Canada from Toronto to Vancouver. I chose this direction because I wanted to end in Jasper National Park and spend a few days in Vancouver too. I had been to Vancouver before and vowed to come back as it is an amazing place.
 
 I booked this trip 9 months in advance as I knew tickets would go quickly. If I had more forethought (and money) I could have tried to link together more trains through America. Many of the passengers I met on the train were doing that.
 
