@@ -87,7 +87,7 @@ route:
   - title: Jasper National Park
     latitude: 52.87615911534961
     longitude: -118.07909278981076
-    text: I had set my alarm for 5am. This gave me enough time to shower and get prepared for arrival into Jasper at 6am. I did not want to miss this for anything. Though it was pitch black when the doors were opened, I was the first off the train and so smiling from ear to ear; I had been longing to come back to Jasper for a very very long time. First things first, Tim Hortons for breakfast. Then a few hours exploring the small town watching the sun rise over the snowy mountains. The early cloud cover meant we weren't going to get clear views when we pass through the mountains later, but that didn't matter to me. Just being in Jasper with the sun and fresh snow falling was enough to make the whole trip perfect.
+    text: I had set my alarm for 5am. This gave me enough time to shower and get prepared for arrival into Jasper at 6am. I did not want to miss this for anything. Though it was pitch black when the doors were opened, I was the first off the train and smiling from ear to ear; I had been longing to come back to Jasper for a very very long time. First things first, Tim Hortons for breakfast. Then a few hours exploring the small town watching the sun rise over the snowy mountains. The early cloud cover meant we weren't going to get clear views when we pass through the mountains later, but that didn't matter to me. Just being in Jasper with the sun and fresh snow falling was enough to make the whole trip perfect.
     images:
     - url: /travel/2023-11-19-the-canadian/jasper-poster-1.jpg
       alt: Poster
@@ -126,7 +126,7 @@ route:
       alt: Vancouver Pacific Central station
 ---
 
-One of the longest single train journeys in the world, travelling across Cannada from Toronto to Vancouver. I chose this direction because I wanted to end in Jasper National Park and spend a few days in Vancouver too. I had been to Vancouver before and vowed to come back as it is an amazing place.
+One of the longest single train journeys in the world, traveling across Canada from Toronto to Vancouver. I chose this direction because I wanted to end in Jasper National Park and spend a few days in Vancouver too. I had been to Vancouver before and vowed to come back as it is an amazing place.
 
 I booked this trip 9 months in advance as I knew tickets would go quickly. If I had more forethought (and money) I could have tried to link together more trains through America. Many of the passengers I met on the train were doing that.
 
