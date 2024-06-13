@@ -81,7 +81,8 @@
         {% if waypoint.images -%}
         <figure>
           {% for image in waypoint.images -%}
-          <img src="/img/{{ image.url }}" alt="{{ image.alt }}">
+          <img src="/img/{{ image.url }}" alt="{{ image.alt }}" {% if image.flex -%}style="flex: {{ image.flex }}" {%-
+            endif %} />
           {% endfor %}
         </figure>
         {%- endif %}
