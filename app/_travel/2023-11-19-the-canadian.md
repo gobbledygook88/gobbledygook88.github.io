@@ -25,7 +25,7 @@ route:
   - title: Boarding and setting off
     latitude: 43.644391523965076
     longitude: -79.38092603013126
-    text: In due time, we were called through to board the train. Seeing the train up close was breath-taking. Huge metal walls was the first thought. Each sleeper carriage has an attendant and they were waiting at the door to greet each of us, letting us know where our room was. Since I was the only passenger in our carriage going all the way to Vancouver, I had to learn some emergency evacuation procedures. Nothing too difficult. Soon after, I got acquainted with my neighbour and we both headed to the Park Car. Since this was off-season, all sleeper passengers had access to the Prestige class observation car at the rear of the train (another reason why I chose to travel in the winter). As we pulled out the station we could see the CN Tower and sit to be served mimosas and canapes. Delicious.
+    text: In due time, we were called through to board the train. Seeing the train up close was breath-taking. Huge metal walls was the first thought. Each sleeper carriage has an attendant and they were waiting at the door to greet each of us, letting us know where our room was. Since I was the only passenger in our carriage going all the way to Vancouver, I had to learn some emergency evacuation procedures. Nothing too difficult. Soon after, I got acquainted with my neighbour and we both headed to the Park Car. Since this was off-season, all sleeper passengers had access to the Prestige class observation car at the rear of the train (another reason why I chose to travel in the winter). As we pulled out the station we could see the CN Tower and sit to be served mimosas and canapés. Delicious.
     images:
     - url: /travel/2023-11-19-the-canadian/setting-off-cn-tower.jpg
       alt: Outside Toronto Union Station
@@ -34,7 +34,7 @@ route:
   - title: First meal on board - lunch!
     latitude: 46.487254358919635
     longitude: -80.99231302952937
-    text: Having had a chance to settle into my room and explore a bit more of the train, of which it is certainly big, it was time for lunch. Both lunch and dinner are 3 course meals and cooked fresh on board the train. Each meal provides a chance to meet new people and discover new perspectives from all walks of life, while being united by a love of the train. After meals, most people head back to their rooms for a short rest. The kitchen certainly does not hold back on portion sizes!
+    text: Having had a chance to settle into my room and explore a bit more of the train, of which it is certainly big, it was time for lunch. Both lunch and dinner are three course meals and cooked fresh on board the train. Each meal provides a chance to meet new people and discover new perspectives from all walks of life, while being united by a love of the train. After meals, most people head back to their rooms for a short rest. The kitchen certainly does not hold back on portion sizes!
     images:
     - url: /travel/2023-11-19-the-canadian/meal-lunch-main.jpg
       alt: Main course
@@ -50,7 +50,7 @@ route:
   - title: Waking up
     latitude: 50.16834427478059
     longitude: -91.40167547414947
-    text: The staff announce train time after dinner so we wake up on the right time. This can differ to the actual timezone we're currently in, but it helps with logistics on board the train. I get a surprisingly good night sleep in a comfortable bed. I wake at 6am to freshen up and head on over to the dining car at 6:30am for breakfast. It is nice to get some quiet time to eat alongside the real early birds. I'll be seeing them regularly for breakfast. Afterwards, I head on up to the Park car (no one else is there) to watch the sun rise and watch the snow covered grounds pass by. We even see our sister train pass too!
+    text: The staff announce train time after dinner so we wake up on the right time. This can differ to the actual time-zone we're currently in, but it helps with logistics on board the train. I get a surprisingly good night sleep in a comfortable bed. I wake at 6am to freshen up and head on over to the dining car at 6:30am for breakfast. It is nice to get some quiet time to eat alongside the real early birds. I'll be seeing them regularly for breakfast. Afterwards, I head on up to the Park car (no one else is there) to watch the sun rise and watch the snow covered grounds pass by. We even see our sister train pass too!
     images:
     - url: /travel/2023-11-19-the-canadian/day2-morning-snow.jpg
       alt: Waking up to snow
@@ -73,14 +73,14 @@ route:
   - title: Sunrise on Day 3
     latitude: 51.62925830867803
     longitude: -105.351364357881
-    text: Since we're traveling East to West, our mornings were progressively getting darker. Breakfast for me was always at 6:30am. I just prefer to start the day early. This also gave me a good few hours alone in the Park car to watch the sunrise. This morning, it was incredible.
+    text: Since we were travelling East to West, our mornings were progressively getting darker. Breakfast for me was always at 6:30am. I just prefer to start the day early. This also gave me a good few hours alone in the Park car to watch the sunrise. This morning, it was incredible.
     images:
     - url: /travel/2023-11-19-the-canadian/day3-sunrise.jpg
       alt: The sun rising on day 3
   - title: Saskatoon
     latitude: 52.104431597140064
     longitude: -106.73836094699787
-    text: A brief stop at Saskatoon gave an opportunity to see the front of the train. We firmly were in Saskatchewan now, and the day would be full of looking across the prairies. Utter nothingness for miles on end. The train staff holds a good number of events for entertainment throughout each day. Today it was bingo, a showing a train documentary, and a wine tasting in the evening. All optional to attend, but also great fun if you do.
+    text: A brief stop at Saskatoon gave an opportunity to see the front of the train. We were firmly in the province of Saskatchewan now, and the day would be full of looking across the prairies. Utter nothingness for miles on end. The train staff holds a good number of events for entertainment throughout each day. Today it was bingo, a showing a train documentary, and a wine tasting in the evening. All optional to attend, but also great fun if you do.
     images:
     - url: /travel/2023-11-19-the-canadian/saskatoon-front-of-train.jpg
       alt: Front of the train
@@ -102,7 +102,7 @@ route:
   - title: The Rockies
     latitude: 52.953127714565596
     longitude: -118.87726612065516
-    text: Not so long after departed Jasper at 9:30am, the train drivers had radioed back to other staff members that elk were spotted alongside the tracks. And as if by magic, there they were on the right. This all happened in a matter of seconds. The Park car was full this morning. People knew this was the prime location for this morning. We were going to pass through the Rocky Mountains. I had been looking forward to this moment for a very long time. The snowy morning had transitioned to misty grey skies and crisp winds; we couldn't see the top of Mount Robson unfortunately. As we snaked our way through and down the mountains, the scenery was breath-taking. From entire forests covered in white snow to the vast Moose Lake - the surface as still as can be. We tried spotting eagles and bears, but alas we could only see their tracks. An incredible morning and one I will never forget. As we descended into British Columbia proper, I headed over to the dining car for brunch.
+    text: Not long after we departed Jasper at 9:30am, the train drivers radioed back to other staff members that elk were spotted alongside the tracks. And as if by magic, there they were on the right. This all happened in a matter of seconds. The Park car was full this morning. People knew this was the prime location for this morning. We were going to pass through the Rocky Mountains. I had been looking forward to this moment for a very long time. The snowy morning had transitioned to misty grey skies and crisp winds; we couldn't see the top of Mount Robson unfortunately. As we snaked our way through and down the mountains, the scenery was breath-taking. From entire forests covered in white snow to the vast Moose Lake - the water's surface as still as can be. We tried spotting eagles and bears, but alas we could only see their tracks. An incredible morning and one I will never forget. As we descended into British Columbia proper, I headed over to the dining car for brunch.
     images:
     - url: /travel/2023-11-19-the-canadian/jasper-forests.jpg
       alt: Snow covered forests
@@ -120,7 +120,7 @@ route:
   - title: Vancouver Pacific Central Station
     latitude: 49.27372037143575
     longitude: -123.09744235530488
-    text: The last morning. As usual, I woke up at 5am. My phone had reception again so that meant we were near Vancouver. In fact, we were early so we had to wait outside of the city for quite some time. I skipped breakfast opting to pick something up once I had dropped my bags off at my hotel. We eventually arrived into Pacific Central station at 8am. It was a bittersweet moment jumping off the train for the final time. It was an incredible four days and four nights onboard. The time I had to myself to contemplate, the wonderful people I spoke to at meal times. A journey I'd gladly do again, maybe even with others if they would come with me. I collected my luggage within the station, and headed to my hotel in downtown Vancouver via a short metro ride.
+    text: The last morning. As usual, I woke up at 5am. My phone had reception again so that meant we were near Vancouver. In fact, we were early so we had to wait outside of the city for quite some time. I skipped breakfast opting to pick something up once I had dropped my bags off at my hotel. We eventually arrived into Pacific Central station at 8am. It was a bittersweet moment jumping off the train for the final time. It was an incredible four days and four nights onboard. The time I had to myself to contemplate, the wonderful people I spoke to at meal times. A journey I'd gladly do again, maybe even with others if they would come with me. I collected my luggage within the station, and headed to my hotel in down-town Vancouver via a short metro ride.
     images:
     - url: /travel/2023-11-19-the-canadian/vancouver-pacific-central-station.jpg
       alt: Vancouver Pacific Central station
@@ -128,8 +128,8 @@ route:
 
 One of the longest single train journeys in the world, travelling across Canada from Toronto to Vancouver. I chose this direction because I wanted to end in Jasper National Park and spend a few days in Vancouver too. I had been to Vancouver before and vowed to come back as it is an amazing place.
 
-I booked this trip 9 months in advance as I knew tickets would go quickly. If I had more forethought (and money) I could have tried to link together more trains through America. Many of the passengers I met on the train were doing that.
+I booked this trip nine months in advance as I knew tickets would go quickly. If I had more forethought (and money) I could have tried to link together more trains through America. Many of the passengers I met on the train were doing that.
 
-The allure of having 4 days of no mobile phone signal, no wifi, and 3 course meals was too great. There was no pressure to socialise, and everyone was utterly kind with fascinating lives to tell.
+The allure of having four days of no mobile phone signal, no Wifi, and three course meals was too great. There was no pressure to socialise, and everyone was utterly kind with fascinating lives to tell.
 
 I also chose to travel in the winter to get the full experience of Canadian winter. Some places we stopped at was -10C and the snowy mountains did not disappoint!
