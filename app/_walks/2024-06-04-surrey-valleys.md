@@ -108,10 +108,10 @@ route:
     - title: Oh, there's a dual carriageway to cross too
       latitude: 51.280988399221954
       longitude: -0.07065123801450521
-      text: After passing through a new housing estate you'll be greeted by the exhilerating sounds of cars at 60mph. A small opening in the trees takes you graciously down to the road side. Look right first. Spot an opening in the cars and commit. Then repeat while looking left. You've made it back to Caterham. Head back to the train station to finish the walk.
+      text: After passing through a new housing estate you'll be greeted by the exhilarating sounds of cars at 60mph. A small opening in the trees takes you graciously down to the road side. Look right first. Spot an opening in the cars and commit. Then repeat while looking left. You've made it back to Caterham. Head back to the train station to finish the walk.
 ---
 
-This moderately challenging hike is from a Country Walks book published (1980) by London Transport. It passes through the towns of Caterham, Chaldon, Coulsdon, Whyteleafe, Warlingham and Woldingham. On a sunny day, this is a great walk through valleys and pass churches. Expect quite a bit of ascending and decending in the second half.
+This moderately challenging hike is from a Country Walks book published (1980) by London Transport. It passes through the towns of Caterham, Chaldon, Coulsdon, Whyteleafe, Warlingham and Woldingham. On a sunny day, this is a great walk through valleys and pass churches. Expect quite a bit of ascending and descending in the second half.
 
 Unfortunately, there is no convenient pub along the route for lunch, so pack a picnic and enjoy!
 
