@@ -184,12 +184,14 @@ td {
 
 .waypoint figure {
   display: flex;
+  flex-wrap: wrap;
   gap: 1em;
   margin: 0;
 }
 
-.waypoint img {
+.waypoint figure img {
   width: 100%;
+  flex: 1;
 }
 
 .waypoint img.svg-icon {
