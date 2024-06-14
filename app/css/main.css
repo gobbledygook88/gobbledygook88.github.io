@@ -200,7 +200,7 @@ td {
 
 @media (min-width: 1000px) {
 
-  .trip {
+  .two-columns {
     display: flex;
     flex-flow: row wrap;
     margin: 2em;
@@ -208,37 +208,37 @@ td {
     gap: 2em;
   }
 
-  .trip>* {
+  .two-columns>* {
     flex: 1 45%;
   }
 
-  .trip h2 {
+  .two-columns h2 {
     flex-basis: 100%;
     position: sticky;
     top: 1em;
     order: 1;
   }
 
-  .trip #map {
+  .two-columns #map {
     top: 5em;
     order: 2;
   }
 
-  .trip .walk-metadata {
+  .two-columns .walk-metadata {
     position: sticky;
     top: 20em;
     order: 4
   }
 
-  .trip .post {
+  .two-columns .post {
     order: 3;
   }
 
-  .trip .post p:first-child {
+  .two-columns .post p:first-child {
     margin-top: 0;
   }
 
-  .trip .waypoints {
+  .two-columns .waypoints {
     order: 5;
   }
 
