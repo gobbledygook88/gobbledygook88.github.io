@@ -13,3 +13,5 @@ A blog. My blog? Not really a blog. More, a collection of biscuit crumbs.
 
     python scripts/build.py
     python scripts/serve.py
+
+    # view http://localhost:4443

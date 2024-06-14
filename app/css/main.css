@@ -197,3 +197,49 @@ td {
 .waypoint img.svg-icon {
   width: 0.75em;
 }
+
+@media (min-width: 1000px) {
+
+  .two-columns {
+    display: flex;
+    flex-flow: row wrap;
+    margin: 2em;
+    width: auto;
+    gap: 2em;
+  }
+
+  .two-columns>* {
+    flex: 1 45%;
+  }
+
+  .two-columns h2 {
+    flex-basis: 100%;
+    position: sticky;
+    top: 1em;
+    order: 1;
+  }
+
+  .two-columns #map {
+    top: 5em;
+    order: 2;
+  }
+
+  .two-columns .walk-metadata {
+    position: sticky;
+    top: 20em;
+    order: 4
+  }
+
+  .two-columns .post {
+    order: 3;
+  }
+
+  .two-columns .post p:first-child {
+    margin-top: 0;
+  }
+
+  .two-columns .waypoints {
+    order: 5;
+  }
+
+}
