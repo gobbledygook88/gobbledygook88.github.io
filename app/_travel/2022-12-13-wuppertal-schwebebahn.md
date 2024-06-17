@@ -33,6 +33,9 @@ route:
     - url: /travel/2022-12-13-wuppertal-schwebebahn/wuppertal-station-looking-down-river.jpg
       alt: Looking down river at Wuppertal station
       flex: 1
+    videos:
+    - url: https://www.youtube.com/embed/SHUhcv-mqG4
+      title: Wuppertal Schwebebahn - Wuppertal station
   - title: Onboard from Sonnborn
     latitude: 51.238134634342465
     longitude: 7.096862447767788

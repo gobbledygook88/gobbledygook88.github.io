@@ -87,10 +87,13 @@
         </figure>
         {%- endif %}
 
-        <iframe class="youtube-embed" src="https://www.youtube.com/embed/SHUhcv-mqG4"
-          title="Wuppertal Schwebebahn - Wuppertal station" frameborder="0"
+        {% if waypoint.videos -%}
+        {% for video in waypoint.videos -%}
+        <iframe class="youtube-embed" src="{{ video.url }}" title="{{ video.title }}" frameborder="0"
           allow="accelerometer; clipboard-write; encrypted-media; gyroscope"
           referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        {% endfor %}
+        {%- endif %}
 
         {% if waypoint.text -%}
         <p>{{ waypoint.text }}</p>
