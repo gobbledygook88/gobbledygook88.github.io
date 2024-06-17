@@ -22,6 +22,9 @@ route:
       alt: Schwebebahn arriving into Oberbarman station
     - url: /travel/2022-12-13-wuppertal-schwebebahn/oberbarmen-station-arrived.jpg
       alt: Stationery Schwebebahn at Oberbarman station
+    videos:
+    - url: https://www.youtube.com/embed/PdAMvc95IsA
+      title: Wuppertal Schwebebahn - Oberbarmen station
   - title: Wuppertal station
     latitude: 51.255967202664614
     longitude: 7.148464375130116
@@ -41,8 +44,9 @@ route:
     longitude: 7.096862447767788
     text:
     images:
-    - url: /travel/2022-12-13-wuppertal-schwebebahn/oberbarmen-station.jpg
-      alt:
+    videos:
+    - url: https://www.youtube.com/embed/LTP1_1lHeFk
+      title: Wuppertal Schwebebahn - onboard from Sonnborn
   - title: Vohwinkel station
     latitude: 51.23036698218902
     longitude: 7.0677905485969275
@@ -50,4 +54,7 @@ route:
     images:
     - url: /travel/2022-12-13-wuppertal-schwebebahn/vohwinkel-station.jpg
       alt: Vohwinkel station
+    videos:
+    - url: https://www.youtube.com/embed/R7nJjxG_BQQ
+      title: Wuppertal Schwebebahn - Vohwinkel station
 ---
