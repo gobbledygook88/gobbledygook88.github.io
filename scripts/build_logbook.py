@@ -1,6 +1,9 @@
 from argparse import ArgumentParser, BooleanOptionalAction
 from csv import DictReader
 from fetch_country_geojson import fetch_geojson
+from build import env
+import os
+import geojson
 
 
 def read_logbook():
@@ -9,7 +12,7 @@ def read_logbook():
 
 
 def write_file(destination, contents):
-    with open(destination, "w") as f:
+    with open(destination, "w", encoding="utf-8") as f:
         f.write(contents)
 
 
@@ -38,8 +41,22 @@ def fetch_and_write_all_geojson_files():
         write_file(destination, geojson)
 
 
-def build_logbook_js():
-    pass
+def merge_geojson_files():
+    files = []
+    collection = []
+
+    for file in files:
+        with open(file, "r") as f:
+            layer = geojson.load(f)
+            collection.append(layer)
+
+    destination_dir = os.path.join("build", "travel", "logbook")
+    destination = os.path.join(destination_dir, "logbook.geojson")
+
+    os.makedirs(destination_dir, exist_ok=True)
+
+    with open(destination, "w", encoding="utf-8") as f:
+        geojson.dump(geojson.GeometryCollection(collection), f)
 
 
 def build_logbook_html():
@@ -56,5 +73,5 @@ if __name__ == "__main__":
     if args.fetch_geojson:
         fetch_and_write_all_geojson_files()
 
-    build_logbook_js()
+    merge_geojson_files()
     build_logbook_html()
