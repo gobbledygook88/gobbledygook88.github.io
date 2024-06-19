@@ -1,3 +1,4 @@
+from argparse import ArgumentParser, BooleanOptionalAction
 from csv import DictReader
 from fetch_country_geojson import fetch_geojson
 
@@ -46,6 +47,14 @@ def build_logbook_html():
 
 
 if __name__ == "__main__":
-    fetch_and_write_all_geojson_files()
+    parser = ArgumentParser()
+    parser.add_argument("--fetch-geojson", action=BooleanOptionalAction)
+    parser.set_defaults(fetch_geojson=False)
+
+    args = parser.parse_args()
+
+    if args.fetch_geojson:
+        fetch_and_write_all_geojson_files()
+
     build_logbook_js()
     build_logbook_html()
