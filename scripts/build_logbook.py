@@ -19,7 +19,7 @@ def get_countries_with_areas(logbook):
     )
 
 
-def build_logbook():
+def fetch_and_write_all_geojson_files():
     logbook = read_logbook()
     countries = get_countries_with_areas(logbook)
 
@@ -37,5 +37,15 @@ def build_logbook():
         write_file(destination, geojson)
 
 
+def build_logbook_js():
+    pass
+
+
+def build_logbook_html():
+    pass
+
+
 if __name__ == "__main__":
-    build_logbook()
+    fetch_and_write_all_geojson_files()
+    build_logbook_js()
+    build_logbook_html()
