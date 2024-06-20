@@ -4,6 +4,7 @@ from fetch_country_geojson import fetch_geojson
 from render import render
 import os
 import geojson
+import shutil
 
 
 def read_logbook():
@@ -68,12 +69,22 @@ def build_logbook_html():
     destination = os.path.join(destination_dir, "index.html")
 
     with open(source, "r") as f:
-        html = render(f.read(), {"site": {"name": "foobar"}})
+        html = render(f.read(), {})
 
     os.makedirs(destination_dir, exist_ok=True)
 
     with open(destination, "w", encoding="utf-8") as f:
         f.write(html)
+
+
+def build_logbook_js():
+    source_dir = os.path.join("app", "js")
+    source = os.path.join(source_dir, "logbook.js")
+
+    destination_dir = os.path.join("build", "js")
+    destination = os.path.join(destination_dir, "logbook.js")
+
+    shutil.copyfile(source, destination)
 
 
 if __name__ == "__main__":
@@ -88,3 +99,4 @@ if __name__ == "__main__":
 
     merge_geojson_files()
     build_logbook_html()
+    build_logbook_js()
