@@ -2,6 +2,7 @@ from argparse import ArgumentParser, BooleanOptionalAction
 from csv import DictReader
 from fetch_country_geojson import fetch_geojson
 import os
+import shutil
 import geojson
 
 
@@ -59,19 +60,21 @@ def merge_geojson_files():
         geojson.dump(geojson.FeatureCollection(collection), f)
 
 
-# def build_logbook_html():
-# source_dir = os.path.join("app", "travel")
-# source = os.path.join(source_dir, "logbook.html")
+def build_logbook_html():
+    source_dir = os.path.join("app", "travel")
+    source = os.path.join(source_dir, "logbook.html")
 
-# destination_dir = os.path.join("build", "travel", "logbook")
-# destination = os.path.join(destination_dir, "index.html")
+    destination_dir = os.path.join("build", "travel", "logbook")
+    destination = os.path.join(destination_dir, "index.html")
 
-# html = env.render()
+    # html = env.render()
 
-# os.makedirs(destination_dir, exist_ok=True)
+    os.makedirs(destination_dir, exist_ok=True)
 
-# with open(destination, "w", encoding="utf-8") as f:
-#     f.write(html)
+    shutil.copyfile(source, destination)
+
+    # with open(destination, "w", encoding="utf-8") as f:
+    # f.write(html)
 
 
 if __name__ == "__main__":
@@ -85,4 +88,4 @@ if __name__ == "__main__":
         fetch_and_write_all_geojson_files()
 
     merge_geojson_files()
-    # build_logbook_html()
+    build_logbook_html()
