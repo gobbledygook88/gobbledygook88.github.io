@@ -1,8 +1,8 @@
 from argparse import ArgumentParser, BooleanOptionalAction
 from csv import DictReader
 from fetch_country_geojson import fetch_geojson
+from render import render
 import os
-import shutil
 import geojson
 
 
@@ -67,14 +67,13 @@ def build_logbook_html():
     destination_dir = os.path.join("build", "travel", "logbook")
     destination = os.path.join(destination_dir, "index.html")
 
-    # html = env.render()
+    with open(source, "r") as f:
+        html = render(f.read(), {"site": {"name": "foobar"}})
 
     os.makedirs(destination_dir, exist_ok=True)
 
-    shutil.copyfile(source, destination)
-
-    # with open(destination, "w", encoding="utf-8") as f:
-    # f.write(html)
+    with open(destination, "w", encoding="utf-8") as f:
+        f.write(html)
 
 
 if __name__ == "__main__":
