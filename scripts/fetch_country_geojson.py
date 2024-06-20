@@ -1,4 +1,5 @@
 import requests
+import geojson
 
 
 SOURCE = "https://raw.githubusercontent.com/georgique/world-geojson/develop"
@@ -15,4 +16,9 @@ def fetch_geojson(country, area):
     if response.status_code != 200:
         raise ValueError(f"{url} does not exist")
 
-    return response.text
+    collection = geojson.loads(response.text)
+
+    for feature in collection.features:
+        feature.properties.update({"country": country, "area": area})
+
+    return collection

@@ -1,7 +1,6 @@
 from argparse import ArgumentParser, BooleanOptionalAction
 from csv import DictReader
 from fetch_country_geojson import fetch_geojson
-from build import env
 import os
 import geojson
 
@@ -28,7 +27,7 @@ def fetch_and_write_all_geojson_files():
     countries = get_countries_with_areas(logbook)
 
     for country, area in countries:
-        geojson = fetch_geojson(country, area)
+        collection = fetch_geojson(country, area)
         destination = f"logbook/geojson/{country}"
 
         if area is not None:
@@ -38,7 +37,7 @@ def fetch_and_write_all_geojson_files():
 
         print(f"Writing {destination}")
 
-        write_file(destination, geojson)
+        write_file(destination, geojson.dumps(collection))
 
 
 def merge_geojson_files():
@@ -48,8 +47,8 @@ def merge_geojson_files():
 
     for file in files:
         with open(os.path.join(source_dir, file), "r") as f:
-            layer = geojson.load(f)
-            collection.append(layer)
+            feature = geojson.load(f)
+            collection.append(feature)
 
     destination_dir = os.path.join("build", "travel", "logbook")
     destination = os.path.join(destination_dir, "logbook.geojson")
@@ -57,11 +56,22 @@ def merge_geojson_files():
     os.makedirs(destination_dir, exist_ok=True)
 
     with open(destination, "w", encoding="utf-8") as f:
-        geojson.dump(geojson.GeometryCollection(collection), f)
+        geojson.dump(geojson.FeatureCollection(collection), f)
 
 
-def build_logbook_html():
-    pass
+# def build_logbook_html():
+# source_dir = os.path.join("app", "travel")
+# source = os.path.join(source_dir, "logbook.html")
+
+# destination_dir = os.path.join("build", "travel", "logbook")
+# destination = os.path.join(destination_dir, "index.html")
+
+# html = env.render()
+
+# os.makedirs(destination_dir, exist_ok=True)
+
+# with open(destination, "w", encoding="utf-8") as f:
+#     f.write(html)
 
 
 if __name__ == "__main__":
@@ -75,4 +85,4 @@ if __name__ == "__main__":
         fetch_and_write_all_geojson_files()
 
     merge_geojson_files()
-    build_logbook_html()
+    # build_logbook_html()
