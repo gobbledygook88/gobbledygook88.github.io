@@ -42,11 +42,12 @@ def fetch_and_write_all_geojson_files():
 
 
 def merge_geojson_files():
-    files = []
+    source_dir = os.path.join("logbook", "geojson")
+    files = os.listdir(source_dir)
     collection = []
 
     for file in files:
-        with open(file, "r") as f:
+        with open(os.path.join(source_dir, file), "r") as f:
             layer = geojson.load(f)
             collection.append(layer)
 
