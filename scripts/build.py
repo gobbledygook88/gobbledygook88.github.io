@@ -2,7 +2,7 @@ import os
 import shutil
 import markdown
 import yaml
-from render import env, render_template
+from render import render_template, render_raw
 
 CONFIG_FILE = "_config.yml"
 CONTENT_DIRS = {"blog": "app/_blog", "walks": "app/_walks", "travel": "app/_travel"}
@@ -87,9 +87,7 @@ def build_index(site_config, posts, content_subdir):
     site_config["posts"] = posts
     index_path = os.path.join("app", content_subdir, "index.html")
     metadata, raw_html_content = parse_markdown(index_path)
-    html_content = env.from_string(raw_html_content).render(
-        {"site": site_config, "page": metadata}
-    )
+    html_content = render_raw(raw_html_content, {"site": site_config, "page": metadata})
     context = {"site": site_config, "page": metadata, "content": html_content}
     template_name = f"{metadata['layout']}.html"
     html_output = render_template(template_name, context)
