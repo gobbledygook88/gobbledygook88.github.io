@@ -24,8 +24,7 @@ def get_countries_with_areas(logbook):
     )
 
 
-def fetch_and_write_all_geojson_files():
-    logbook = read_logbook()
+def fetch_and_write_all_geojson_files(logbook):
     countries = get_countries_with_areas(logbook)
 
     for country, area in countries:
@@ -61,7 +60,7 @@ def merge_geojson_files():
         geojson.dump(geojson.FeatureCollection(collection), f)
 
 
-def build_logbook_html():
+def build_logbook_html(logbook):
     source_dir = os.path.join("app", "travel")
     source = os.path.join(source_dir, "logbook.html")
 
@@ -69,7 +68,10 @@ def build_logbook_html():
     destination = os.path.join(destination_dir, "index.html")
 
     with open(source, "r") as f:
-        html = render(f.read(), {})
+        html = render(
+            f.read(),
+            {"page": {"num_countries": 99, "num_cities": 88, "num_continents": 77}},
+        )
 
     os.makedirs(destination_dir, exist_ok=True)
 
@@ -94,9 +96,11 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    logbook = read_logbook()
+
     if args.fetch_geojson:
-        fetch_and_write_all_geojson_files()
+        fetch_and_write_all_geojson_files(logbook)
 
     merge_geojson_files()
-    build_logbook_html()
+    build_logbook_html(logbook)
     build_logbook_js()

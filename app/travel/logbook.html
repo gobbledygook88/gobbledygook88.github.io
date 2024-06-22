@@ -29,6 +29,22 @@
 
   <div class="site">
     <div id="map" data-map-data="logbook.geojson"></div>
+
+    <ul class="walk-metadata">
+      <li>
+        <img class="svg-icon" src="/img/svg/location-dot-solid.svg" alt="Location pin icon" width="20px" />
+        {{ page.num_continents }}
+      </li>
+      <li>
+        <img class="svg-icon" src="/img/svg/person-walking-arrow-loop-left-solid.svg" alt="Person walking icon"
+          width="20px" />
+        {{ page.num_countries }}
+      </li>
+      <li>
+        <img class="svg-icon" src="/img/svg/road-solid.svg" alt="Road icon" width="20px" />
+        {{ page.num_cities }}
+      </li>
+    </ul>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
