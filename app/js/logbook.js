@@ -32,7 +32,8 @@
         "weight": 1,
         "opacity": 0.65
       }).addTo(map);
-      map.fitBounds(geojsonLayer.getBounds());
+
+      map.setView([0, 0], 1);
     });
 
 })();
