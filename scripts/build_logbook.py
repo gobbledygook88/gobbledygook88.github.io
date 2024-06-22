@@ -24,6 +24,18 @@ def get_countries_with_areas(logbook):
     )
 
 
+def get_countries(logbook):
+    return set(location["country"] for location in logbook)
+
+
+def get_continents(logbook):
+    return set(location["continent"] for location in logbook)
+
+
+def get_cities(logbook):
+    return set(location["location"] for location in logbook)
+
+
 def fetch_and_write_all_geojson_files(logbook):
     countries = get_countries_with_areas(logbook)
 
@@ -70,7 +82,13 @@ def build_logbook_html(logbook):
     with open(source, "r") as f:
         html = render(
             f.read(),
-            {"page": {"num_countries": 99, "num_cities": 88, "num_continents": 77}},
+            {
+                "page": {
+                    "num_countries": len(get_countries(logbook)),
+                    "num_cities": len(get_cities(logbook)),
+                    "num_continents": len(get_continents(logbook)),
+                }
+            },
         )
 
     os.makedirs(destination_dir, exist_ok=True)

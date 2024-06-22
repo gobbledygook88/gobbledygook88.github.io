@@ -167,6 +167,10 @@ td {
   text-align: center;
 }
 
+.walk-metadata li h4 {
+  margin: 0 auto 1em;
+}
+
 .walk-metadata .svg-icon {
   display: block;
   margin: 0 auto 1em;
