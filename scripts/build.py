@@ -1,16 +1,13 @@
 import os
 import shutil
 import markdown
-from jinja2 import Environment, FileSystemLoader
 import yaml
+from render import render_template, render
 
 CONFIG_FILE = "_config.yml"
 CONTENT_DIRS = {"blog": "app/_blog", "walks": "app/_walks", "travel": "app/_travel"}
-TEMPLATE_DIR = "app/_layouts"
 OUTPUT_DIR = "build"
 STATIC_ASSETS = ["assets", "css", "img", "js", "CNAME", "index.html"]
-
-env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
 
 
 def clear_directory(directory):
@@ -23,10 +20,6 @@ def clear_directory(directory):
                 shutil.rmtree(item_path)
         except Exception as e:
             print(f"Failed to delete {item_path}. Reason: {e}")
-
-
-def render_template(template_name, context):
-    return env.get_template(template_name).render(context)
 
 
 def load_yaml_config(file_path):
@@ -94,9 +87,7 @@ def build_index(site_config, posts, content_subdir):
     site_config["posts"] = posts
     index_path = os.path.join("app", content_subdir, "index.html")
     metadata, raw_html_content = parse_markdown(index_path)
-    html_content = env.from_string(raw_html_content).render(
-        {"site": site_config, "page": metadata}
-    )
+    html_content = render(raw_html_content, {"site": site_config, "page": metadata})
     context = {"site": site_config, "page": metadata, "content": html_content}
     template_name = f"{metadata['layout']}.html"
     html_output = render_template(template_name, context)

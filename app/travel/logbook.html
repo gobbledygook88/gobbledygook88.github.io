@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Logbook</title>
+  <meta name="viewport" content="width=device-width">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Oxygen'>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+
+  <header class="banner">
+    <h1 class="title"><a href="/">Biscuit Crumbs</a></h1>
+    <a href="https://www.alltrails.com/members/marcus-mo/maps"><img class="svg-icon" src="/img/svg/alltrails.svg"
+        alt="AllTrails" width="20px" /></a>
+    <a href="https://strava.app.link/C5jt2v2v8Jb"><img class="svg-icon" src="/img/svg/strava.svg" alt="Strava"
+        width="20px" /></a>
+  </header>
+
+  <div class="site">
+    <div id="map" data-map-data="logbook.geojson"></div>
+
+    <ul class="walk-metadata">
+      <li>
+        <h4>Continents</h4>
+        {{ page.num_continents }}
+      </li>
+      <li>
+        <h4>Countries</h4>
+        {{ page.num_countries }}
+      </li>
+      <li>
+        <h4>Cities</h4>
+        &gt; {{ page.num_cities }}
+      </li>
+    </ul>
+
+    <div class="post">
+      <p>This logbook records which countries I have been to. I aim to keep it eventually updated. Cities is hard to
+        define, and spend time listing out, so I have only recorded major locations which featured during a visit.</p>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <script src="/js/logbook.js"></script>
+  <script src="/js/ga.js"></script>
+</body>
+
+</html>
