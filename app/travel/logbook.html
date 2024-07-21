@@ -33,21 +33,28 @@
     <ul class="walk-metadata">
       <li>
         <h4>Continents</h4>
-        {{ page.num_continents }}
+        {{ page.num_continents_visited }}
       </li>
       <li>
         <h4>Countries</h4>
-        {{ page.num_countries }}
+        {{ page.num_countries_visited }}
       </li>
       <li>
-        <h4>Cities</h4>
-        &gt; {{ page.num_cities }}
+        <h4>Places</h4>
+        &gt; {{ page.num_places_visited }}
       </li>
     </ul>
 
     <div class="post">
-      <p>This logbook records which countries I have been to. I aim to keep it eventually updated. Cities is hard to
-        define, and spend time listing out, so I have only recorded major locations which featured during a visit.</p>
+      <p>This logbook records which countries I have been to. I aim to keep it eventually updated. It is hard to
+        track every visited location so I have only recorded major locations which featured during a visit.</p>
+
+      <ul>
+        {% for continent, num_countries in page.num_countries_visited_per_continent.items() %}
+        <li>{{ continent | replace("_", " ") | title }}: {{ num_countries }} / {{
+          page.num_countries_per_continent[continent] }}</li>
+        {% endfor %}
+      </ul>
     </div>
   </div>
 
