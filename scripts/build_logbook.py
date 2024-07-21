@@ -36,7 +36,14 @@ def get_countries_with_areas(logbook):
 
 
 def get_countries(logbook):
-    return set(location["country"] for location in logbook)
+    return set(
+        (
+            location["country"]
+            if location["country"] != "united_kingdom"
+            else location["area"]
+        )
+        for location in logbook
+    )
 
 
 def get_continents(logbook):
