@@ -11,7 +11,7 @@ import shutil
 NUM_COUNTRIES_PER_CONTINENT = {
     "africa": 54,
     "asia": 49,
-    "europe": 51,
+    "europe": 44,
     "north_america": 23,
     "south_america": 12,
     "oceania": 14,
