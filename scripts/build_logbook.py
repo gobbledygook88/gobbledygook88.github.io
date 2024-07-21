@@ -51,7 +51,12 @@ def get_countries_per_continent(logbook):
     groups = defaultdict(set)
 
     for location in logbook:
-        groups[location["continent"]].add(location["country"])
+        country = location["country"]
+
+        if location["country"] == "united_kingdom":
+            country = location["area"]
+
+        groups[location["continent"]].add(country)
 
     return groups
 
