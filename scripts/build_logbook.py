@@ -1,10 +1,21 @@
 from argparse import ArgumentParser, BooleanOptionalAction
+from collections import defaultdict
 from csv import DictReader
 from fetch_country_geojson import fetch_geojson
 from render import render
 import os
 import geojson
 import shutil
+
+
+NUM_COUNTRIES_PER_CONTINENT = {
+    "africa": 54,
+    "asia": 49,
+    "europe": 51,
+    "north_america": 23,
+    "south_america": 12,
+    "oceania": 14,
+}
 
 
 def read_logbook():
@@ -32,8 +43,24 @@ def get_continents(logbook):
     return set(location["continent"] for location in logbook)
 
 
-def get_cities(logbook):
+def get_places(logbook):
     return set(location["location"] for location in logbook)
+
+
+def get_countries_per_continent(logbook):
+    groups = defaultdict(set)
+
+    for location in logbook:
+        groups[location["continent"]].add(location["country"])
+
+    return groups
+
+
+def get_num_countries_per_continent(logbook):
+    return {
+        continent: len(countries)
+        for continent, countries in get_countries_per_continent(logbook).items()
+    }
 
 
 def fetch_and_write_all_geojson_files(logbook):
@@ -84,9 +111,13 @@ def build_logbook_html(logbook):
             f.read(),
             {
                 "page": {
-                    "num_countries": len(get_countries(logbook)),
-                    "num_cities": len(get_cities(logbook)),
-                    "num_continents": len(get_continents(logbook)),
+                    "num_countries_visited": len(get_countries(logbook)),
+                    "num_places_visited": len(get_places(logbook)),
+                    "num_continents_visited": len(get_continents(logbook)),
+                    "num_countries_visited_per_continent": get_num_countries_per_continent(
+                        logbook
+                    ),
+                    "num_countries_per_continent": NUM_COUNTRIES_PER_CONTINENT,
                 }
             },
         )
