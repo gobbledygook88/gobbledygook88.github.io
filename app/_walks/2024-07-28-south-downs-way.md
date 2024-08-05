@@ -14,11 +14,11 @@ route:
   duration: 7 days
   gpx_url_text: AllTrails
   gpx_url: https://www.alltrails.com/explore/map/surrey-valleys-3d387d2?u=m&sh=xr4vxe
-  waypoints:
-    - title: Winchester
-      latitude : 51.28202574415372
-      longitude : -0.07826041260999102
-      text:
+  # waypoints:
+  #   - title: Winchester
+  #     latitude : 51.28202574415372
+  #     longitude : -0.07826041260999102
+  #     text:
 ---
 
 The South Downs Way was my first thru-hike, and even my first ever experience at camping too. I first came across it when walking Ditchling Beacons and Seven Sisters. There were sign posts dotted around and it stuck with me ever since. It was a toss up between this and the North Downs Way, which I have actually walked more of, but the South Downs seemed a little more appealing.
