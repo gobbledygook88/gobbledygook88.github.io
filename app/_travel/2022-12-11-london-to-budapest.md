@@ -10,22 +10,22 @@ route:
   start: London
   end: Budapest
   type: Linear
-  distance: 17.4km
+  distance: 2900km
   duration: 7 days
   waypoints:
   - title: London to Brussels
     latitude: 51.5329977446607
     longitude: -0.12674994264680498
-    text: early train, busy, lounge access. train packed
-  - title: Brussels to Cologne
+    text: Despite choosing to take a really early train, Eurostar is ever popular and departures is extremely packed so much so every seat was taken on the train also. All in all, an uneventful train journey to Brussels. Not the best experience given a large section of the journey is underground. Purely functional.
+  - title: Brussels
     latitude: 50.83622576041437
     longitude: 4.336118903248739
-    text: arrived around noon. hotel was the other side of brussels. decided to walk all around the city as a tourist in the rain. visited parks, touristy areas, christmas market, frites, bought chocolate
-  - title: Cologne to Wuppertal
+    text: Brussels had a few interesting spots of interest - the Porte de Hal, the Palais de Justice, Notre-Dame, Palais de Bruxelles, Grand Place and of course Mannekin Pis. Following these landmarks provided a delightful tour of the city, with plenty of spots to rest and people watch. The Christmas market was held towards the west of the city and was definitely more fun to visit at night time.
+  - title: Cologne
     latitude: 50.94311233864501
     longitude: 6.958732323298055
-    text: magnificent train station. so many trains to see in quick succession. massive cathedral. small christmas market
-  - title: Wuppertal to Dusseldorf
+    text: Cologne's train station is magnificent. So many platforms and opportunities to spot trains given a vast amount pass through in quick succession. Once I could pry myself out of the station, I was immediately greeted by the largest Gothic church in Northern Europe. The Christmas market was just next to the cathedral. Offerings were limited but good to walk around and snack nonetheless.
+  - title: Wuppertal
     latitude: 51.254522785942534
     longitude: 7.1500507787919325
     text: Monorail
