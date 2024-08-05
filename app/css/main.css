@@ -40,7 +40,9 @@ a:visited {
 }
 
 table {
+  width: 888px;
   margin: 0 auto;
+  margin-left: -150px;
 }
 
 th,
