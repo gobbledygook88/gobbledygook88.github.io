@@ -7,7 +7,7 @@ from render import render_template, render
 CONFIG_FILE = "_config.yml"
 CONTENT_DIRS = {"blog": "app/_blog", "walks": "app/_walks", "travel": "app/_travel"}
 OUTPUT_DIR = "build"
-STATIC_ASSETS = ["assets", "css", "img", "js", "CNAME", "index.html"]
+STATIC_ASSETS = ["assets", "css", "img", "js", "CNAME", "index.html", "cwmask.html"]
 
 
 def clear_directory(directory):
