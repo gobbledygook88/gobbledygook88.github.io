@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mask Crossword</title>
+
+  <style>
+    #canvas-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    #canvas {
+      display: block;
+      width: auto;
+      height: auto;
+      margin: 0 auto;
+      max-width: 500px;
+    }
+
+    #copyButton {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #copyButton:hover {
+      background-color: #45a049;
+    }
+
+    #stats {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="canvas-container">
+    <input type="file" id="upload" accept="image/*">
+    <canvas id="canvas"></canvas>
+    <button id="copyButton" style="display: none;">Copy Masked Image to Clipboard</button>
+    <div id="stats" style="display: none;">
+      <p id="filledCount"></p>
+      <p id="totalCount"></p>
+      <p id="percentage"></p>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const copyButton = document.getElementById('copyButton');
+    const upload = document.getElementById('upload');
+
+    function determineCellSize(ctx, width, height) {
+      const imageData = ctx.getImageData(0, 0, width, height);
+      const data = imageData.data;
+
+      const horizontalLines = [];
+      const verticalLines = [];
+
+      // Threshold for detecting grid lines
+      const lineThreshold = 100;  // Adjust this value as needed
+      const lineDensityThreshold = 0.6;  // Percentage of pixels that must be dark to consider a line
+
+      // Detect horizontal lines, considering groups of dark pixels
+      let lastY = -1;
+      for (let y = 0; y < height; y++) {
+        let darkPixelCount = 0;
+        for (let x = 0; x < width; x++) {
+          const index = (y * width + x) * 4;
+          const brightness = (data[index] + data[index + 1] + data[index + 2]) / 3;
+          if (brightness < lineThreshold) {
+            darkPixelCount++;
+          }
+        }
+        if (darkPixelCount / width > lineDensityThreshold) {
+          if (lastY === -1 || y - lastY > 1) {
+            horizontalLines.push(y);
+          }
+          lastY = y;
+        }
+      }
+
+      // Detect vertical lines, considering groups of dark pixels
+      let lastX = -1;
+      for (let x = 0; x < width; x++) {
+        let darkPixelCount = 0;
+        for (let y = 0; y < height; y++) {
+          const index = (y * width + x) * 4;
+          const brightness = (data[index] + data[index + 1] + data[index + 2]) / 3;
+          if (brightness < lineThreshold) {
+            darkPixelCount++;
+          }
+        }
+        if (darkPixelCount / height > lineDensityThreshold) {
+          if (lastX === -1 || x - lastX > 1) {
+            verticalLines.push(x);
+          }
+          lastX = x;
+        }
+      }
+
+      // Handle cases where no lines are detected
+      if (horizontalLines.length < 2 || verticalLines.length < 2) {
+        console.error('Unable to detect enough grid lines. Using fallback cell size.');
+        return Math.min(width, height) / 10;  // Fallback: Estimate based on image size
+      }
+
+      // Calculate average distance between horizontal lines (cell height)
+      let totalHeight = 0;
+      for (let i = 1; i < horizontalLines.length; i++) {
+        totalHeight += (horizontalLines[i] - horizontalLines[i - 1]);
+      }
+      const avgHeight = totalHeight / (horizontalLines.length - 1);
+
+      // Calculate average distance between vertical lines (cell width)
+      let totalWidth = 0;
+      for (let i = 1; i < verticalLines.length; i++) {
+        totalWidth += (verticalLines[i] - verticalLines[i - 1]);
+      }
+      const avgWidth = totalWidth / (verticalLines.length - 1);
+
+      // Ensure that avgWidth and avgHeight are valid numbers
+      const cellSize = (avgWidth + avgHeight) / 2;
+      return cellSize > 0 ? Math.round(cellSize) : Math.min(width, height) / 10;  // Fallback if cellSize is invalid
+    }
+
+    function detectGridBoundaries(ctx, width, height, cellSize) {
+      const imageData = ctx.getImageData(0, 0, width, height);
+      const data = imageData.data;
+
+      let top = -1, bottom = -1, left = -1, right = -1;
+
+      // Detect top boundary
+      for (let y = 0; y < height; y++) {
+        let darkPixelCount = 0;
+        for (let x = 0; x < width; x++) {
+          const index = (y * width + x) * 4;
+          const brightness = (data[index] + data[index + 1] + data[index + 2]) / 3;
+          if (brightness < 100) {
+            darkPixelCount++;
+          }
+        }
+        if (darkPixelCount > width * 0.5) {
+          top = y;
+          break;
+        }
+      }
+
+      // Detect bottom boundary
+      for (let y = height - 1; y >= 0; y--) {
+        let darkPixelCount = 0;
+        for (let x = 0; x < width; x++) {
+          const index = (y * width + x) * 4;
+          const brightness = (data[index] + data[index + 1] + data[index + 2]) / 3;
+          if (brightness < 100) {
+            darkPixelCount++;
+          }
+        }
+        if (darkPixelCount > width * 0.5) {
+          bottom = y;
+          break;
+        }
+      }
+
+      // Detect left boundary
+      for (let x = 0; x < width; x++) {
+        let darkPixelCount = 0;
+        for (let y = 0; y < height; y++) {
+          const index = (y * width + x) * 4;
+          const brightness = (data[index] + data[index + 1] + data[index + 2]) / 3;
+          if (brightness < 100) {
+            darkPixelCount++;
+          }
+        }
+        if (darkPixelCount > height * 0.5) {
+          left = x;
+          break;
+        }
+      }
+
+      // Detect right boundary
+      for (let x = width - 1; x >= 0; x--) {
+        let darkPixelCount = 0;
+        for (let y = 0; y < height; y++) {
+          const index = (y * width + x) * 4;
+          const brightness = (data[index] + data[index + 1] + data[index + 2]) / 3;
+          if (brightness < 100) {
+            darkPixelCount++;
+          }
+        }
+        if (darkPixelCount > height * 0.5) {
+          right = x;
+          break;
+        }
+      }
+
+      return { top, bottom, left, right };
+    }
+
+    function maskFilledCells(ctx, width, height, cellSize, fillThreshold = 0.1, blackCellThreshold = 0.8, debug = false) {
+      const boundaries = detectGridBoundaries(ctx, width, height, cellSize);
+      const { top, bottom, left, right } = boundaries;
+
+      // Define the central region of the cell (50% of the cell's size)
+      const centralRegionSize = 0.5 * cellSize;
+      const centralOffset = (cellSize - centralRegionSize) / 2;
+
+      let filledCount = 0;
+      let totalNonBlackCells = 0;
+
+      // Iterate over the detected grid area
+      for (let y = top; y + cellSize <= bottom; y += cellSize) {
+        for (let x = left; x + cellSize <= right; x += cellSize) {
+          const safeWidth = Math.min(cellSize, right - x + 1);
+          const safeHeight = Math.min(cellSize, bottom - y + 1);
+
+          const centerX = x + centralOffset;
+          const centerY = y + centralOffset;
+
+          // Debug: Draw the cell borders in green
+          if (debug) {
+            ctx.strokeStyle = 'green';
+            ctx.strokeRect(x, y, safeWidth, safeHeight);
+
+            // Debug: Draw the central region borders in purple
+            ctx.strokeStyle = 'purple';
+            ctx.strokeRect(centerX, centerY, centralRegionSize, centralRegionSize);
+          }
+
+          const data = ctx.getImageData(centerX, centerY, centralRegionSize, centralRegionSize);
+          const pixels = data.data;
+          let darkPixelCount = 0;
+
+          // Iterate over the pixels in the central region
+          for (let i = 0; i < pixels.length; i += 4) {
+            const r = pixels[i];
+            const g = pixels[i + 1];
+            const b = pixels[i + 2];
+            const brightness = (r + g + b) / 3;
+            if (brightness < 50) darkPixelCount++;  // Adjust this threshold based on your needs
+          }
+
+          // Calculate darkPixelRatio using the number of pixels in the central region
+          const totalCentralPixels = pixels.length / 4;
+          const darkPixelRatio = darkPixelCount / totalCentralPixels;
+
+          // Skip fully black cells (black boxes in crosswords)
+          if (darkPixelRatio > blackCellThreshold) {
+            continue; // Do not count or mask fully black cells
+          }
+
+          totalNonBlackCells++; // Count non-black cells
+
+          // Mask cells with letters (partially filled cells)
+          if (darkPixelRatio > fillThreshold) {
+            filledCount++; // Count filled cells
+            ctx.fillStyle = 'red';  // Change the fill color to red
+            ctx.fillRect(centerX, centerY, centralRegionSize, centralRegionSize);
+          }
+        }
+      }
+
+      // Calculate the filled percentage
+      const filledPercentage = (filledCount / totalNonBlackCells) * 100;
+
+      // Update the stats display
+      document.getElementById('filledCount').textContent = `Filled cells: ${filledCount}`;
+      document.getElementById('totalCount').textContent = `Total cells (excluding black cells): ${totalNonBlackCells}`;
+      document.getElementById('percentage').textContent = `Percentage filled: ${filledPercentage.toFixed(2)}%`;
+
+      // Show the stats section
+      document.getElementById('stats').style.display = 'block';
+    }
+
+    // Usage within the Canvas example
+    upload.addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const img = new Image();
+        img.onload = function () {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+
+          const cellSize = determineCellSize(ctx, img.width, img.height);
+          console.log('Detected cell size:', cellSize);
+
+          // Mask the crossword and enable debugging
+          maskFilledCells(ctx, img.width, img.height, cellSize, 0.1, 0.8, false);
+
+          // Display the copy button after masking
+          copyButton.style.display = 'inline-block';
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    copyButton.addEventListener('click', function () {
+      canvas.toBlob(function (blob) {
+        const item = new ClipboardItem({ 'image/png': blob });
+        navigator.clipboard.write([item]).then(function () {
+          alert('Masked image copied to clipboard!');
+        }, function (err) {
+          console.error('Failed to copy: ', err);
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
