@@ -14,11 +14,64 @@ route:
   duration: 7 days
   gpx_url_text: AllTrails
   gpx_url: https://www.alltrails.com/explore/map/surrey-valleys-3d387d2?u=m&sh=xr4vxe
-  # waypoints:
-  #   - title: Winchester
-  #     latitude : 51.28202574415372
-  #     longitude : -0.07826041260999102
-  #     text:
+  waypoints:
+    - title: Winchester train station (Day 1)
+      latitude : 51.06718454811706
+      longitude : -1.3197108056735272
+      text: The journey begins at Winchester train station. It is a 1.3km walk to the official start of the South Downs Way, but you get to pass the cathedral and stock up on last minute supplies and equipment if needed.
+    - title: Winchester City Mill
+      latitude : 51.0613365517769
+      longitude : -1.3079521195542652
+      text: Winchester City Mill on the River Itchen is the official starting point of the South Downs Way. Don't cross the bridge but cross the road and head south on the The Wiers path.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-1-start-point.jpg
+        alt: Starting point of South Downs Way
+      - url: walks/2024-07-28-south-downs-way/day-1-river-itchen.jpg
+        alt: Looking down the River Itchen
+    - title: A step into the countryside
+      latitude : 51.05036847121613
+      longitude : -1.2589772043236553
+      text: After crossing the M3, we leave Winchester and enter the countryside.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-1-countryside.jpg
+        alt: The countryside
+    - title: Holden Farm
+      latitude : 51.03765981084017
+      longitude : -1.200313035722208
+      text: After a couple of hours of walking, Holden Farm is a great place for lunch. They sell sandwiches, sausage rolls and drinks. It is also a campsite and would make a great place for a first night if you arrived in Winchester late. There are clean toilets and a water tap too.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-1-holden-farm-1.jpg
+        alt: Holden Farm cafe
+      - url: walks/2024-07-28-south-downs-way/day-1-holden-farm-2.jpg
+        alt: Holden Farm toilets and showers
+    - title: Beacon Hill
+      latitude : 50.99822575732212
+      longitude : -1.142074319578535
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-1-beacon-hill.jpg
+        alt: Beacon Hill trig-point
+    - title: Old Winchester Hill
+      latitude : 50.980528674124635
+      longitude : -1.086647050342046
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-1-old-winchester-hill.jpg
+        alt: Old Winchester Hill
+    - title: Meon Springs campsite and cafe
+      latitude : 50.98988187646779
+      longitude : -1.0672953329849266
+      text: Another candidate for camping on the first day. It has a great cafe to refuel with a water tap round the back. In hindsight, I should have finished here. The final climb up to the Sustainability Centre was what killed my hamstrings, while walking in 30C sun.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-1-meon-springs-1.jpg
+        alt: Meon Springs campsite
+      - url: walks/2024-07-28-south-downs-way/day-1-meon-springs-2.jpg
+        alt: Meon Springs campsite
+    - title: Sustainability Centre
+      latitude : 50.96795321788909
+      longitude : -1.0378368370805588
+      text: Having finally arrived at the Sustainability Centre after a gruelling 35km, I pitched my tent, cleaned myself up, forced down some food and slept very very well. The birds will be collectively singing in full around 5am (which I loved). A quick pack up and refill of water bottles meant I set off quite early the next morning.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-1-sustainability-centre.jpg
+        alt: Pitched tent at Sustainability Centre
 ---
 
 The South Downs Way was my first thru-hike, and even my first ever experience at camping too. I first came across it when walking Ditchling Beacons and Seven Sisters. There were sign posts dotted around and it stuck with me ever since. It was a toss up between this and the North Downs Way, which I have actually walked more of, but the South Downs seemed a little more appealing.
