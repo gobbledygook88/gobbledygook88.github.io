@@ -127,6 +127,37 @@ route:
         alt: Cocking
       - url: walks/2024-07-28-south-downs-way/day-2-cocking-2.jpg
         alt: Cocking
+    - title: Morning animals (Day 3)
+      latitude: 50.94087073813719
+      longitude: -0.7311883222326118
+      text: The day starts with a moderate climb. There are lots of farm animals, notably sheep, but also wild rabbits if you are lucky.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-3-animals-1.jpg
+        alt: Sheep
+      - url: walks/2024-07-28-south-downs-way/day-3-animals-2.jpg
+        alt: Rabbits
+    - title: Littleton Farm Campsite and Cadence Cafe
+      latitude: 50.92220202021835
+      longitude: -0.64888706329818
+      text: This is an alternative campsite if you arrived at Manor Farm relatively early in the afternoon and want to walk a little more. Another Cadence cafe is right next door and is a great place to grab breakfast, and fill up water bottles, where ever you camped the night before.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-3-littleton-farm.jpg
+        alt: Rolling hills
+    - title: Slindon Estate
+      latitude: 50.90950570300622
+      longitude: -0.6012440520090282
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-3-slindon-estate.jpg
+        alt: Slindon Estate
+    - title: Amberley (end of Day 3)
+      latitude: 50.90223300252227
+      longitude: -0.544264237738569
+      text: As we cross rivers and train tracks into Amberley, we have another water tap available and views of Amberley Castle. Would recommend taking a detour to Amberley Tea Rooms for a scenic bite to eat next to the river. The train station is also across the road in case you want to cut the trail in half. Since it was forecast to be 32C this afternoon, I had decided I wanted to set off at 7am and make it to Amberley for lunch, during which the sunshine was already really really hot. I walked a little further along the trail to the junction of Mill Lane, at which I took and walked down a steep road towards Amberley town. The Black Horse pub is a great place to stay mid-way through the walk. Wonderful rooms and great food too!
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-3-amberley-1.jpg
+        alt: Water tap
+      - url: walks/2024-07-28-south-downs-way/day-3-amberley-2.jpg
+        alt: Amberley hills
 ---
 
 The South Downs Way was my first thru-hike, and even my first ever experience at camping too. I first came across it when walking Ditchling Beacons and Seven Sisters. There were sign posts dotted around and it stuck with me ever since. It was a toss up between this and the North Downs Way, which I have actually walked more of, but the South Downs seemed a little more appealing.
