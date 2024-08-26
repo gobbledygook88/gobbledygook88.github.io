@@ -158,6 +158,57 @@ route:
         alt: Water tap
       - url: walks/2024-07-28-south-downs-way/day-3-amberley-2.jpg
         alt: Amberley hills
+    - title: Amberley Mount (Day 4)
+      latitude: 50.90277349820072
+      longitude: -0.5161374764302139
+      text: I chose to stop in Amberley because I knew there would be a really hard climb once you leave the town. In fact, today would feature three hard climbs so I would class this my hardest day. As you'll see later, it was also the most beautiful. The Black Horse pub packed a nutritious lunch for me, of which I decided I would eat for breakfast once I had conquered the first hill.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-4-morning.jpg
+        alt: Amberley Mount
+    - title: A24 / Washington turning
+      latitude: 50.8964994120135
+      longitude: -0.43025333241748975
+      text: I knew about this turning during research so was on the lookout for it, and I'm glad I took it. Further along the true route is a crossing at the A24 dual carriageway. The traffic is extremely fast with multiple lanes in both directions. This small diversion is also officially signposted as the South Downs Way and provides a footbridge over the A24. I arrived to this point quite early before noon so decided to take a break on top of the hill looking down on Washington.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-4-washington-turn.jpg
+        alt: Signpost indicating the turning to Washington
+      - url: walks/2024-07-28-south-downs-way/day-4-washington-viewpoint.jpg
+        alt: The view onto Washington
+    - title: The Frankland Arms, Washington
+      latitude: 50.90486559521179
+      longitude: -0.40491545265484247
+      text: Again, planning paid dividends here. The second climb of the day was just after Washington, so I knew I should refuel before tackling it. I waited for the Frankland Arms pub to open and ate a great lunch of scampi and chips.
+    - title: Chanctonbury Ring
+      latitude: 50.89615683789775
+      longitude: -0.38125911930847284
+      text: The second climb was a long and gruelling one, especially on a hot day. But at the top is Chanctonbury Ring, a prehistoric hill fort with absolutely stunning views. Words and photos cannot do these views justice. This was definitely the highlight of the day.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-4-chanctonbury-hill-1.jpg
+        alt: View from Chanctonbury Ring
+        flex: 2
+      - url: walks/2024-07-28-south-downs-way/day-4-chanctonbury-hill-2.jpg
+        alt: View from Chanctonbury Ring
+        flex: 1
+    - title: Steyning Bowl
+      latitude: 50.87183258040735
+      longitude: -0.3486895772865331
+      text: The heat and climbs were definitely taking its toll by this point of the day. Luckily, there are a couple of viewing benches alongside the road overlooking Steyning Bowl. As is with most of the South Downs, amazing views.
+    - title: Water tap
+      latitude: 50.87126028462722
+      longitude: -0.29936669260204624
+      text: A very welcome water tap placed right on the way. A bench provides some rest in the shade.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-4-water-tap.jpg
+        alt: Water tap
+    - title: YHA Truleigh Hill (end of Day 4)
+      latitude: 50.88124013479072
+      longitude: -0.26638556063646657
+      text: After the final climb of the day, which was pretty tough and involved a couple of pauses, the Truleigh Hill hostel is wonderfully presented directly on the South Downs Way. Reception is on the first floor and check-in was straightforward with many aspects of the hostel explained. There are water taps at the entrance to the hostel building. The campsite is on a slight incline, so finding a place to pitch the tent was interesting. The showers and toilets round the back of the hostel building were excellent.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-4-truleigh-hill.jpg
+        alt: YHA Truleigh Hill
+      - url: walks/2024-07-28-south-downs-way/day-4-tent.jpg
+        alt: Pitched tent
 ---
 
 The South Downs Way was my first thru-hike, and even my first ever experience at camping too. I first came across it when walking Ditchling Beacons and Seven Sisters. There were sign posts dotted around and it stuck with me ever since. It was a toss up between this and the North Downs Way, which I have actually walked more of, but the South Downs seemed a little more appealing.
