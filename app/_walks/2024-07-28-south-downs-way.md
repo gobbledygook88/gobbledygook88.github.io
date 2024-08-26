@@ -209,6 +209,38 @@ route:
         alt: YHA Truleigh Hill
       - url: walks/2024-07-28-south-downs-way/day-4-tent.jpg
         alt: Pitched tent
+    - title: Rabbits! (Day 5)
+      latitude: 50.88396132744976
+      longitude: -0.25148808853903803
+      text: Being woken up by rabbits nibbling at your tent is a delight to be experienced.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-5-morning.jpg
+        alt: View from beyond Truleigh Hill
+    - title: Pyecombe
+      latitude: 50.89872708818301
+      longitude: -0.16386167552948203
+      text: Much of the morning were rolling hills, but with the dew and light fog not many views were on offer. The small village of Pyecombe marks the half way point of the day. It is flanked by busy roads so feels quite busy. There is an opportunity to fill up water at the church, or turn at Church Lane to pop to the shops for some food. Either way, prepare for a fun ascend up to Ditchling Beacons.
+    - title: Jack and Jill Windmills
+      latitude: 50.90453703893456
+      longitude: -0.14686515527366445
+      text: The South Downs Way begins its ascend up to Ditchling Beacons through a golf course. The path gets quite narrow at times. Once a cross road is finally reached, we turn left and approach the Jack and Jill Windmills. Often times, there is a small cafe van open but might be a little hidden behind hedges. They serve plenty of drinks and lovely cakes (who can resist a slice of dense rocky road).
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-5-windmills.jpg
+        alt: Jack and Jill windmills
+    - title: Ditchling Beacons
+      latitude: 50.90236813262591
+      longitude: -0.10799745048144409
+      text: The walk up to Ditchling Beacons is pleasant. Lots of grass to soften the pressure on the feet, and certainly a lot more people on day hikes. The rest of the walk on the other side however was composed of long unending paths and didn't leave much for inspiration. It really just goes on and on. At some point, a sharp right turn is made and the path narrows with hedges either side. Again, it goes on and on.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-5-ditchling-beacons.jpg
+        alt: Ditchling Beacons
+    - title: Housedean Farm Campsite (end of Day 5)
+      latitude: 50.86640410334393
+      longitude: -0.05611172850008891
+      text: Finally, we reach Housedean Farm campsite which is excellent. There is a small farm shop which provides a few food items when it is open. Check-in to the camp was simple as ticking your name off at the shop and finding an empty plot to pitch the tent. The showers and toilets were spotless. The campsite is great place to sunbathe and relax. It does get busier towards the end of the day with more cars driving in and it was very fascinating seeing how elaborate some camping setups can be.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-5-tent.jpg
+        alt: Housedean Farm campsite
 ---
 
 The South Downs Way was my first thru-hike, and even my first ever experience at camping too. I first came across it when walking Ditchling Beacons and Seven Sisters. There were sign posts dotted around and it stuck with me ever since. It was a toss up between this and the North Downs Way, which I have actually walked more of, but the South Downs seemed a little more appealing.
