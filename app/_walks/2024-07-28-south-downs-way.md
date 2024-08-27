@@ -241,6 +241,46 @@ route:
       images:
       - url: walks/2024-07-28-south-downs-way/day-5-tent.jpg
         alt: Housedean Farm campsite
+    - title: A foggy morning (Day 6)
+      latitude: 50.85159310225265
+      longitude: -0.049652620845018244
+      text: The climb out of Housedean Farm was pretty tough on this day. The early morning fog and dew meant the air was very humid. Lots of sheep and cows will be grazing on the paths. On a nice day, the views will be really nice. The path here was relatively easy to follow; right on top of the ridge.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-6-morning.jpg
+        alt: A cloudy, foggy morning
+    - title: The Greenwich Meridian
+      latitude: 50.833328130304146
+      longitude: -0.0015809041085970235
+      text: Within a crop field, and easy to walk straight past, is a fingerpost marking the Greenwich Meridian.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-6-greenwich-meridian.jpg
+        alt: Fingerpost for Greenwich Meridian
+    - title: YHA South Downs
+      latitude: 50.83193639320069
+      longitude: 0.03387098416686652
+      text: YHA South Downs is a highly recommended half way point for the day. They serve a great breakfast bap and was much needed before today's big climb. The climb is pretty tough all the way up but has great views looking back on Southease.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-6-yha-south-downs.jpg
+        alt: Lunch at YHA South Downs
+      - url: walks/2024-07-28-south-downs-way/day-6-southease-bridge.jpg
+        alt: Bridge over the A26 dual carriageway
+      - url: walks/2024-07-28-south-downs-way/day-6-southease.jpg
+        alt: Views looking back over Southease
+        flex: auto
+    - title: Firle Beacon
+      latitude: 50.8337274046537
+      longitude: 0.10752073596881512
+      text: The rest of the trail down to Alfriston is across gentle rolling hills. At some point, Firle Beacon trig point offers a lovely view over Charleston. It can get windy up there.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-6-trig-point.jpg
+        alt: Trig point
+    - title: Alfriston (end of Day 6)
+      latitude: 50.80419153058033
+      longitude: 0.14681052514811832
+      text: The walk into Alfriston village is delightful. Definitely stop by Alfriston Village Store, a small shop with a deli round the back. They make great pasties, sausage rolls and quiches. Stock up before heading over to the campsite just outside the village. Alfriston Camping Park is a pleasant place. Located down a dirt road, it wasn't hard to find. Once past the gates, find a good spot to pitch a tent. Most car campers will take up the middle flatter section. If it looks a little too crowded then try up the small hill along the tree line. Eventually, a few people will drive quad-bikes around asking for payment or online reservation name. The process was simple and they helpfully pointed out the facilities too. If you aren't too tired, I'd recommend taking a shower before heading back into Alfriston for some dinner; there are plenty of pubs to choose from.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-6-alfriston-camping-park.jpg
+        alt: Alfriston Camping Park
 ---
 
 The South Downs Way was my first thru-hike, and even my first ever experience at camping too. I first came across it when walking Ditchling Beacons and Seven Sisters. There were sign posts dotted around and it stuck with me ever since. It was a toss up between this and the North Downs Way, which I have actually walked more of, but the South Downs seemed a little more appealing.
