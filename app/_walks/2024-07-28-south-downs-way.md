@@ -281,6 +281,51 @@ route:
       images:
       - url: walks/2024-07-28-south-downs-way/day-6-alfriston-camping-park.jpg
         alt: Alfriston Camping Park
+    - title: A small diversion (Day 7)
+      latitude: 50.80753486312485
+      longitude: 0.1591876267114591
+      text: At Cuckmere River, a diversion notice was posted indicating the official South Downs Way down the river was closed. The alternative path was back over the bridge and follows the river on the other side. Not a big diversion at all. A couple of kissing gates made it hard to pass while carrying a large backpack, but wasn't too difficult to overcome with some acrobatics.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-7-diversion.jpg
+        alt: Diversion map at Cuckmere River
+    - title: Litlington
+      latitude: 50.78129363896671
+      longitude: 0.1575878042799135
+      text: Passing through Litlington, we start ascending first through a small horse holding and then a couple large flights of steps. A forest makes for an interesting change of scenery, which turns out to also be a mountain bike track.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-7-litlington-1.jpg
+        alt: Litlington
+      - url: walks/2024-07-28-south-downs-way/day-7-litlington-2.jpg
+        alt: Litlington
+      - url: walks/2024-07-28-south-downs-way/day-7-litlington-3.jpg
+        alt: Litlington
+    - title: A view towards Cuckmere Haven
+      latitude: 50.77652633463895
+      longitude: 0.15876274722247155
+      text: Upon exiting the forest, we are greeted by a stunning view over Cuckmere River and beyond to the English Channel. There are a few options here - either follow the signposts to ascend a hill, or follow the beach path and ascend up to Seven Sisters a little further along. Both are valid routes.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-7-cuckmere-haven.jpg
+        alt: Cuckmere Haven
+    - title: Seven Sisters
+      latitude: 50.743260638507486
+      longitude: 0.2019931159229764
+      text: Now for the finale. As we keep climbing up to the Seven Sisters, the wind grew much stronger on this particular day which made the final few kilometres a little dangerous. Nevertheless, the undulating path is tough especially after six days of walking. Take your time and look for good foot holes. It'll soon be the end. Toilets are available in Birling Gap.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-7-seven-sisters-1.jpg
+        alt: Seven Sisters
+      - url: walks/2024-07-28-south-downs-way/day-7-seven-sisters-2.jpg
+        alt: Birling Gap
+      - url: walks/2024-07-28-south-downs-way/day-7-seven-sisters-3.jpg
+        alt: Lighthouse
+    - title: Eastbourne (end of Day 7)
+      latitude: 50.75190385862617
+      longitude: 0.26719644364861317
+      text: After passing Bushy Head, we start a steep descent down into Eastbourne. Make sure feet are placed firmly before taking in the view and the finish line. A commemorative sign is available for photos to mark the completion of 100 miles or roughly 170 kilometres of the beautiful South Downs Way. The town of Eastbourne is a few kilometres further, or a bus is available. Would recommend a dip in the sea if weather permits and a large plate of fish and chips. This is one hike I'll certainly remember for a long time.
+      images:
+      - url: walks/2024-07-28-south-downs-way/day-7-eastbourne.jpg
+        alt: Looking down over Eastbourne
+      - url: walks/2024-07-28-south-downs-way/day-7-finish-post.jpg
+        alt: Finish post
 ---
 
 The South Downs Way was my first thru-hike, and even my first ever experience at camping too. I first came across it when walking Ditchling Beacons and Seven Sisters. There were sign posts dotted around and it stuck with me ever since. It was a toss up between this and the North Downs Way, which I have actually walked more of, but the South Downs seemed a little more appealing.
