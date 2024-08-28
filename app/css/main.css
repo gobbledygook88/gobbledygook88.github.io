@@ -74,7 +74,8 @@ td {
 
 .site {
   text-align: justify;
-  margin: 3em 2em 2em;
+  margin: 3em auto 2em;
+  padding: 0 2em;
   line-height: 1.5em;
 }
 
@@ -83,6 +84,24 @@ td {
   .site {
     margin: 3em auto 2em;
     width: 42em;
+  }
+
+  .site.two-columns {
+    width: 100%;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    column-gap: 2em;
+  }
+
+  .column-left {
+    grid-column: 1 / span 2;
+  }
+
+  .column-right {
+    grid-column: 3 / span 3;
   }
 
 }
