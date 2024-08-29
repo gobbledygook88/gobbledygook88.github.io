@@ -30,84 +30,83 @@
   <div class="site two-columns">
     <h2>{{ page.title }}</h2>
 
-    <div class="row">
-      <div class="column column-left">
-        <div id="map" data-map-data="{{ page.map.data }}"></div>
+    <aside>
+      <div id="map" data-map-data="{{ page.map.data }}"></div>
 
-        <ul class="walk-metadata">
-          <li>
-            <img class="svg-icon" src="/img/svg/location-dot-solid.svg" alt="Location pin icon" width="20px" />
-            {{ page.route.start }} to {{ page.route.end }}
-          </li>
-          <li>
-            <img class="svg-icon"
-              src="/img/svg/person-walking-arrow-{{ 'loop-left' if page.route.type.lower() == 'circular' else 'right' }}-solid.svg"
-              alt="Person walking icon" width="20px" />
-            {{ page.route.type }}
-          </li>
-          <li>
-            <img class="svg-icon" src="/img/svg/road-solid.svg" alt="Road icon" width="20px" />
-            {{ page.route.distance }}
-          </li>
-          <li>
-            <img class="svg-icon" src="/img/svg/stopwatch-solid.svg" alt="Stopwatch icon" width="20px" />
-            {{ page.route.duration }}
-          </li>
-          {% if page.route.gpx_url and page.route.gpx_url_text -%}
-          <li>
-            <img class="svg-icon" src="/img/svg/map-solid.svg" alt="Map icon" width="20px" />
-            <a href="{{ page.route.gpx_url }}" target="_blank">{{ page.route.gpx_url_text }}</a>
-          </li>
-          {% endif %}
-        </ul>
-      </div>
-
-      <div class="column column-right">
-        <div class="post">
-          {{ content }}
-        </div>
-
-        {% if page.route.waypoints -%}
-        <div class="waypoints">
-          <h3>Waypoints</h3>
-
-          {% for waypoint in page.route.waypoints -%}
-          <div class="waypoint" data-waypoint-latitude="{{ waypoint.latitude }}"
-            data-waypoint-longitude="{{ waypoint.longitude }}">
-            {% if waypoint.latitude and waypoint.longitude -%}
-            <h4>
-              <img class="svg-icon" src="/img/svg/location-dot-solid.svg" alt="Location pin icon" />
-              {{ waypoint.latitude | round(5) }}, {{ waypoint.longitude | round(5) }}
-              {%- if waypoint.title %} - {{ waypoint.title }}{%- endif %}
-            </h4>
-            {%- endif %}
-
-            {% if waypoint.images -%}
-            <figure>
-              {% for image in waypoint.images -%}
-              <img src="/img/{{ image.url }}" alt="{{ image.alt }}" {% if image.flex -%}style="flex: {{ image.flex }}"
-                {%- endif %} />
-              {% endfor %}
-            </figure>
-            {%- endif %}
-
-            {% if waypoint.videos -%}
-            {% for video in waypoint.videos -%}
-            <iframe class="youtube-embed" src="{{ video.url }}" title="{{ video.title }}" frameborder="0"
-              allow="accelerometer; clipboard-write; encrypted-media; gyroscope"
-              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            {% endfor %}
-            {%- endif %}
-
-            {% if waypoint.text -%}
-            <p>{{ waypoint.text }}</p>
-            {%- endif %}
-          </div>
-          {% endfor %}
-        </div>
+      <ul class="walk-metadata">
+        <li>
+          <img class="svg-icon" src="/img/svg/location-dot-solid.svg" alt="Location pin icon" width="20px" />
+          {{ page.route.start }} to {{ page.route.end }}
+        </li>
+        <li>
+          <img class="svg-icon"
+            src="/img/svg/person-walking-arrow-{{ 'loop-left' if page.route.type.lower() == 'circular' else 'right' }}-solid.svg"
+            alt="Person walking icon" width="20px" />
+          {{ page.route.type }}
+        </li>
+        <li>
+          <img class="svg-icon" src="/img/svg/road-solid.svg" alt="Road icon" width="20px" />
+          {{ page.route.distance }}
+        </li>
+        <li>
+          <img class="svg-icon" src="/img/svg/stopwatch-solid.svg" alt="Stopwatch icon" width="20px" />
+          {{ page.route.duration }}
+        </li>
+        {% if page.route.gpx_url and page.route.gpx_url_text -%}
+        <li>
+          <img class="svg-icon" src="/img/svg/map-solid.svg" alt="Map icon" width="20px" />
+          <a href="{{ page.route.gpx_url }}" target="_blank">{{ page.route.gpx_url_text }}</a>
+        </li>
         {% endif %}
+      </ul>
+    </aside>
+
+    <main>
+      <div class="post">
+        {{ content }}
       </div>
-    </div>
+
+      {% if page.route.waypoints -%}
+      <div class="waypoints">
+        <h3>Waypoints</h3>
+
+        {% for waypoint in page.route.waypoints -%}
+        <div class="waypoint" data-waypoint-latitude="{{ waypoint.latitude }}"
+          data-waypoint-longitude="{{ waypoint.longitude }}">
+          {% if waypoint.latitude and waypoint.longitude -%}
+          <h4>
+            <img class="svg-icon" src="/img/svg/location-dot-solid.svg" alt="Location pin icon" />
+            {{ waypoint.latitude | round(5) }}, {{ waypoint.longitude | round(5) }}
+            {%- if waypoint.title %} - {{ waypoint.title }}{%- endif %}
+          </h4>
+          {%- endif %}
+
+          {% if waypoint.images -%}
+          <figure>
+            {% for image in waypoint.images -%}
+            <img src="/img/{{ image.url }}" alt="{{ image.alt }}" {% if image.flex -%}style="flex: {{ image.flex }}" {%-
+              endif %} />
+            {% endfor %}
+          </figure>
+          {%- endif %}
+
+          {% if waypoint.videos -%}
+          {% for video in waypoint.videos -%}
+          <iframe class="youtube-embed" src="{{ video.url }}" title="{{ video.title }}" frameborder="0"
+            allow="accelerometer; clipboard-write; encrypted-media; gyroscope"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          {% endfor %}
+          {%- endif %}
+
+          {% if waypoint.text -%}
+          <p>{{ waypoint.text }}</p>
+          {%- endif %}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </main>
+  </div>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
