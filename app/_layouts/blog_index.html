@@ -5,11 +5,7 @@
 
 <body>
 
-  <header class="banner">
-    <h1 class="title"><a href="/">{{ site.name }}</a></h1>
-    <a href="https://github.com/gobbledygook88"><img class="svg-icon" src="/img/svg/github2.svg" alt="Github"
-        width="20px" /></a>
-  </header>
+  {% include 'banner.html' %}
 
   <div class="site">
     {{ content }}
