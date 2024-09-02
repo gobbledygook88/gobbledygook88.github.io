@@ -60,7 +60,7 @@ route:
   - title: Gothenburg
     latitude: 57.709232880518535
     longitude: 11.973292063904013
-    text: Placeholder
+    text: With only 4 hours in Gothenburg before my onward train, it was time for a speed run. Arriving at noon, first priority was Swedish meatballs. Luckily, there is a store at Stora Saluhallen (market hall) which serves them and wasn't too far from the train station. A gentle stroll through Kungsparken gets you to the district of Haga. New challenge. Climb up the hill to Skansen Kronan to get a lovely view over the whole city. To end the fleeting visit, we relax in Cafe Husaren for fika.
   - title: Oslo
     latitude: 59.91121540230328
     longitude: 10.752424766236718
