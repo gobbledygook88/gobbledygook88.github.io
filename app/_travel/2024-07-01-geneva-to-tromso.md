@@ -28,7 +28,7 @@ route:
   - title: Rochers-de-Naye
     latitude: 46.43171367452
     longitude: 6.978960325539971
-    text: Placeholder
+    text: A trip up to Rochers-de-Naye is a must if you're ever in Montreux. It is just a short journey on the cog railway; expect steep inclines and sheer cliff edges. Once at the top, the views are incredible. There is a large chance of clouds, but the ticket office will check and let you know when you buy tickets. There is a cafe, restaurant and toilets available. The alpine garden is a short walk away. The path does get a little scary but it is generally ok. If time allows, the 5 hour hike back down to Montreux will be great. Something I'll try next time.
   - title: Chateau de Chillon
     latitude: 46.41404562151403
     longitude: 6.928218484914776
