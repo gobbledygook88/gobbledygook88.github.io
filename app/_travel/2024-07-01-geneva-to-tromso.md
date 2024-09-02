@@ -64,23 +64,23 @@ route:
   - title: Oslo
     latitude: 59.91121540230328
     longitude: 10.752424766236718
-    text: Placeholder
+    text: Here we end our continuous journey by train. The Arctic Train from Stockholm was not running, so I continued the journey to Narvik by plane. A brief night in Oslo before the plane tomorrow morning. Not to worry, I'll be back in Oslo after visiting the Arctic Circle.
   - title: Narvik
     latitude: 68.44165446867841
     longitude: 17.441455539584606
-    text: Placeholder
+    text: The bus at Evenes airport is wonderfully set up to take passengers into Narvik; it'll wait for passengers in the event of a delayed arrival, so no need to worry. This is my first time to experience 24 hour daylight in the Arctic Circle and I was very excited. After dropping my bags at the hotel, I went for a dinner and then proceeded to walk to a local swimming spot. Afterwards, I hiked up to the cable car station and took it up to the viewpoint and cafe. The view as the sun was lowering in the sky was breathtaking. I tried to stay up here until midnight, but the mosquitoes were feasting on me too much. I decided to hike back down to my hotel instead of taking the cable car down. It is a pleasant walk and you get to experience the clean air. The next day was raining so I decided to take the Arctic Train on the Ofoten Line to Bjornfjell (the last station before the Swedish border), and also visited the Narvik Museum.
   - title: Tromso
     latitude: 69.64884444402931
     longitude: 18.956011927895986
-    text: Placeholder
+    text: The bus from Narvik to Tromso takes 4.5 hours. Nothing too eventful but comfortable. My time in Tromso was filled with much hiking. First across the really big Tromso Bridge and up to the viewpoint beyond the cable car. I took the Sherpatrappa back down which involved some incredibly steep steps; once again my legs were very wobbly at the end. Next hike took me to Prestvannet and then down to Telegrafbukta and Sydspissen. Great locations for a swim too! It was great to see so many people out hiking - the fjords are really beautiful.
   - title: Oslo
     latitude: 59.91121540230328
     longitude: 10.752424766236718
-    text: Placeholder
+    text: Back in Oslo for a few days to finish off the trip. The Vigeland Museum housing the art of Gustav Vigeland was simply some of the best sculptures I have ever seen. Amazing art and one I definitely recommend for any visitor to Oslo. The bigger sculptures in Frognerparken were great, but the museum offers a much more intimate experience without the hordes of tourists trying to take photos. The National Museum was excellent and I spent many hours there. There was also a big Mark Rothko exhibition which was incredible too. There is so much to see, do and eat here it is definitely a place to come back to. One day I'll pick up the courage to go to the saunas and jump into the sea.
   - title: London
     latitude: 51.47136294394127
     longitude: -0.48785645422399676
-    text: Placeholder
+    text: The flight back to London was pleasant and also marked the first leg of my round the world flights.
 ---
 
 Since I went west to east across Europe on the train a couple of years prior, I thought it only right that I go south to north. My original plan started in Seville going all the way to Tromso. However, travelling in July in southern Spain (i.e. 40C temperatures) was not going to happen. A few key train journeys were on the cards for this journey. The rest of the trains on this trip were essentially to join the dots.
