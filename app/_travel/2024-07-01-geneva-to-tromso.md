@@ -32,31 +32,31 @@ route:
   - title: Chateau de Chillon
     latitude: 46.41404562151403
     longitude: 6.928218484914776
-    text: Placeholder
+    text: Chillon Castle is a 40 minute walk, or 10 minute train, from Montreux. There is lots to see and easy to navigate by following the provided leaflet. As with anywhere in Switzerland, the surrounding scenery is sublime.
   - title: Bern
     latitude: 46.948810904855605
     longitude: 7.438144962322048
-    text: Placeholder
+    text: The weather forecast wasn't great for the afternoon, so I decided to spend the rest of the day on the train. Bern was a few hours away via Lausanne. At some point, the default language switched from French to German, which was a little confusing but fun nonetheless. Bern is a great place to visit, with lots of museums and streets to explore. It was also certainly a place that brought back my fear of heights! After a few hours, I headed back to Montreux while it rained very heavily.
   - title: Golden Pass Express - Montreux to Interlaken
     latitude: 46.690726165060724
     longitude: 7.869427255645302
-    text: Placeholder
+    text: Big travel day. First up, the Golden Pass Express. The train itself has massive panoramic windows. The seats were very big and the First Class carriage was relatively quiet all throughout the journey. We reach Interlaken a four hours later - a popular location indeed for tourists.
   - title: Jungfrau
     latitude: 46.54751286663088
     longitude: 7.981851360004084
-    text: Placeholder
+    text: I had bought reservations for the trip up to Jungfrau and connection times were tight. Once I alighted the Golden Pass Express, it was a quick hop to the next platform for the train up to Grindelwald. From there, a 20 minute cable car ride to Eigergletscher. Then the train through the mountains to Jungfraujoch. An incredible experience, where temperatures went from 30C in Interlaken to -7C on the glaciers of Jungfrau. Though very very busy even on a weekday, it was well worth the journey.
   - title: Zurich
     latitude: 47.377838051529416
     longitude: 8.540558183412848
-    text: Placeholder
+    text: Zurich was where I fully experienced how expensive Switzerland can be. It is a lovely city to walk around, with plenty of spaces to relax, but eating anywhere here will drain the wallet to no end. I was due to take a night train to Hamburg, but since I had thoroughly explored the city ahead of schedule, I decided to take an earlier train in the hopes of getting to Copenhagen in the morning instead of in the afternoon.
   - title: Hamburg
     latitude: 53.553376082814204
     longitude: 10.00647880707137
-    text: Placeholder
+    text: That decision turned out to be a bad decision. The leg to Mannheim was fine. Pretty quickly the train filled up. By the time we had to change trains at 11pm, it became apparent that the entire train was filled with football fans and was going the same way. Since the next train was jammed, it was standing room only until 1am when they all alighted at Dusseldorf. I managed a couple of hours shut eye (always bring an eye mask) and awoke just before Breman when I realised the train was no longer going to Hamburg. We all had to change onto a Metronom train at 4am. Luckily we were on time, and I managed to just catch my onward train to Copenhagen with a few seconds to spare.
   - title: Copenhagen
     latitude: 55.67269436073573
     longitude: 12.564702572688093
-    text: Placeholder
+    text: I spent three full days in Copenhagen and enjoyed every minute of it. The weather was lovely and there was a large selection of design and art museums. The food was great too. Tivoli was great fun and highly recommended.
   - title: Gothenburg
     latitude: 57.709232880518535
     longitude: 11.973292063904013
