@@ -56,7 +56,7 @@ route:
   - title: Copenhagen
     latitude: 55.67269436073573
     longitude: 12.564702572688093
-    text: I spent three full days in Copenhagen and enjoyed every minute of it. The weather was lovely and there was a large selection of design and art museums. The food was great too. Tivoli was great fun and highly recommended.
+    text: I spent three full days in Copenhagen as a tactical rest compared to the adventurous time in Switzerland, and enjoyed every minute of it. The weather was lovely and there was a large selection of design and art museums. Tivoli was great fun and highly recommended. The cafes and hot dog stands were awesome, and I ate the best cardamom croissant from Hart bakery. I'm still thinking about it to this day.
   - title: Gothenburg
     latitude: 57.709232880518535
     longitude: 11.973292063904013
