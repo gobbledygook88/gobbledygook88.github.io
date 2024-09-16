@@ -7,5 +7,5 @@ Markdown==3.7
 MarkupSafe==2.1.5
 PyYAML==6.0.2
 requests==2.32.3
-ruff==0.6.3
+ruff==0.6.5
 urllib3==2.2.2
