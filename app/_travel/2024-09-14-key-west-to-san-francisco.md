@@ -14,95 +14,95 @@ route:
   duration: 32 days
   waypoints:
   - title: Miami
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
-    text: The journey started by flying from London Heathrow to Miami. A couple of days were spent here to adapt to the time difference, and get the lay of the land. Much of the time was spent relaxing, and making sure I had things organised to ensure a smooth road trip ahead. I walked a loop around South Beach to view the Art Deco architecture, and visited the graffiti walls of [check | Wymwood].
+    latitude: 25.77144145694701
+    longitude: -80.13096924925698
+    text: The journey started by flying from London Heathrow to Miami. A couple of days were spent here to adapt to the time difference, and get the lay of the land. Much of the time was spent relaxing, and making sure I had things organised to ensure a smooth road trip ahead. I walked a loop around South Beach to view the Art Deco architecture, and visited the graffiti walls of Wynwood.
   - title: Key West
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
-    text: Picking up the car from Miami International Airport was smooth. I took my time to get acquainted with it and drove to a nearby Walmart to pick up some supplies for the road. I made sure the car always had a couple of water bottles in case of emergencies. The drive to Key West was relatively straightforward; mainly driving south on Highway 1. I stopped off for lunch at [check | Bad Boy Burrito] in [insert location]. The sun was mighty and food tasty. I had a couple of nights in Key West and visited Hemmingway's House, the Southernmost point of continental America, and sampled some tasty Cuban cuisine. The weather wasn't the best, but that didn't detract that the road trip had officially begun. Sunset viewing at [insert location] is highly recommended.
+    latitude: 24.552009369567077
+    longitude: -81.79961585248265
+    text: Picking up the car from Miami International Airport was smooth. I took my time to get acquainted with it and drove to a nearby Walmart to pick up some supplies for the road. I made sure the car always had a couple of water bottles in case of emergencies. The drive to Key West was relatively straightforward; mainly driving south on Highway 1. I stopped off for lunch at Bad Boy Burrito in Islamorada. The sun was mighty and food tasty. I had a couple of nights in Key West and visited Hemmingway's House, the Southernmost point of continental America, and sampled some tasty Cuban cuisine. The weather wasn't the best, but that didn't detract that the road trip had officially begun. Sunset viewing at Mallory Square is highly recommended.
   - title: Everglades National Park
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 25.383535141819337
+    longitude: -80.61036120706672
     text: A three hour drive back up Highway 1 took me to the first of many national parks. No alligators strolling around unfortunately, but saw a lot of dragonflies. Walked a couple of boardwalk trails before driving on to a few other observation points. It is an incredibly peaceful place.
   - title: Cocoa Beach
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
-    text: The drive up Florida state was traumatising to say the least. The brief stint on Interstate 95 had me witness confusing signs regarding toll roads, multiple crashes and the infamous 6 or 7 lanes of high speed traffic. I can never understand why undertaking is allowed. After a lunch break in [insert location], I decided to take Highway 1 instead. That turned out to be a good decision. Soon after lunch, a couple hours of torrential tropical rain started. Visibility was low; I could barely see the car in front nor road markings. This experience meant I didn't see Cocoa Beach proper; rest in the hotel was needed.
+    latitude: 28.32049710333401
+    longitude: -80.60832303210954
+    text: The drive up Florida state was traumatising to say the least. The brief stint on Interstate 95 had me witness confusing signs regarding toll roads, multiple crashes and the infamous 6 or 7 lanes of high speed traffic. I can never understand why undertaking is allowed. After a lunch break in West Palm Beach I decided to take Highway 1 instead. That turned out to be a good decision. Soon after lunch, a couple hours of torrential tropical rain started. Visibility was low; I could barely see the car in front nor road markings. This experience meant I didn't see Cocoa Beach proper; rest in the hotel was needed.
   - title: Crystal River
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 28.879626121746757
+    longitude: -82.5888210512256
     text: An early start to get to Kennedy Space Center. I had good tips to take the shuttle bus to see Saturn V first as it can be a long wait later in the day. Every exhibit was visited and information board read. I hadn't necessarily grasped the significance of space before for America but the Space Center certainly makes sure everyone leaves more patriotic. Great fun, even on my own, and highly recommended for all. The 4 hour drive over to Crystal River was tiring, but lounging beside the hotel pool for the evening soon fixed that.
   - title: Destin
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
-    text: This might have been the day I was most dreading. The first 8 hour driving day. I had planned a few break stops, and a dear friend recommended I hug the coast of the panhandle which is also known as the Redneck Riviera. The tree lined roads were a delight to drive on with the sea to the left. Lunch was in [insert location] - a lovely plate of breaded shrimp! I also passed through the town of Seaside where the Truman Show was filmed. It was surreal. The beach at Destin was excellent with the finest white sand I've ever felt. This was my last chance of sunbathing on the beach before heading inland to continue west.
+    latitude: 30.38508009437113
+    longitude: -86.45999702113883
+    text: This might have been the day I was most dreading. The first 8 hour driving day. I had planned a few break stops, and a dear friend recommended I hug the coast of the panhandle which is also known as the Redneck Riviera. The tree lined roads were a delight to drive on with the sea to the left. Lunch was in Apalachicola - a lovely plate of breaded shrimp! I also passed through the town of Seaside where the Truman Show was filmed. It was surreal. The beach at Destin was excellent with the finest white sand I've ever felt. This was my last chance of sunbathing on the beach before heading inland to continue west.
   - title: New Orleans
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 29.95596914388006
+    longitude: -90.06697027897995
     text: Finally made it out of Florida and into Louisiana (and passing through two other states on the way). New Orleans had a lot of promise, but I unfortunately did not get to experience the so-called 'southern hospitality' many people talk about. I did a walking tour of the French Quarter and it was great to learn about its history. Other than that, I didn't feel particularly safe walking around on my own. I probably visited on a game day and there were lots of loud people drunk on the streets at all times. Maybe a place to come back to with company in the future.
   - title: Natchitoches
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 31.761489910127676
+    longitude: -93.08575698209424
     text: Without a doubt, Natchitoches (pronounced 'nack-a-tish') was the place I needed. I was the only guest at the bed-and-breakfast that night, an utterly delightful period American house. The town itself was incredibly peaceful with a stroll along the river a must do. It was perfect after the chaos of New Orleans, and the point at which I started to enjoy the road trip.
   - title: Dallas
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
-    text: I was looking forward to visiting Texas for a long long time. Of course, for the BBQ and it did not disappoint. Public transport wasn't the best as it often had delays. On my full rest day of not having to drive, I visited the Book Depository Museum to learn about the assassination of John F. Kennedy. It was really well done. I then took the bus up to [insert location] and walked the Katy Trail all the way back to Downtown. It's a disused railway line (you know how much I love walking those) turned public park. It was great to see so many people walking, running and cycling. A far cry from the disappointing sight of people driving from shop to shop even if it was one block away.
+    latitude: 32.7819384395133
+    longitude: -96.79889226244603
+    text: I was looking forward to visiting Texas for a long long time. Of course, for the BBQ and it did not disappoint. Public transport wasn't the best as it often had delays. On my full rest day of not having to drive, I visited the Book Depository Museum to learn about the assassination of John F. Kennedy. It was really well done. I then took the bus up to West Village and walked the Katy Trail all the way back to Downtown. It's a disused railway line (you know how much I love walking those) turned public park. It was great to see so many people walking, running and cycling. A far cry from the disappointing sight of people driving from shop to shop even if it was one block away.
   - title: Amarillo
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 35.19376695197887
+    longitude: -101.75352821243338
     text: The drive to Amarillo was rather uneventful from Dallas. It was an interesting feeling driving down Elm Street, the street where JFK was shot. I'm not sure if anyone else has that feeling too. I stayed at the Big Texan Motel which is next door to The Big Texan Steak Ranch. It is a fun themed restaurant where staff are dressed in cowboy boots and hats. Some people ordered gigantic steaks and just worked their way through for dinner. Impressive indeed!
   - title: Santa Fe, via Albuquerque
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 35.64700464769531
+    longitude: -106.0043625486324
     text: I didn't feel particularly drawn to Santa Fe, so I decided to detour to Albuquerque and take the cable car up to Sandia Mountains. Upon arrival, they suggested buying tickets online as entry onto the cable car was timed, so I bought them while waiting in line for 30 minutes. The views from the top were amazing and marked a point in the trip where I would spend a lot more time amongst nature.
   - title: Winslow, via Petrified Forest National Park
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 35.01969700646363
+    longitude: -110.67254375679069
     text: Winslow is just a small town on the interstate, so today's point of interest was Petrified Forest National Park. It is a park where you drive through yourself after paying the entrance fee. There is a small cafe at the visitor centre which was very welcome. They show a really informative video while you can enjoy lunch. As you drive through the park, there are lots of observation points to stop at and enjoy the views. Hiking trails are available, but they are only 1-2 km. There is a second visitor centre to the south of the park, and you can walk amongst the petrified trees behind it.
   - title: Grand Canyon National Park
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 36.05876922999208
+    longitude: -112.10997432088983
     text: The first of the major (popular) national parks. I woke up early and drove into Grand Canyon for 9am from Winslow. Since I was staying at Yavapai Lodge (located in the park), I parked next to the lodge building and took the shuttle bus to the visitor centre. As you approach your first view of the canyon, you can help but gasp in amazement and hear many other people do the same! The South Rim trail is a great way to see so much of Grand Canyon. Walking all the way to Hopi Point was not too difficult, after which I took the shuttle bus to the end of the line. The hikes down to the valley looked great fun, but given I only had one day and without proper planning thought it not wise to attempt. Definitely something for my next visit!
   - title: Monument Valley
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 36.95273946401665
+    longitude: -110.08260698999239
     text: The day started with a drive along the Grand Canyon scenic drive, then onwards to Monument Valley. It is in the Navejo reservation. I didn't want to risk damaging my rental car, so booked a deluxe tour with Goulding's (the place I was staying that night too). It was amazing (4.5 hours) and ended during sunset where the light was the best. So much information available and a small group in an open truck. Their shop, museum and restaurant were also really good.
   - title: Page
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 36.90565477992693
+    longitude: -111.47590150519021
     text: The drive to Page wasn't that long, so I checked out late. I also booked a tour to go to Antelope Canyon in the afternoon. The time-zone changes were quite hard to deal with and complicated the scheduling. I'd say the tour through Antelope Canyon wasn't that good, especially compared to the amazing tour at Monument Valley the day before. There were many tour groups, and you are led through the canyon being instructed where and how to take those Instagram worthy photos. If you own an iPhone you'll have a good time. Android phone cameras consistently struggled. Other points of interest were Horseshoe Bend (where so many people go too close to the edge for that photo), The Chains at Lake Powell and the Glen Canyon Dam.
   - title: Bryce National Park
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 37.64004009066462
+    longitude: -112.17009264734372
     text: Spoiler alert - Bryce Canyon had now become one of my favourite national parks in America. It is really well set up with ample parking if you drive around a bit. The shuttle buses are great too. I hiked from Bryce Point to Sunset Point on the rim trail, then down Navejo Loop across to Queen's Garden, up to Sunrise point and back to Sunset Point. It was phenomenal! The difficulty wasn't too hard, but the high altitude was the big difference to my previous hikes. I found myself a lot more dehydrated and out of breath, something to keep in mind for the future. I loved Bryce Canyon so much, I came back the next day for a more relaxed hike.
   - title: Zion National Park
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 37.25468886795702
+    longitude: -112.95690062253162
     text: I'm glad I forwent a day in Zion for an extra day in Bryce Canyon. The stress of Zion comes with having to drive in early in pitch darkness to get a parking space before 6am, and then queueing to get the first shuttle bus. Even at 7am there were about a hundred people waiting in line. The hikes in Zion are nice, but as I started making my way back to the visitor centre the trails got quite congested. The shuttle bus stop at the visitor centre at 12 noon stretched to 300+ people; I was glad I came early. Since the temperature was reaching 35C and above, I decided not to hike the Watchmen Trail given it doesn't have much tree cover.
   - title: Death Valley National Park
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 36.45698759085247
+    longitude: -116.86544755163943
     text: It was unbeknownst to me that California was suffering a heat wave when I drove into Death Valley. Furthermore, it was only when I read the information boards at the visitor centre that I found out Death Valley is the hottest place in America. At 45C, I can safely say it was hot! The scenery and drives through the park were incredible though. There were stretches of road where you have to be really careful not to overheat the car by turned off the air conditioning, and tempering the brakes.
   - title: Bakersfield
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 35.380159483329535
+    longitude: -119.04631543567423
     text: A stop-over night in Bakersfield while navigating the terrain to get to the next set of national parks. Stayed in a boutique hotel which was very welcome. It had a beautiful pool and gym. A great place to relax and reset.
   - title: Sequoia National Park
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 36.60827363575881
+    longitude: -118.75097431020114
     text: The twisty roads leading up and through Sequoia National Park are really fun to drive. Makes for a big difference to the monotonous interstates. Similar to other national parks, this one you drive through yourself and find a place to park. I enjoyed the information in the museum, and then went hiking through all the amazing trees. The shade offered was very welcome as it was a sunny day.
   - title: Yosemite National Park
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 37.74439080046328
+    longitude: -119.59425091172514
     text: An early start to drive into Yosemite (but luckily not as early as Zion). As the sun rose, I entered the park proper and was greeted by the immensely vast cliff walls. I was stunned. Since I only had one full day in Yosemite, and it was my first time, I decided to book a tour up to Glacier Point, and I'm glad I did. We got to see lots of famous points in Yosemite, and the tour guide gave us lots of interesting information en route. We had just under two hours at Glacier Point and saw fantastic views of Half Dome. Most people hiked back down to the valley, but I didn't have any of my proper hiking gear I had a return ticket instead. The bus made an impromptu stop at Tunnel View for us, and it was amazing. Upon returning to the valley floor, I had a picnic and strolled around visiting (dry) waterfalls, museums and shops. Truly incredible place, and one I might just put as my favourite national park I visited on this trip.
   - title: Lake Tahoe
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 38.95783917817149
+    longitude: -119.94798000023022
     text: South Lake Tahoe seemed to be more suited for wintertime. There were water sports on offer, but with it being shoulder season, the temperatures didn't lend well to getting in the water. Instead, I went hiking in the Van Sickle Bi State park which was great fun. A nice relaxing time in between lots of national parks, and driving into the last big city.
   - title: San Francisco
-    latitude: 51.5329977446607
-    longitude: -0.12674994264680498
+    latitude: 37.787753691291435
+    longitude: -122.40755993375318
     text: I had been to San Francisco five years prior and wanted to end the road trip somewhere familiar. Staying next to Union Square was very convenient to drop off the car, and explore the city. I had already done all the touristy locations last time (which are great) so managed to have a couple of days just walking around taking in the city. The Cable Car Museum is excellent. SFMoMa was good too. I had to visit Chinatown and the Wharfs again; they are great to walk around. Soon enough, it was time to head to SFO and fly out of America.
 ---
