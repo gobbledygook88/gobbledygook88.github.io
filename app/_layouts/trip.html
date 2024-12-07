@@ -11,7 +11,8 @@
     <h2>{{ page.title }}</h2>
 
     <aside>
-      <div id="map" data-map-data="{{ page.map.data }}"></div>
+      <div id="map" data-map-data="{{ page.map.data }}" {% if page.map.zoomLevel
+        -%}data-map-zoom-level="{{ page.map.zoomLevel }}" {%- endif -%}></div>
 
       <ul class="walk-metadata">
         <li>
