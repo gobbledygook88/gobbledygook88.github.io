@@ -5,6 +5,7 @@ categories: travel car train
 
 map:
   data: 2024-11-10-rtw-new-zealand.geojson
+  zoomLevel: 5
 
 route:
   start: Queenstown

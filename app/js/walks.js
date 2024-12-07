@@ -33,6 +33,10 @@
         "opacity": 0.65
       }).addTo(map);
       map.fitBounds(geojsonLayer.getBounds());
+
+      if (mapEl.dataset.mapZoomLevel) {
+        map.setZoom(mapEl.dataset.mapZoomLevel);
+      }
     });
 
   let currentMarker;
