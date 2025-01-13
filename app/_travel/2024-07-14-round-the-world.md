@@ -6,8 +6,7 @@ categories: travel
 video:
   title: 2024 Round the world
   url: https://www.youtube.com/embed/41P5ww14TE4
-  width: 380
-  height: 676
+  orientation: vertical
   autoplay: true
   mute: true
   loop: true
