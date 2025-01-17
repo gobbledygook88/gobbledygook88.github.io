@@ -75,12 +75,12 @@ def get_num_countries_per_continent(logbook):
     }
 
 
-def fetch_and_write_all_geojson_files(logbook):
+def fetch_country_geojson_files(logbook):
     countries = get_countries_with_areas(logbook)
 
     for country, area in countries:
         collection = fetch_geojson(country, area)
-        destination = f"logbook/geojson/{country}"
+        destination = f"logbook/geojson/countries/{country}"
 
         if area is not None:
             destination += f"_{area}"
@@ -92,8 +92,8 @@ def fetch_and_write_all_geojson_files(logbook):
         write_file(destination, geojson.dumps(collection))
 
 
-def merge_geojson_files():
-    source_dir = os.path.join("logbook", "geojson")
+def merge_country_geojson_files():
+    source_dir = os.path.join("logbook", "geojson", "countries")
     files = os.listdir(source_dir)
     collection = []
 
@@ -160,8 +160,8 @@ if __name__ == "__main__":
     logbook = read_logbook()
 
     if args.fetch_geojson:
-        fetch_and_write_all_geojson_files(logbook)
+        fetch_country_geojson_files(logbook)
 
-    merge_geojson_files()
+    merge_country_geojson_files()
     build_logbook_html(logbook)
     build_logbook_js()
