@@ -1,13 +1,17 @@
 from argparse import ArgumentParser, BooleanOptionalAction
 from csv import DictReader
 import json
-from fetch_country_geojson import fetch_country_geojson
-from render import render
 import os
 import geojson
 import shutil
 
+from fetch_country_geojson import fetch_country_geojson
 from fetch_usa_states_geojson import build_usa_states_geojson, fetch_usa_states_geojson
+from fetch_london_boroughs_geojson import (
+    build_london_boroughs_geojson,
+    fetch_london_boroughs_geojson,
+)
+from render import render
 
 
 NUM_COUNTRIES_PER_CONTINENT = {
@@ -98,6 +102,7 @@ def build_logbook_html(logbook, timeline):
                     ],
                     "num_countries_per_continent": NUM_COUNTRIES_PER_CONTINENT,
                     "num_usa_states_visited": timeline["num_usa_states"],
+                    "num_london_boroughs_visited": timeline["num_london_boroughs"],
                 }
             },
         )
@@ -129,6 +134,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--fetch-usa-states-geojson", action=BooleanOptionalAction, default=False
     )
+    parser.add_argument(
+        "--fetch-london-boroughs-geojson", action=BooleanOptionalAction, default=False
+    )
 
     args = parser.parse_args()
 
@@ -141,7 +149,11 @@ if __name__ == "__main__":
     if args.fetch_all_geojson or args.fetch_usa_states_geojson:
         fetch_usa_states_geojson()
 
+    if args.fetch_all_geojson or args.fetch_london_boroughs_geojson:
+        fetch_london_boroughs_geojson()
+
     build_country_geojson()
     build_usa_states_geojson(timeline)
+    build_london_boroughs_geojson(timeline)
     build_logbook_html(logbook, timeline)
     build_logbook_js()

@@ -28,6 +28,9 @@ def build_usa_states_geojson(timeline):
         )
     )
 
+    if len(collection) != len(visited_states):
+        raise RuntimeError("Could not find GeoJSON for all visited US states")
+
     destination_dir = os.path.join("build", "travel", "logbook")
     destination = os.path.join(destination_dir, "logbook_usa_states.geojson")
 

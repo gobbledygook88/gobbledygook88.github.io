@@ -12,7 +12,7 @@
     iconAnchor: [6, 16],
   });
 
-  const mapIds = ["map-countries", "map-usa-states"];
+  const mapIds = ["map-countries", "map-usa-states", "map-london-boroughs"];
 
   mapIds.forEach(mapId => {
     const mapEl = document.getElementById(mapId);
