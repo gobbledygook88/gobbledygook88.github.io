@@ -20,7 +20,9 @@ def build_london_boroughs_geojson(timeline):
         london_boroughs_geojson = json.loads(f.read())
 
     visited_boroughs = [
-        borough.removeprefix("London Borough of ").removeprefix("Royal Borough of ")
+        borough.removeprefix("London Borough of ")
+        .removeprefix("Royal Borough of ")
+        .removeprefix("City of ")
         for borough in timeline["london_boroughs"]
     ]
 
