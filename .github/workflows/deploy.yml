@@ -28,7 +28,7 @@ jobs:
         run: |
           pip install -r requirements.txt
           python scripts/build.py
-          python scripts/build_logbook.py --fetch-geojson
+          python scripts/build_logbook.py --fetch-all-geojson
       - name: Upload static files as an artifact
         uses: actions/upload-pages-artifact@v3
         with:
