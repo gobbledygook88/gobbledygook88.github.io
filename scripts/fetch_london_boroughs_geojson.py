@@ -19,14 +19,13 @@ def build_london_boroughs_geojson(timeline):
     with open(DESTINATION, "r") as f:
         london_boroughs_geojson = json.loads(f.read())
 
-    visited_boroughs = [
-        borough.removeprefix("London Borough of ").removeprefix("Royal Borough of ")
-        for borough in timeline["london_boroughs"]
-    ]
+    visited_boroughs = timeline["london_boroughs"]
 
     collection = list(
         filter(
-            lambda f: f["properties"]["name"] in visited_boroughs,
+            lambda f: any(
+                f["properties"]["name"] in borough for borough in visited_boroughs
+            ),
             london_boroughs_geojson["features"],
         )
     )
