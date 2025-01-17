@@ -1,8 +1,5 @@
 (function () {
 
-  const mapEl = document.getElementById("map");
-  if (!mapEl) { return; }
-
   const attributions = {
     "OpenStreetMap contributers": "http://www.openstreetmap.org/copyright",
     "OpenMapTiles": "http://openmaptiles.org/",
@@ -15,25 +12,36 @@
     iconAnchor: [6, 16],
   });
 
-  var map = L.map('map').setView([51.505, -0.09], 13);
+  const mapIds = ["map-countries", "map-usa-states", "map-london-boroughs"];
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png', {
-    maxZoom: 19,
-    attribution: Object.entries(attributions)
-      .map(([text, url]) => `&copy; <a href="${url}">${text}</a>`)
-      .join(' | ')
-  }).addTo(map);
+  mapIds.forEach(mapId => {
+    const mapEl = document.getElementById(mapId);
+    if (!mapEl) { return; }
 
-  fetch(mapEl.dataset.mapData)
-    .then(response => response.json())
-    .then(json => {
-      var geojsonLayer = L.geoJSON(json, {
-        "color": "#ff7800",
-        "weight": 1,
-        "opacity": 0.65
-      }).addTo(map);
+    var map = L.map(mapId).setView([51.505, -0.09], 13);
 
-      map.setView([0, 0], 1);
-    });
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png', {
+      maxZoom: 19,
+      attribution: Object.entries(attributions)
+        .map(([text, url]) => `&copy; <a href="${url}">${text}</a>`)
+        .join(' | ')
+    }).addTo(map);
+
+    fetch(mapEl.dataset.mapData)
+      .then(response => response.json())
+      .then(json => {
+        const geojsonLayer = L.geoJSON(json, {
+          "color": "#ff7800",
+          "weight": 1,
+          "opacity": 0.65
+        }).addTo(map);
+
+        if (mapEl.dataset.mapInitialLatitude) {
+          map.setView([mapEl.dataset.mapInitialLatitude, mapEl.dataset.mapInitialLongitude], mapEl.dataset.mapInitialZoom);
+        } else {
+          map.fitBounds(geojsonLayer.getBounds());
+        }
+      });
+  });
 
 })();

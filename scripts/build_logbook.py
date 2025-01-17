@@ -1,26 +1,37 @@
 from argparse import ArgumentParser, BooleanOptionalAction
-from collections import defaultdict
 from csv import DictReader
-from fetch_country_geojson import fetch_geojson
-from render import render
+import json
 import os
 import geojson
 import shutil
 
+from fetch_country_geojson import fetch_country_geojson
+from fetch_usa_states_geojson import build_usa_states_geojson, fetch_usa_states_geojson
+from fetch_london_boroughs_geojson import (
+    build_london_boroughs_geojson,
+    fetch_london_boroughs_geojson,
+)
+from render import render
+
 
 NUM_COUNTRIES_PER_CONTINENT = {
-    "africa": 54,
-    "asia": 49,
-    "europe": 44,
-    "north_america": 23,
-    "south_america": 12,
-    "oceania": 14,
+    "Africa": 54,
+    "Asia": 49,
+    "Europe": 44,
+    "North America": 23,
+    "South America": 12,
+    "Oceania": 14,
 }
 
 
 def read_logbook():
     with open("logbook/locations.csv", "r") as f:
         return list(DictReader(f))
+
+
+def read_timeline():
+    with open("logbook/timeline_statistics.json", "r") as f:
+        return json.loads(f.read())
 
 
 def write_file(destination, contents):
@@ -35,52 +46,12 @@ def get_countries_with_areas(logbook):
     )
 
 
-def get_countries(logbook):
-    return set(
-        (
-            location["country"]
-            if location["country"] != "united_kingdom"
-            else location["area"]
-        )
-        for location in logbook
-    )
-
-
-def get_continents(logbook):
-    return set(location["continent"] for location in logbook)
-
-
-def get_places(logbook):
-    return set(location["location"] for location in logbook)
-
-
-def get_countries_per_continent(logbook):
-    groups = defaultdict(set)
-
-    for location in logbook:
-        country = location["country"]
-
-        if location["country"] == "united_kingdom":
-            country = location["area"]
-
-        groups[location["continent"]].add(country)
-
-    return groups
-
-
-def get_num_countries_per_continent(logbook):
-    return {
-        continent: len(countries)
-        for continent, countries in get_countries_per_continent(logbook).items()
-    }
-
-
-def fetch_and_write_all_geojson_files(logbook):
+def fetch_country_geojson_files(logbook):
     countries = get_countries_with_areas(logbook)
 
     for country, area in countries:
-        collection = fetch_geojson(country, area)
-        destination = f"logbook/geojson/{country}"
+        collection = fetch_country_geojson(country, area)
+        destination = f"logbook/geojson/countries/{country}"
 
         if area is not None:
             destination += f"_{area}"
@@ -92,8 +63,8 @@ def fetch_and_write_all_geojson_files(logbook):
         write_file(destination, geojson.dumps(collection))
 
 
-def merge_geojson_files():
-    source_dir = os.path.join("logbook", "geojson")
+def build_country_geojson():
+    source_dir = os.path.join("logbook", "geojson", "countries")
     files = os.listdir(source_dir)
     collection = []
 
@@ -103,7 +74,7 @@ def merge_geojson_files():
             collection.append(feature)
 
     destination_dir = os.path.join("build", "travel", "logbook")
-    destination = os.path.join(destination_dir, "logbook.geojson")
+    destination = os.path.join(destination_dir, "logbook_countries.geojson")
 
     os.makedirs(destination_dir, exist_ok=True)
 
@@ -111,7 +82,7 @@ def merge_geojson_files():
         geojson.dump(geojson.FeatureCollection(collection), f)
 
 
-def build_logbook_html(logbook):
+def build_logbook_html(logbook, timeline):
     source_dir = os.path.join("app", "travel")
     source = os.path.join(source_dir, "logbook.html")
 
@@ -123,13 +94,15 @@ def build_logbook_html(logbook):
             f.read(),
             {
                 "page": {
-                    "num_countries_visited": len(get_countries(logbook)),
-                    "num_places_visited": len(get_places(logbook)),
-                    "num_continents_visited": len(get_continents(logbook)),
-                    "num_countries_visited_per_continent": get_num_countries_per_continent(
-                        logbook
-                    ),
+                    "num_countries_visited": timeline["num_countries"],
+                    "num_cities_visited": timeline["num_cities"],
+                    "num_continents_visited": timeline["num_continents"],
+                    "num_countries_visited_per_continent": timeline[
+                        "num_countries_per_continent"
+                    ],
                     "num_countries_per_continent": NUM_COUNTRIES_PER_CONTINENT,
+                    "num_usa_states_visited": timeline["num_usa_states"],
+                    "num_london_boroughs_visited": timeline["num_london_boroughs"],
                 }
             },
         )
@@ -152,16 +125,35 @@ def build_logbook_js():
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--fetch-geojson", action=BooleanOptionalAction)
-    parser.set_defaults(fetch_geojson=False)
+    parser.add_argument(
+        "--fetch-all-geojson", action=BooleanOptionalAction, default=False
+    )
+    parser.add_argument(
+        "--fetch-country-geojson", action=BooleanOptionalAction, default=False
+    )
+    parser.add_argument(
+        "--fetch-usa-states-geojson", action=BooleanOptionalAction, default=False
+    )
+    parser.add_argument(
+        "--fetch-london-boroughs-geojson", action=BooleanOptionalAction, default=False
+    )
 
     args = parser.parse_args()
 
     logbook = read_logbook()
+    timeline = read_timeline()
 
-    if args.fetch_geojson:
-        fetch_and_write_all_geojson_files(logbook)
+    if args.fetch_all_geojson or args.fetch_country_geojson:
+        fetch_country_geojson_files(logbook)
 
-    merge_geojson_files()
-    build_logbook_html(logbook)
+    if args.fetch_all_geojson or args.fetch_usa_states_geojson:
+        fetch_usa_states_geojson()
+
+    if args.fetch_all_geojson or args.fetch_london_boroughs_geojson:
+        fetch_london_boroughs_geojson()
+
+    build_country_geojson()
+    build_usa_states_geojson(timeline)
+    build_london_boroughs_geojson(timeline)
+    build_logbook_html(logbook, timeline)
     build_logbook_js()
