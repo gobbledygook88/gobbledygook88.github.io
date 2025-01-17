@@ -189,7 +189,7 @@
     },
     "num_places": 2918,
     "num_england_counties": 28,
-    "num_london_boroughs": 27,
+    "num_london_boroughs": 30,
     "num_usa_states": 9,
     "continents": [
         "Asia",
@@ -3425,7 +3425,10 @@
         "London Borough of Wandsworth",
         "Royal Borough of Greenwich",
         "Royal Borough of Kensington and Chelsea",
-        "Royal Borough of Kingston upon Thames"
+        "Royal Borough of Kingston upon Thames",
+        "Westminster",
+        "Tower Hamlets",
+        "City of London"
     ],
     "usa_states": [
         "Arizona",
