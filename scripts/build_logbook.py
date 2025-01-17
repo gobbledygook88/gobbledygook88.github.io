@@ -103,7 +103,7 @@ def merge_country_geojson_files():
             collection.append(feature)
 
     destination_dir = os.path.join("build", "travel", "logbook")
-    destination = os.path.join(destination_dir, "logbook.geojson")
+    destination = os.path.join(destination_dir, "logbook_countries.geojson")
 
     os.makedirs(destination_dir, exist_ok=True)
 
