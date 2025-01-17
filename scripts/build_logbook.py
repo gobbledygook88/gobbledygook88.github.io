@@ -117,15 +117,19 @@ def build_logbook_js():
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--fetch-geojson", action=BooleanOptionalAction)
-    parser.set_defaults(fetch_geojson=False)
+    parser.add_argument(
+        "--fetch-all-geojson", action=BooleanOptionalAction, default=False
+    )
+    parser.add_argument(
+        "--fetch-country-geojson", action=BooleanOptionalAction, default=False
+    )
 
     args = parser.parse_args()
 
     logbook = read_logbook()
     timeline = read_timeline()
 
-    if args.fetch_geojson:
+    if args.fetch_all_geojson or args.fetch_country_geojson:
         fetch_country_geojson_files(logbook)
 
     merge_country_geojson_files()
