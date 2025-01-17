@@ -95,7 +95,7 @@ def build_logbook_html(logbook, timeline):
             {
                 "page": {
                     "num_countries_visited": timeline["num_countries"],
-                    "num_places_visited": timeline["num_places"],
+                    "num_cities_visited": timeline["num_cities"],
                     "num_continents_visited": timeline["num_continents"],
                     "num_countries_visited_per_continent": timeline[
                         "num_countries_per_continent"
