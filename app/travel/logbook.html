@@ -34,7 +34,8 @@
 
     <h2>Countries</h2>
 
-    <div id="map" data-map-data="logbook_countries.geojson"></div>
+    <div id="map-countries" class="map" data-map-data="logbook_countries.geojson" data-map-initial-latitude="0"
+      data-map-initial-longitude="0" data-map-initial-zoom="1"></div>
 
     <ul class="walk-metadata">
       <li>
@@ -59,6 +60,17 @@
         {% endfor %}
       </ul>
     </div>
+
+    <h2>USA States</h2>
+
+    <div id="map-usa-states" class="map" data-map-data="logbook_usa_states.geojson"></div>
+
+    <ul class="walk-metadata">
+      <li>
+        <h4>USA states</h4>
+        {{ page.num_usa_states_visited }}
+      </li>
+    </ul>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"

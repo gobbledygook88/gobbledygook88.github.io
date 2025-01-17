@@ -97,6 +97,7 @@ def build_logbook_html(logbook, timeline):
                         "num_countries_per_continent"
                     ],
                     "num_countries_per_continent": NUM_COUNTRIES_PER_CONTINENT,
+                    "num_usa_states_visited": timeline["num_usa_states"],
                 }
             },
         )
