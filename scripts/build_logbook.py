@@ -1,7 +1,7 @@
 from argparse import ArgumentParser, BooleanOptionalAction
 from collections import defaultdict
 from csv import DictReader
-from fetch_country_geojson import fetch_geojson
+from fetch_country_geojson import fetch_country_geojson
 from render import render
 import os
 import geojson
@@ -79,7 +79,7 @@ def fetch_country_geojson_files(logbook):
     countries = get_countries_with_areas(logbook)
 
     for country, area in countries:
-        collection = fetch_geojson(country, area)
+        collection = fetch_country_geojson(country, area)
         destination = f"logbook/geojson/countries/{country}"
 
         if area is not None:

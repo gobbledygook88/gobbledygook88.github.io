@@ -13,7 +13,7 @@ COUNTRIES_TO_NORMALISE = {
 }
 
 
-def fetch_geojson(country, area):
+def fetch_country_geojson(country, area):
     url = f"{SOURCE}/countries/{country}.json"
 
     if area is not None:
