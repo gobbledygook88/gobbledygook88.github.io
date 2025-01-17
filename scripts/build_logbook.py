@@ -1,6 +1,6 @@
 from argparse import ArgumentParser, BooleanOptionalAction
-from collections import defaultdict
 from csv import DictReader
+import json
 from fetch_country_geojson import fetch_country_geojson
 from render import render
 import os
@@ -9,18 +9,23 @@ import shutil
 
 
 NUM_COUNTRIES_PER_CONTINENT = {
-    "africa": 54,
-    "asia": 49,
-    "europe": 44,
-    "north_america": 23,
-    "south_america": 12,
-    "oceania": 14,
+    "Africa": 54,
+    "Asia": 49,
+    "Europe": 44,
+    "North America": 23,
+    "South America": 12,
+    "Oceania": 14,
 }
 
 
 def read_logbook():
     with open("logbook/locations.csv", "r") as f:
         return list(DictReader(f))
+
+
+def read_timeline():
+    with open("logbook/timeline_statistics.json", "r") as f:
+        return json.loads(f.read())
 
 
 def write_file(destination, contents):
@@ -33,46 +38,6 @@ def get_countries_with_areas(logbook):
         (location["country"], location["area"] if location["area"] != "" else None)
         for location in logbook
     )
-
-
-def get_countries(logbook):
-    return set(
-        (
-            location["country"]
-            if location["country"] != "united_kingdom"
-            else location["area"]
-        )
-        for location in logbook
-    )
-
-
-def get_continents(logbook):
-    return set(location["continent"] for location in logbook)
-
-
-def get_places(logbook):
-    return set(location["location"] for location in logbook)
-
-
-def get_countries_per_continent(logbook):
-    groups = defaultdict(set)
-
-    for location in logbook:
-        country = location["country"]
-
-        if location["country"] == "united_kingdom":
-            country = location["area"]
-
-        groups[location["continent"]].add(country)
-
-    return groups
-
-
-def get_num_countries_per_continent(logbook):
-    return {
-        continent: len(countries)
-        for continent, countries in get_countries_per_continent(logbook).items()
-    }
 
 
 def fetch_country_geojson_files(logbook):
@@ -111,7 +76,7 @@ def merge_country_geojson_files():
         geojson.dump(geojson.FeatureCollection(collection), f)
 
 
-def build_logbook_html(logbook):
+def build_logbook_html(logbook, timeline):
     source_dir = os.path.join("app", "travel")
     source = os.path.join(source_dir, "logbook.html")
 
@@ -123,12 +88,12 @@ def build_logbook_html(logbook):
             f.read(),
             {
                 "page": {
-                    "num_countries_visited": len(get_countries(logbook)),
-                    "num_places_visited": len(get_places(logbook)),
-                    "num_continents_visited": len(get_continents(logbook)),
-                    "num_countries_visited_per_continent": get_num_countries_per_continent(
-                        logbook
-                    ),
+                    "num_countries_visited": timeline["num_countries"],
+                    "num_places_visited": timeline["num_places"],
+                    "num_continents_visited": timeline["num_continents"],
+                    "num_countries_visited_per_continent": timeline[
+                        "num_countries_per_continent"
+                    ],
                     "num_countries_per_continent": NUM_COUNTRIES_PER_CONTINENT,
                 }
             },
@@ -158,10 +123,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     logbook = read_logbook()
+    timeline = read_timeline()
 
     if args.fetch_geojson:
         fetch_country_geojson_files(logbook)
 
     merge_country_geojson_files()
-    build_logbook_html(logbook)
+    build_logbook_html(logbook, timeline)
     build_logbook_js()
