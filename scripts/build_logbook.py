@@ -7,6 +7,8 @@ import os
 import geojson
 import shutil
 
+from fetch_usa_states_geojson import build_usa_states_geojson, fetch_usa_states_geojson
+
 
 NUM_COUNTRIES_PER_CONTINENT = {
     "Africa": 54,
@@ -57,7 +59,7 @@ def fetch_country_geojson_files(logbook):
         write_file(destination, geojson.dumps(collection))
 
 
-def merge_country_geojson_files():
+def build_country_geojson():
     source_dir = os.path.join("logbook", "geojson", "countries")
     files = os.listdir(source_dir)
     collection = []
@@ -123,6 +125,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--fetch-country-geojson", action=BooleanOptionalAction, default=False
     )
+    parser.add_argument(
+        "--fetch-usa-states-geojson", action=BooleanOptionalAction, default=False
+    )
 
     args = parser.parse_args()
 
@@ -132,6 +137,10 @@ if __name__ == "__main__":
     if args.fetch_all_geojson or args.fetch_country_geojson:
         fetch_country_geojson_files(logbook)
 
-    merge_country_geojson_files()
+    if args.fetch_all_geojson or args.fetch_usa_states_geojson:
+        fetch_usa_states_geojson()
+
+    build_country_geojson()
+    build_usa_states_geojson(timeline)
     build_logbook_html(logbook, timeline)
     build_logbook_js()
