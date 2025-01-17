@@ -28,6 +28,12 @@
   </header>
 
   <div class="site">
+    <div class="post">
+      <p>The data on this page has been computed from Google Takeout location data.</p>
+    </div>
+
+    <h2>Countries</h2>
+
     <div id="map" data-map-data="logbook_countries.geojson"></div>
 
     <ul class="walk-metadata">
@@ -46,9 +52,6 @@
     </ul>
 
     <div class="post">
-      <p>This logbook records which countries I have been to. I aim to keep it eventually updated. It is hard to
-        track every visited location so I have only recorded major locations which featured during a visit.</p>
-
       <ul>
         {% for continent, num_countries in page.num_countries_visited_per_continent.items() %}
         <li>{{ continent | replace("_", " ") | title }}: {{ num_countries }} / {{
