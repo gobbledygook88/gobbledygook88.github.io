@@ -50,18 +50,16 @@
         <h4>Cities</h4>
         &gt; {{ page.num_cities_visited }}
       </li>
+      <li class="break"></li>
+      {% for continent, num_countries in page.num_countries_visited_per_continent.items() %}
+      <li>
+        <h4>{{ continent | replace("_", " ") | title }}</h4>
+        {{ num_countries }} / {{ page.num_countries_per_continent[continent] }}
+      </li>
+      {% endfor %}
     </ul>
 
-    <div class="post">
-      <ul>
-        {% for continent, num_countries in page.num_countries_visited_per_continent.items() %}
-        <li>{{ continent | replace("_", " ") | title }}: {{ num_countries }} / {{
-          page.num_countries_per_continent[continent] }}</li>
-        {% endfor %}
-      </ul>
-    </div>
-
-    <h2>USA States</h2>
+    <h2>USA</h2>
 
     <div class="post">
       <p>I have visited {{ page.num_usa_states_visited }} out of 50 states.</p>
@@ -69,7 +67,7 @@
 
     <div id="map-usa-states" class="map" data-map-data="logbook_usa_states.geojson"></div>
 
-    <h2>London Boroughs</h2>
+    <h2>United Kingdom</h2>
 
     <div class="post">
       <p>I have visited {{ page.num_london_boroughs_visited }} out of 32 London boroughs and the City of London.</p>
