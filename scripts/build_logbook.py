@@ -12,7 +12,7 @@ from fetch_london_boroughs_geojson import (
     fetch_london_boroughs_geojson,
 )
 from render import render
-from build_places_geojson import build_places_geojson
+from build_places_geojson import build_unique_places_geojson, build_places_geojson
 
 
 NUM_COUNTRIES_PER_CONTINENT = {
@@ -158,6 +158,7 @@ if __name__ == "__main__":
         fetch_london_boroughs_geojson()
 
     build_country_geojson()
+    build_unique_places_geojson(timeline)
     build_places_geojson(timeline)
     build_usa_states_geojson(timeline)
     build_london_boroughs_geojson(timeline)
