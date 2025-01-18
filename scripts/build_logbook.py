@@ -13,6 +13,10 @@ from fetch_london_boroughs_geojson import (
 )
 from render import render
 from build_places_geojson import build_unique_places_geojson, build_places_geojson
+from build_uk_counties_geojson import (
+    build_uk_counties_geojson,
+    fetch_uk_counties_geojson,
+)
 
 
 NUM_COUNTRIES_PER_CONTINENT = {
@@ -140,6 +144,9 @@ if __name__ == "__main__":
         "--fetch-usa-states-geojson", action=BooleanOptionalAction, default=False
     )
     parser.add_argument(
+        "--fetch-uk-counties-geojson", action=BooleanOptionalAction, default=False
+    )
+    parser.add_argument(
         "--fetch-london-boroughs-geojson", action=BooleanOptionalAction, default=False
     )
 
@@ -154,6 +161,9 @@ if __name__ == "__main__":
     if args.fetch_all_geojson or args.fetch_usa_states_geojson:
         fetch_usa_states_geojson()
 
+    if args.fetch_all_geojson or args.fetch_uk_counties_geojson:
+        fetch_uk_counties_geojson()
+
     if args.fetch_all_geojson or args.fetch_london_boroughs_geojson:
         fetch_london_boroughs_geojson()
 
@@ -161,6 +171,8 @@ if __name__ == "__main__":
     build_unique_places_geojson(timeline)
     build_places_geojson(timeline)
     build_usa_states_geojson(timeline)
+    build_uk_counties_geojson(timeline)
     build_london_boroughs_geojson(timeline)
+
     build_logbook_html(logbook, timeline)
     build_logbook_js()
