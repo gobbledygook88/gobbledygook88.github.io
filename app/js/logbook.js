@@ -36,6 +36,11 @@
           "opacity": 0.65,
           "pointToLayer": function (feature, latlng) {
             return L.marker(latlng, { icon: marker });
+          },
+          "onEachFeature": function (feature, layer) {
+            if (feature.properties && feature.properties.name) {
+              layer.bindPopup(feature.properties.name);
+            }
           }
         }).addTo(map);
 
