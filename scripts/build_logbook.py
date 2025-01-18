@@ -12,6 +12,7 @@ from fetch_london_boroughs_geojson import (
     fetch_london_boroughs_geojson,
 )
 from render import render
+from build_places_geojson import build_unique_places_geojson, build_places_geojson
 
 
 NUM_COUNTRIES_PER_CONTINENT = {
@@ -103,6 +104,10 @@ def build_logbook_html(logbook, timeline):
                     "num_countries_per_continent": NUM_COUNTRIES_PER_CONTINENT,
                     "num_usa_states_visited": timeline["num_usa_states"],
                     "num_london_boroughs_visited": timeline["num_london_boroughs"],
+                    "most_northern_place": timeline["most_northern_place"],
+                    "most_southern_place": timeline["most_southern_place"],
+                    "most_eastern_place": timeline["most_eastern_place"],
+                    "most_western_place": timeline["most_western_place"],
                 }
             },
         )
@@ -153,6 +158,8 @@ if __name__ == "__main__":
         fetch_london_boroughs_geojson()
 
     build_country_geojson()
+    build_unique_places_geojson(timeline)
+    build_places_geojson(timeline)
     build_usa_states_geojson(timeline)
     build_london_boroughs_geojson(timeline)
     build_logbook_html(logbook, timeline)

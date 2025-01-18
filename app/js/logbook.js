@@ -12,7 +12,7 @@
     iconAnchor: [6, 16],
   });
 
-  const mapIds = ["map-countries", "map-usa-states", "map-london-boroughs"];
+  const mapIds = ["map-countries", "map-unique-places", "map-cardinal-places", "map-usa-states", "map-london-boroughs"];
 
   mapIds.forEach(mapId => {
     const mapEl = document.getElementById(mapId);
@@ -33,7 +33,15 @@
         const geojsonLayer = L.geoJSON(json, {
           "color": "#ff7800",
           "weight": 1,
-          "opacity": 0.65
+          "opacity": 0.65,
+          "pointToLayer": function (feature, latlng) {
+            return L.marker(latlng, { icon: marker });
+          },
+          "onEachFeature": function (feature, layer) {
+            if (feature.properties && feature.properties.name) {
+              layer.bindPopup(feature.properties.name);
+            }
+          }
         }).addTo(map);
 
         if (mapEl.dataset.mapInitialLatitude) {
