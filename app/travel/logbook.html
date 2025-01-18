@@ -59,6 +59,29 @@
       {% endfor %}
     </ul>
 
+    <h2>Places</h2>
+
+    <div id="map-cardinal-places" class="map" data-map-data="logbook_cardinal_places.geojson"></div>
+
+    <ul class="walk-metadata">
+      <li>
+        <h4>Most northern</h4>
+        {{ page.most_northern_place.name }}
+      </li>
+      <li>
+        <h4>Most southern</h4>
+        {{ page.most_southern_place.name }}
+      </li>
+      <li>
+        <h4>Most western</h4>
+        {{ page.most_western_place.name }}
+      </li>
+      <li>
+        <h4>Most eastern</h4>
+        {{ page.most_eastern_place.name }}
+      </li>
+    </ul>
+
     <h2>USA</h2>
 
     <div class="post">
