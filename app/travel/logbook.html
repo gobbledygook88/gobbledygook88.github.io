@@ -61,6 +61,10 @@
 
     <h2>Places</h2>
 
+    <div class="post">
+      <p>These are the most northern, southern, western and eastern places I have visited.</p>
+    </div>
+
     <div id="map-cardinal-places" class="map" data-map-data="logbook_cardinal_places.geojson"></div>
 
     <ul class="walk-metadata">
@@ -93,7 +97,8 @@
     <h2>United Kingdom</h2>
 
     <div class="post">
-      <p>I have visited {{ page.num_london_boroughs_visited }} out of 32 London boroughs and the City of London.</p>
+      <p>I have visited {{ page.num_london_boroughs_visited - 1 }} out of 32 London boroughs, and the City of London.
+      </p>
     </div>
 
     <div id="map-london-boroughs" class="map" data-map-data="logbook_london_boroughs.geojson"></div>
