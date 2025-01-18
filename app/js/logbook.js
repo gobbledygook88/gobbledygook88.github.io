@@ -12,7 +12,7 @@
     iconAnchor: [6, 16],
   });
 
-  const mapIds = ["map-countries", "map-unique-places", "map-cardinal-places", "map-usa-states", "map-london-boroughs"];
+  const mapIds = ["map-countries", "map-unique-places", "map-cardinal-places", "map-usa-states", "map-uk-counties", "map-london-boroughs"];
 
   mapIds.forEach(mapId => {
     const mapEl = document.getElementById(mapId);

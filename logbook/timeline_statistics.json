@@ -188,7 +188,7 @@
         "2016": 1326
     },
     "num_places": 5967,
-    "num_uk_counties": 39,
+    "num_uk_counties": 37,
     "num_london_boroughs": 30,
     "num_usa_states": 9,
     "continents": [
@@ -48194,7 +48194,6 @@
             "Cambridgeshire",
             "Derbyshire",
             "Devon",
-            "East Midlands",
             "East Sussex",
             "Essex",
             "Gloucestershire",
@@ -48206,7 +48205,6 @@
             "Lancashire",
             "Nottinghamshire",
             "Oxfordshire",
-            "Royal Borough of Windsor and Maidenhead",
             "South Yorkshire",
             "Surrey",
             "Swindon",
@@ -48226,9 +48224,9 @@
             "West Dunbartonshire"
         ],
         "Wales": [
-            "Caerphilly County Borough",
+            "Blaenau Gwent",
+            "Caerphilly",
             "Cardiff",
-            "Gwent",
             "Neath Port Talbot",
             "Powys"
         ]
