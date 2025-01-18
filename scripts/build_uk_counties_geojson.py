@@ -24,9 +24,11 @@ def build_uk_counties_geojson(timeline):
     ]
 
     if "South Yorkshire" in visited_counties:
+        visited_counties.remove("South Yorkshire")
         visited_counties.extend(["Barnsley", "Doncaster", "Rotherham", "Sheffield"])
 
     if "West Midlands" in visited_counties:
+        visited_counties.remove("West Midlands")
         visited_counties.extend(
             [
                 "Birmingham",
@@ -40,6 +42,7 @@ def build_uk_counties_geojson(timeline):
         )
 
     if "Greater Manchester" in visited_counties:
+        visited_counties.remove("Greater Manchester")
         visited_counties.extend(
             [
                 "Bolton",
@@ -56,6 +59,7 @@ def build_uk_counties_geojson(timeline):
         )
 
     if "Greater London" in visited_counties:
+        visited_counties.remove("Greater London")
         visited_counties.extend(
             [
                 "Barking and Dagenham",
