@@ -221,6 +221,11 @@ td {
   flex: 1;
 }
 
+.waypoint figure .break {
+  flex-basis: 100%;
+  height: 0;
+}
+
 .waypoint img.svg-icon {
   width: 0.75em;
 }

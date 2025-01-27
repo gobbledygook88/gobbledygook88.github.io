@@ -33,16 +33,20 @@
           <img class="svg-icon" src="/img/svg/location-dot-solid.svg" alt="Location pin icon" width="20px" />
           {{ page.route.start }} to {{ page.route.end }}
         </li>
+        {% if page.route.type %}
         <li>
           <img class="svg-icon"
             src="/img/svg/person-walking-arrow-{{ 'loop-left' if page.route.type.lower() == 'circular' else 'right' }}-solid.svg"
             alt="Person walking icon" width="20px" />
           {{ page.route.type }}
         </li>
+        {% endif %}
+        {% if page.route.distance %}
         <li>
           <img class="svg-icon" src="/img/svg/road-solid.svg" alt="Road icon" width="20px" />
           {{ page.route.distance }}
         </li>
+        {% endif %}
         <li>
           <img class="svg-icon" src="/img/svg/stopwatch-solid.svg" alt="Stopwatch icon" width="20px" />
           {{ page.route.duration }}
@@ -79,8 +83,12 @@
           {% if waypoint.images -%}
           <figure>
             {% for image in waypoint.images -%}
+            {% if image.space == 'break' %}
+            <span class="break"></span>
+            {% else %}
             <img src="/img/{{ image.url }}" alt="{{ image.alt }}" {% if image.flex -%}style="flex: {{ image.flex }}" {%-
               endif %} />
+            {% endif %}
             {% endfor %}
           </figure>
           {%- endif %}
