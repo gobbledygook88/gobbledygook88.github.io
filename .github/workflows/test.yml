@@ -19,3 +19,5 @@ jobs:
         run: pip install -r requirements.txt
       - name: Run ruff
         run: ruff check
+      - name: Check imports
+        run: ruff check --select I

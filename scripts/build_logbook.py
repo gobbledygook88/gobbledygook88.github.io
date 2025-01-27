@@ -1,23 +1,22 @@
-from argparse import ArgumentParser, BooleanOptionalAction
-from csv import DictReader
 import json
 import os
-import geojson
 import shutil
+from argparse import ArgumentParser, BooleanOptionalAction
+from csv import DictReader
 
-from fetch_country_geojson import fetch_country_geojson
-from fetch_usa_states_geojson import build_usa_states_geojson, fetch_usa_states_geojson
-from fetch_london_boroughs_geojson import (
-    build_london_boroughs_geojson,
-    fetch_london_boroughs_geojson,
-)
-from render import render
-from build_places_geojson import build_unique_places_geojson, build_places_geojson
+import geojson
+from build_places_geojson import build_places_geojson, build_unique_places_geojson
 from build_uk_counties_geojson import (
     build_uk_counties_geojson,
     fetch_uk_counties_geojson,
 )
-
+from fetch_country_geojson import fetch_country_geojson
+from fetch_london_boroughs_geojson import (
+    build_london_boroughs_geojson,
+    fetch_london_boroughs_geojson,
+)
+from fetch_usa_states_geojson import build_usa_states_geojson, fetch_usa_states_geojson
+from render import render
 
 NUM_COUNTRIES_PER_CONTINENT = {
     "Africa": 54,
