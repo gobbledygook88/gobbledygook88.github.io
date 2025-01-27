@@ -12,8 +12,8 @@ route:
   duration: 9 days
   waypoints:
   - title: Da Nang
-    latitude: 25.77144145694701
-    longitude: -80.13096924925698
+    latitude: 16.065750897632714
+    longitude: 108.2463753040069
     text:
     images:
     - url: /travel/2024-12-19-rtw-vietnam/danang-beach-sign.jpg
@@ -23,8 +23,8 @@ route:
     - url: /travel/2024-12-19-rtw-vietnam/danang-memorial.jpg
     - url: /travel/2024-12-19-rtw-vietnam/danang-han-market.jpg
   - title: Son Tra Peninsula
-    latitude: 25.77144145694701
-    longitude: -80.13096924925698
+    latitude: 16.100396961568475
+    longitude: 108.27805449192012
     text:
     images:
     - url: /travel/2024-12-19-rtw-vietnam/son-tra-main-building.jpg
@@ -33,8 +33,8 @@ route:
     - url: /travel/2024-12-19-rtw-vietnam/son-tra-statue.jpg
     - url: /travel/2024-12-19-rtw-vietnam/son-tra-danang-view.jpg
   - title: Ba Na Hills
-    latitude: 25.77144145694701
-    longitude: -80.13096924925698
+    latitude: 15.996934380147833
+    longitude: 107.99354294190866
     text:
     images:
     - url: /travel/2024-12-19-rtw-vietnam/banahills-gate.jpg
@@ -50,8 +50,8 @@ route:
     - url: /travel/2024-12-19-rtw-vietnam/banahills-peacock.jpg
       flex: 2
   - title: Hoi An
-    latitude: 25.77144145694701
-    longitude: -80.13096924925698
+    latitude: 15.877113468035848
+    longitude: 108.32628594052865
     text:
     images:
     - url: /travel/2024-12-19-rtw-vietnam/hoian-lanterns.jpg
@@ -60,8 +60,8 @@ route:
     - url: /travel/2024-12-19-rtw-vietnam/hoian-gate.jpg
     - url: /travel/2024-12-19-rtw-vietnam/hoian-night.jpg
   - title: Hue
-    latitude: 25.77144145694701
-    longitude: -80.13096924925698
+    latitude: 16.469571954276034
+    longitude: 107.57765021003733
     text:
     images:
     - url: /travel/2024-12-19-rtw-vietnam/hue-lagoon.jpg
@@ -72,8 +72,8 @@ route:
     - url: /travel/2024-12-19-rtw-vietnam/hue-pagoda.jpg
     - url: /travel/2024-12-19-rtw-vietnam/hue-tomb.jpg
   - title: Hanoi
-    latitude: 25.77144145694701
-    longitude: -80.13096924925698
+    latitude: 21.02873701422508
+    longitude: 105.85167798070854
     text:
     images:
     - url: /travel/2024-12-19-rtw-vietnam/hanoi-lake.jpg
