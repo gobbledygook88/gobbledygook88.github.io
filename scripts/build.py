@@ -1,8 +1,9 @@
 import os
 import shutil
+
 import markdown
 import yaml
-from render import render_template, render
+from render import render, render_template
 
 CONFIG_FILE = "_config.yml"
 CONTENT_DIRS = {"blog": "app/_blog", "walks": "app/_walks", "travel": "app/_travel"}

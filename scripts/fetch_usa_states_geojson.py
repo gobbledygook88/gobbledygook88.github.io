@@ -1,8 +1,8 @@
 import json
 import os
+
 import geojson
 import requests
-
 
 SOURCE = "https://raw.githubusercontent.com/PublicaMundi/MappingAPI/refs/heads/master/data/geojson/us-states.json"
 DESTINATION = "logbook/geojson/usa_states/usa_states.geojson"

@@ -1,8 +1,8 @@
 import json
 import os
+
 import geojson
 import requests
-
 
 SOURCE = "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Counties_and_Unitary_Authorities_December_2024_Boundaries_UK_BUC/FeatureServer/replicafilescache/Counties_and_Unitary_Authorities_December_2024_Boundaries_UK_BUC_-7342248301948489151.geojson"
 DESTINATION = "logbook/geojson/uk_counties/uk_counties.geojson"

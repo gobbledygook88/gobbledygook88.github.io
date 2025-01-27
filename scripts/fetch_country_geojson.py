@@ -1,7 +1,7 @@
 import math
-import requests
-import geojson
 
+import geojson
+import requests
 
 SOURCE = "https://raw.githubusercontent.com/georgique/world-geojson/develop"
 
