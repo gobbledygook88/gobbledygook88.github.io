@@ -121,6 +121,19 @@ td {
   text-align: center;
 }
 
+.post a {
+  text-decoration: none;
+  color: #ff7800;
+}
+
+.post a:hover {
+  color: #ff7700;
+}
+
+.post a:visited {
+  color: #ff7800;
+}
+
 .post pre {
   border: 1px solid #ddd;
   background-color: #fdf6e3;
