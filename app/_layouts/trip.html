@@ -31,7 +31,11 @@
       <ul class="walk-metadata">
         <li>
           <img class="svg-icon" src="/img/svg/location-dot-solid.svg" alt="Location pin icon" width="20px" />
+          {% if page.route.start == page.route.end %}
+          {{ page.route.start }}
+          {% else %}
           {{ page.route.start }} to {{ page.route.end }}
+          {% endif %}
         </li>
         {% if page.route.type %}
         <li>
