@@ -1,9 +1,14 @@
 import os
 import shutil
+import time
+from argparse import ArgumentParser
+from datetime import datetime
 
 import markdown
 import yaml
 from render import render, render_template
+from watchdog.events import FileSystemEvent, FileSystemEventHandler
+from watchdog.observers import Observer
 
 CONFIG_FILE = "_config.yml"
 CONTENT_DIRS = {"blog": "app/_blog", "walks": "app/_walks", "travel": "app/_travel"}
@@ -99,12 +104,7 @@ def build_index(site_config, posts, content_subdir):
         f.write(html_output)
 
 
-if __name__ == "__main__":
-    config = load_yaml_config(CONFIG_FILE)
-
-    if not os.path.exists(OUTPUT_DIR):
-        os.makedirs(OUTPUT_DIR)
-
+def main():
     clear_directory(OUTPUT_DIR)
     copy_assets(STATIC_ASSETS, OUTPUT_DIR)
 
@@ -113,3 +113,40 @@ if __name__ == "__main__":
             config, content_dir, os.path.join(OUTPUT_DIR, content_type)
         )
         build_index(config, posts, content_type)
+
+
+if __name__ == "__main__":
+    parser = ArgumentParser()
+    parser.add_argument("--watch", action="store_true")
+
+    args = parser.parse_args()
+
+    config = load_yaml_config(CONFIG_FILE)
+
+    if not os.path.exists(OUTPUT_DIR):
+        os.makedirs(OUTPUT_DIR)
+
+    if args.watch:
+
+        class EventHandler(FileSystemEventHandler):
+            def on_any_event(self, event: FileSystemEvent) -> None:
+                print(
+                    f"[{datetime.now().isoformat()}] Detected change in {os.path.basename(event.src_path)}"
+                )
+                main()
+
+        event_handler = EventHandler()
+        observer = Observer()
+        observer.schedule(event_handler, "app", recursive=True)
+        observer.start()
+
+        try:
+            print("Watching for changes...")
+            while True:
+                time.sleep(1)
+        finally:
+            observer.stop()
+            observer.join()
+
+    else:
+        main()
