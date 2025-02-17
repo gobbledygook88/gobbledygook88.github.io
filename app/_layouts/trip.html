@@ -12,8 +12,9 @@
 
     <aside>
       {% if page.map %}
-      <div id="map" data-map-data="{{ page.map.data }}" {% if page.map.zoomLevel
-        -%}data-map-zoom-level="{{ page.map.zoomLevel }}" {%- endif -%}></div>
+      <div id="map" data-map-data="{{ page.map.data }}" data-map-latitude="{{ page.map.latitude }}"
+        data-map-longitude="{{ page.map.longitude }}" {% if page.map.zoomLevel -%}
+        data-map-zoom-level="{{ page.map.zoomLevel }}" {%- endif -%}></div>
       {% endif %}
 
       {% if page.video -%}
