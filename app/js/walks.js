@@ -10,8 +10,14 @@
     CARTO: "https://carto.com/attributions",
   };
 
-  const marker = L.icon({
+  const locationPinMarker = L.icon({
     iconUrl: "/img/svg/location-dot-solid.svg",
+    iconSize: [12, 16],
+    iconAnchor: [6, 16],
+  });
+
+  const utensilsMarker = L.icon({
+    iconUrl: "/img/svg/utensils-solid.svg",
     iconSize: [12, 16],
     iconAnchor: [6, 16],
   });
@@ -58,7 +64,12 @@
     }
     currentMarker = L.marker(
       [el.target.dataset.waypointLatitude, el.target.dataset.waypointLongitude],
-      { icon: marker }
+      {
+        icon:
+          el.target.dataset.waypointIcon === "food"
+            ? utensilsMarker
+            : locationPinMarker,
+      }
     ).addTo(map);
   }
 

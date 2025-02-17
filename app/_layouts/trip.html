@@ -76,10 +76,14 @@
 
         {% for waypoint in page.route.waypoints -%}
         <div class="waypoint" data-waypoint-latitude="{{ waypoint.latitude }}"
-          data-waypoint-longitude="{{ waypoint.longitude }}">
+          data-waypoint-longitude="{{ waypoint.longitude }}" data-waypoint-icon="{{ waypoint.icon }}">
           {% if waypoint.latitude and waypoint.longitude -%}
           <h4>
+            {% if waypoint.icon == "food" %}
+            <img class="svg-icon" src="/img/svg/utensils-solid.svg" alt="Utensils icon" />
+            {% else %}
             <img class="svg-icon" src="/img/svg/location-dot-solid.svg" alt="Location pin icon" />
+            {% endif %}
             {{ waypoint.latitude | round(5) }}, {{ waypoint.longitude | round(5) }}
             {%- if waypoint.title %} - {{ waypoint.title }}{%- endif %}
           </h4>
