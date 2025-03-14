@@ -19,6 +19,7 @@
 
       {% if page.video -%}
       <div>
+        {% if page.video.player == 'youtube' %}
         <iframe
           src="{{ page.video.url }}?autoplay={{ 1 if page.video.autoplay else 0 }}&mute={{ 1 if page.video.mute else 0 }}&loop={{ 1 if page.video.loop else 0 }}&modestbranding=1&controls=0&autohide=1"
           title="{{ page.video.title }}" frameborder="0"
@@ -26,6 +27,15 @@
           referrerpolicy="strict-origin-when-cross-origin"
           style="width: 100%; aspect-ratio: {{ '9 / 16' if page.video.orientation == 'vertical' else '16 / 9'}};"
           allowfullscreen></iframe>
+        {% elif page.video.player == 'vimeo' %}
+        <div style="padding:56.25% 0 0 0;position:relative;">
+          <iframe
+            src="{{ page.video.url }}&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+            frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;" title="{{ page.video.title }}"></iframe>
+        </div>
+        <script src="https://player.vimeo.com/api/player.js"></script>
+        {% endif %}
       </div>
       {% endif %}
 
