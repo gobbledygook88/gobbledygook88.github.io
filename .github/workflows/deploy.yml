@@ -21,14 +21,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version-file: .python-version
       - name: Run the build script
         run: |
-          pip install -r requirements.txt
-          python scripts/build.py
-          python scripts/build_logbook.py --fetch-all-geojson
+          uv sync --all-extras --dev
+          uv run scripts/build.py
+          uv run scripts/build_logbook.py --fetch-all-geojson
       - name: Upload static files as an artifact
         uses: actions/upload-pages-artifact@v3
         with:
