@@ -4,8 +4,9 @@ title: Round the World
 categories: travel
 
 video:
+  player: vimeo
   title: 2024 Round the world
-  url: https://www.youtube.com/embed/Y3F8-lqCpNc
+  url: https://player.vimeo.com/video/1065483186?h=46c1385b66
   orientation: horizontal
   autoplay: true
   mute: true
