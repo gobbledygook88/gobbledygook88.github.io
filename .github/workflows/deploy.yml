@@ -32,7 +32,7 @@ jobs:
           uv run scripts/build.py
           uv run scripts/build_logbook.py --fetch-all-geojson
       - name: Upload static files as an artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: "build/"
 
