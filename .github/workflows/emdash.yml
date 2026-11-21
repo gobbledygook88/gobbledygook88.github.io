@@ -43,6 +43,33 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm build
 
+  # Outside-in browser tests against the built Worker (`wrangler dev`, local
+  # database, no Cloudflare credentials needed)
+  e2e:
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: emdash/.nvmrc
+          cache: pnpm
+          cache-dependency-path: emdash/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - name: Install Playwright's Chromium
+        run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
+      - name: Upload test traces
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: emdash/test-results/
+          retention-days: 7
+
   preview:
     # Secrets aren't available to fork or Dependabot PRs
     if: >-
@@ -155,7 +182,8 @@ jobs:
 
   deploy-staging:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-    needs: check
+    # Don't deploy a build whose browser tests fail
+    needs: [check, e2e]
     runs-on: ubuntu-latest
     environment:
       name: emdash-staging

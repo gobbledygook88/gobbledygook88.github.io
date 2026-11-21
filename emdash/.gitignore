@@ -17,3 +17,11 @@ data.db-*
 # The repo root ignores all hidden dirs (.*/) — re-include EmDash's agent skills
 !.agents/
 !.claude/
+
+# Playwright
+test-results
+playwright-report
+
+# The repo root ignores "Icon?" (macOS folder icons), which matches "icons" on
+# case-insensitive filesystems
+!/src/icons/

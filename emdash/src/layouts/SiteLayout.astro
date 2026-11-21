@@ -1,0 +1,63 @@
+---
+/**
+ * The page shell for every Biscuit Crumbs page: head metadata, EmDash's
+ * plugin and SEO hooks, the banner, and a <main> landmark for the content.
+ */
+import { Font } from "astro:assets";
+import { getSiteSettingsWithCacheHint } from "emdash";
+import { createPublicPageContext } from "emdash/page";
+import { EmDashBodyEnd, EmDashBodyStart, EmDashHead } from "emdash/ui";
+import Banner from "../components/Banner.astro";
+import "../styles/site.css";
+
+interface Props {
+	/** The page's own title. The site name is appended unless it is the site name. */
+	title: string;
+	description?: string | null;
+	type?: "website" | "article";
+	/** The home page has its own header instead of the banner. */
+	showBanner?: boolean;
+	/** The content entry this page renders, for EmDash's SEO and plugin hooks. */
+	content?: { collection: string; id: string; slug?: string | null };
+}
+
+const { title, description, type = "website", showBanner = true, content } = Astro.props;
+
+const { data: settings, cacheHint } = await getSiteSettingsWithCacheHint();
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+
+const siteTitle = settings.title ?? "Biscuit Crumbs";
+const fullTitle = title === siteTitle ? title : `${title} — ${siteTitle}`;
+
+const pageContext = createPublicPageContext({
+	Astro,
+	kind: content ? "content" : "custom",
+	pageType: type,
+	title: fullTitle,
+	pageTitle: title,
+	description,
+	content,
+	siteName: siteTitle,
+});
+---
+
+<!doctype html>
+<html lang="en-GB">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<Font cssVariable="--font-oxygen" preload />
+		<title>{fullTitle}</title>
+		<EmDashHead page={pageContext} />
+		<slot name="head" />
+	</head>
+	<body>
+		<EmDashBodyStart page={pageContext} />
+		<a class="skip-link" href="#main">Skip to content</a>
+		{showBanner && <Banner siteTitle={siteTitle} />}
+		<main id="main">
+			<slot />
+		</main>
+		<EmDashBodyEnd page={pageContext} />
+	</body>
+</html>

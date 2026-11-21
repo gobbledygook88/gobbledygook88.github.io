@@ -1,0 +1,74 @@
+---
+import AllTrailsIcon from "../icons/alltrails.svg";
+import GitHubIcon from "../icons/github.svg";
+import StravaIcon from "../icons/strava.svg";
+
+interface Props {
+	siteTitle: string;
+}
+
+const { siteTitle } = Astro.props;
+
+const profiles = [
+	{ name: "GitHub", href: "https://github.com/gobbledygook88", Icon: GitHubIcon },
+	{
+		name: "AllTrails",
+		href: "https://www.alltrails.com/members/marcus-mo/maps",
+		Icon: AllTrailsIcon,
+	},
+	{ name: "Strava", href: "https://strava.app.link/C5jt2v2v8Jb", Icon: StravaIcon },
+];
+---
+
+<header class="banner">
+	<a class="site-name" href="/">{siteTitle}</a>
+	<nav aria-label="Profiles">
+		<ul>
+			{
+				profiles.map(({ name, href, Icon }) => (
+					<li>
+						<a href={href} aria-label={name}>
+							<Icon aria-hidden="true" width={20} height={20} />
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</nav>
+</header>
+
+<style>
+	.banner {
+		margin-block: 2em;
+	}
+
+	.site-name {
+		display: inline-block;
+		margin-block: 0.67em 1em;
+		color: var(--color-text-strong);
+		font-size: 2em;
+		letter-spacing: var(--tracking-wide);
+		text-transform: uppercase;
+	}
+
+	ul {
+		display: flex;
+		justify-content: center;
+		gap: 0.25em;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	a:has(svg) {
+		display: block;
+		padding: 0.25em;
+		color: var(--color-text-strong);
+	}
+
+	svg {
+		inline-size: 20px;
+		block-size: 20px;
+		fill: currentColor;
+	}
+</style>
