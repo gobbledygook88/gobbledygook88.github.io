@@ -13,12 +13,14 @@ repo_root="$(cd "$(dirname "$0")/../.." && pwd)"
 site="$repo_root/emdash"
 
 cd "$repo_root"
-# build_logbook.py also copies the old site's logbook.js into build/js
-mkdir -p build/js
 uv run scripts/build_logbook.py "$@"
 
 mkdir -p "$site/public/travel/logbook"
-cp build/travel/logbook/*.geojson "$site/public/travel/logbook/"
+# Add the final newline the pre-commit end-of-file hook expects, so an
+# unchanged logbook leaves the committed files unchanged
+for layer in build/travel/logbook/*.geojson; do
+	{ cat "$layer"; echo; } > "$site/public/travel/logbook/$(basename "$layer")"
+done
 # Only the numbers the page shows (the full statistics file is ~1.5 MB)
 python3 - "$site/src/data/logbook-statistics.json" <<'PY'
 import json, sys
