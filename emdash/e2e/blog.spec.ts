@@ -105,6 +105,17 @@ test.describe("Blog post", () => {
 		await expect(table.getByRole("row").nth(1).getByRole("cell")).toHaveText(["Tent", "1.2kg"]);
 	});
 
+	test("keeps tables plain, with their column alignment", async ({ page }) => {
+		await page.goto("/blog/thru-hiking-packing-list/");
+
+		const table = page.getByRole("table");
+		const backgrounds = await table
+			.getByRole("row")
+			.evaluateAll((rows) => rows.map((row) => getComputedStyle(row).backgroundColor));
+		expect(new Set(backgrounds)).toEqual(new Set(["rgba(0, 0, 0, 0)"]));
+		await expect(table.getByRole("cell", { name: "27g" })).toHaveCSS("text-align", "right");
+	});
+
 	test("typesets maths without loading a script", async ({ page }) => {
 		const scripts: string[] = [];
 		page.on("request", (request) => {

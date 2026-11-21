@@ -13,7 +13,9 @@
 		"preview": "astro preview",
 		"deploy": "astro build && wrangler deploy",
 		"typecheck": "astro check",
-		"test:e2e": "playwright test"
+		"test:e2e": "playwright test",
+		"test:import": "node --test 'scripts/import/test/*.test.ts'",
+		"import:legacy": "node scripts/import/cli.ts"
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^14.3.1",
@@ -30,10 +32,15 @@
 	"devDependencies": {
 		"@astrojs/check": "^0.9.10",
 		"@cloudflare/workers-types": "^5.20260820.1",
+		"@emdash-cms/gutenberg-to-portable-text": "1.5.0",
 		"@playwright/test": "^1.65.1",
 		"@types/katex": "^0.16.8",
 		"@types/leaflet": "^1.9.22",
+		"@types/markdown-it": "^14.2.0",
 		"lightningcss": "^1.33.0",
-		"wrangler": "^4.125.0"
+		"markdown-it": "^15.0.3",
+		"sharp": "^0.35.5",
+		"wrangler": "^4.125.0",
+		"yaml": "^2.9.1"
 	}
 }

@@ -11,18 +11,45 @@
 					"_type": "block",
 					"_key": "p1",
 					"style": "normal",
-					"markDefs": [{ "_type": "link", "_key": "plover", "href": "https://www.openstenoproject.org/plover/" }],
+					"markDefs": [
+						{
+							"_type": "link",
+							"_key": "plover",
+							"href": "https://www.openstenoproject.org/plover/"
+						}
+					],
 					"children": [
-						{ "_type": "span", "_key": "s1", "text": "Setup was simple: install " },
-						{ "_type": "span", "_key": "s2", "text": "Plover", "marks": ["plover"] },
-						{ "_type": "span", "_key": "s3", "text": " and plug in the keyboard." }
+						{
+							"_type": "span",
+							"_key": "s1",
+							"text": "Setup was simple: install "
+						},
+						{
+							"_type": "span",
+							"_key": "s2",
+							"text": "Plover",
+							"marks": [
+								"plover"
+							]
+						},
+						{
+							"_type": "span",
+							"_key": "s3",
+							"text": " and plug in the keyboard."
+						}
 					]
 				},
 				{
 					"_type": "block",
 					"_key": "h1",
 					"style": "h2",
-					"children": [{ "_type": "span", "_key": "s4", "text": "Resources" }]
+					"children": [
+						{
+							"_type": "span",
+							"_key": "s4",
+							"text": "Resources"
+						}
+					]
 				},
 				{
 					"_type": "block",
@@ -30,7 +57,13 @@
 					"style": "normal",
 					"listItem": "bullet",
 					"level": 1,
-					"children": [{ "_type": "span", "_key": "s5", "text": "Art of Chording" }]
+					"children": [
+						{
+							"_type": "span",
+							"_key": "s5",
+							"text": "Art of Chording"
+						}
+					]
 				},
 				{
 					"_type": "block",
@@ -38,7 +71,13 @@
 					"style": "normal",
 					"listItem": "bullet",
 					"level": 1,
-					"children": [{ "_type": "span", "_key": "s6", "text": "Typey Type" }]
+					"children": [
+						{
+							"_type": "span",
+							"_key": "s6",
+							"text": "Typey Type"
+						}
+					]
 				}
 			]
 		}
@@ -55,7 +94,13 @@
 					"_type": "block",
 					"_key": "p1",
 					"style": "normal",
-					"children": [{ "_type": "span", "_key": "s1", "text": "Everything I carried on the South Downs Way." }]
+					"children": [
+						{
+							"_type": "span",
+							"_key": "s1",
+							"text": "Everything I carried on the South Downs Way."
+						}
+					]
 				},
 				{
 					"_type": "table",
@@ -66,16 +111,89 @@
 							"_type": "tableRow",
 							"_key": "r1",
 							"cells": [
-								{ "_type": "tableCell", "_key": "c1", "isHeader": true, "content": [{ "_type": "span", "_key": "x1", "text": "Item" }] },
-								{ "_type": "tableCell", "_key": "c2", "isHeader": true, "content": [{ "_type": "span", "_key": "x2", "text": "Weight" }] }
+								{
+									"_type": "tableCell",
+									"_key": "c1",
+									"isHeader": true,
+									"content": [
+										{
+											"_type": "span",
+											"_key": "x1",
+											"text": "Item"
+										}
+									]
+								},
+								{
+									"_type": "tableCell",
+									"_key": "c2",
+									"isHeader": true,
+									"content": [
+										{
+											"_type": "span",
+											"_key": "x2",
+											"text": "Weight"
+										}
+									],
+									"textAlign": "right"
+								}
 							]
 						},
 						{
 							"_type": "tableRow",
 							"_key": "r2",
 							"cells": [
-								{ "_type": "tableCell", "_key": "c3", "content": [{ "_type": "span", "_key": "x3", "text": "Tent" }] },
-								{ "_type": "tableCell", "_key": "c4", "content": [{ "_type": "span", "_key": "x4", "text": "1.2kg" }] }
+								{
+									"_type": "tableCell",
+									"_key": "c3",
+									"content": [
+										{
+											"_type": "span",
+											"_key": "x3",
+											"text": "Tent"
+										}
+									]
+								},
+								{
+									"_type": "tableCell",
+									"_key": "c4",
+									"content": [
+										{
+											"_type": "span",
+											"_key": "x4",
+											"text": "1.2kg"
+										}
+									],
+									"textAlign": "right"
+								}
+							]
+						},
+						{
+							"_type": "tableRow",
+							"_key": "r3",
+							"cells": [
+								{
+									"_type": "tableCell",
+									"_key": "c5",
+									"content": [
+										{
+											"_type": "span",
+											"_key": "x5",
+											"text": "Stove"
+										}
+									]
+								},
+								{
+									"_type": "tableCell",
+									"_key": "c6",
+									"textAlign": "right",
+									"content": [
+										{
+											"_type": "span",
+											"_key": "x6",
+											"text": "27g"
+										}
+									]
+								}
 							]
 						}
 					]
@@ -96,9 +214,24 @@
 					"_key": "p1",
 					"style": "normal",
 					"children": [
-						{ "_type": "span", "_key": "s1", "text": "Every program starts at " },
-						{ "_type": "span", "_key": "s2", "text": "main", "marks": ["code"] },
-						{ "_type": "span", "_key": "s3", "text": "." }
+						{
+							"_type": "span",
+							"_key": "s1",
+							"text": "Every program starts at "
+						},
+						{
+							"_type": "span",
+							"_key": "s2",
+							"text": "main",
+							"marks": [
+								"code"
+							]
+						},
+						{
+							"_type": "span",
+							"_key": "s3",
+							"text": "."
+						}
 					]
 				},
 				{
@@ -123,9 +256,21 @@
 					"_key": "p1",
 					"style": "normal",
 					"children": [
-						{ "_type": "span", "_key": "s1", "text": "A solver for the Poisson equation, for " },
-						{ "_type": "math", "_key": "m1", "latex": "\\mathbf{r} \\in \\mathbb{R}^2" },
-						{ "_type": "span", "_key": "s2", "text": "," }
+						{
+							"_type": "span",
+							"_key": "s1",
+							"text": "A solver for the Poisson equation, for "
+						},
+						{
+							"_type": "math",
+							"_key": "m1",
+							"latex": "\\mathbf{r} \\in \\mathbb{R}^2"
+						},
+						{
+							"_type": "span",
+							"_key": "s2",
+							"text": ","
+						}
 					]
 				},
 				{
@@ -147,7 +292,13 @@
 					"_type": "block",
 					"_key": "p1",
 					"style": "normal",
-					"children": [{ "_type": "span", "_key": "s1", "text": "Not ready yet." }]
+					"children": [
+						{
+							"_type": "span",
+							"_key": "s1",
+							"text": "Not ready yet."
+						}
+					]
 				}
 			]
 		}

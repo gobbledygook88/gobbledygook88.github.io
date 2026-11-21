@@ -22,6 +22,10 @@ const { content } = Astro.props;
 <style>
 	.post {
 		--font-code: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+		/* EmDash's table shades header cells, alternate rows and hovered rows with
+		   these; the old site's tables were plain */
+		--color-surface: transparent;
+		--color-bg-subtle: transparent;
 
 		& :global(a) {
 			color: var(--color-accent);
@@ -64,10 +68,6 @@ const { content } = Astro.props;
 			background: none;
 			font-weight: normal;
 			vertical-align: middle;
-		}
-
-		& :global(.emdash-table tbody tr:is(:nth-child(even), :hover)) {
-			background: none;
 		}
 
 		& :global(h2) {

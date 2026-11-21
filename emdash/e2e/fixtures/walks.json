@@ -11,7 +11,13 @@
 					"_type": "block",
 					"_key": "p1",
 					"style": "normal",
-					"children": [{ "_type": "span", "_key": "s1", "text": "Via Birling Gap and the Seven Sisters cliffs." }]
+					"children": [
+						{
+							"_type": "span",
+							"_key": "s1",
+							"text": "Via Birling Gap and the Seven Sisters cliffs."
+						}
+					]
 				}
 			],
 			"route_start": "Eastbourne",
@@ -22,10 +28,13 @@
 			"gpx_url": "https://www.alltrails.com/explore/map/seven-sisters",
 			"gpx_url_text": "AllTrails",
 			"map_data": {
-				"id": "fixture-seven-sisters-route",
-				"src": "https://fixtures.test/seven-sisters.geojson",
+				"id": "fixture-route-media",
+				"provider": "local",
 				"filename": "seven-sisters.geojson",
-				"mimeType": "application/geo+json"
+				"mimeType": "application/geo+json",
+				"meta": {
+					"storageKey": "fixture-route-storage.geojson"
+				}
 			},
 			"waypoints": [
 				{
@@ -38,11 +47,39 @@
 					"icon": "pin",
 					"text": "The cliffs drop straight to the beach here.",
 					"images": [
-						{ "_key": "i1", "image": { "id": "fixture-cliffs", "src": "https://fixtures.test/cliffs.png", "alt": "White chalk cliffs" } },
-						{ "_key": "i2", "image": { "id": "fixture-beach", "src": "https://fixtures.test/beach.png", "alt": "Pebble beach" } },
-						{ "_key": "i3", "image": { "id": "fixture-lighthouse", "src": "https://fixtures.test/lighthouse.png", "alt": "Belle Tout lighthouse" }, "new_row": true }
+						{
+							"_key": "i1",
+							"image": {
+								"id": "fixture-cliffs",
+								"src": "https://fixtures.test/cliffs.png",
+								"alt": "White chalk cliffs"
+							}
+						},
+						{
+							"_key": "i2",
+							"image": {
+								"id": "fixture-beach",
+								"src": "https://fixtures.test/beach.png",
+								"alt": "Pebble beach"
+							}
+						},
+						{
+							"_key": "i3",
+							"image": {
+								"id": "fixture-lighthouse",
+								"src": "https://fixtures.test/lighthouse.png",
+								"alt": "Belle Tout lighthouse"
+							},
+							"new_row": true
+						}
 					],
-					"videos": [{ "_key": "v1", "url": "https://www.youtube.com/embed/fixture", "title": "Waves at Birling Gap" }]
+					"videos": [
+						{
+							"_key": "v1",
+							"url": "https://www.youtube.com/embed/fixture",
+							"title": "Waves at Birling Gap"
+						}
+					]
 				},
 				{
 					"_type": "waypoint",
