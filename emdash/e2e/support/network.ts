@@ -21,7 +21,7 @@ export async function stubExternalAssets(page: Page) {
 		return route.fulfill({ contentType: "image/png", body: file("photo.png") });
 	});
 
-	await page.route(/basemaps\.cartocdn\.com/, (route) => {
+	await page.route(/tile\.openstreetmap\.org/, (route) => {
 		tileRequests.push(route.request().url());
 		return route.fulfill({ contentType: "image/png", body: file("tile.png") });
 	});

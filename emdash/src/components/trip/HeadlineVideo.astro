@@ -1,0 +1,50 @@
+---
+/** The optional video at the top of a trip, in place of (or above) the map. */
+import type { Walk } from "../../../emdash-env";
+
+type Video = NonNullable<Walk["video"]>[number];
+
+interface Props {
+	video: Video;
+}
+
+const { video } = Astro.props;
+const flag = (on: boolean | null | undefined) => (on ? "1" : "0");
+
+function playerUrl({ url, player, autoplay, mute, loop }: Video): string {
+	const src = new URL(url);
+	if (player === "vimeo") {
+		src.searchParams.set("badge", "0");
+		src.searchParams.set("autopause", "0");
+		if (autoplay) src.searchParams.set("autoplay", "1");
+		if (mute) src.searchParams.set("muted", "1");
+		if (loop) src.searchParams.set("loop", "1");
+	} else {
+		src.searchParams.set("autoplay", flag(autoplay));
+		src.searchParams.set("mute", flag(mute));
+		src.searchParams.set("loop", flag(loop));
+		src.searchParams.set("modestbranding", "1");
+		src.searchParams.set("controls", "0");
+	}
+	return src.toString();
+}
+
+const aspectRatio = video.orientation === "vertical" ? "9 / 16" : "16 / 9";
+---
+
+<iframe
+	class="headline-video"
+	src={playerUrl(video)}
+	title={video.title ?? "Video"}
+	style={`aspect-ratio: ${aspectRatio}`}
+	allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+	referrerpolicy="strict-origin-when-cross-origin"
+	allowfullscreen></iframe>
+
+<style>
+	.headline-video {
+		display: block;
+		inline-size: 100%;
+		border: 0;
+	}
+</style>

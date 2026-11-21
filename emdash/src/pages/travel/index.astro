@@ -1,0 +1,20 @@
+---
+import { getEmDashCollection } from "emdash";
+import EntryList from "../../components/EntryList.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+const { entries: trips, cacheHint } = await getEmDashCollection("travel", {
+	orderBy: { published_at: "desc" },
+});
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+---
+
+<SiteLayout title="Travel">
+	<div class="site">
+		<h1 class="visually-hidden">Travel</h1>
+		<EntryList entries={trips} section="/travel/">
+			<li><a href="/travel/logbook/">Logbook</a></li>
+			<li aria-hidden="true">&lowast; &lowast; &lowast;</li>
+		</EntryList>
+	</div>
+</SiteLayout>

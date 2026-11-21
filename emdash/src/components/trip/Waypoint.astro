@@ -1,0 +1,117 @@
+---
+/**
+ * One stop along a trip: position and title, photos, videos and notes.
+ * Waypoints with coordinates carry them as data attributes so the route map
+ * can mark them when the reader points at one.
+ */
+import { Image } from "emdash/ui";
+import type { WalkWaypointsWaypointBlock } from "../../../emdash-env";
+import LocationIcon from "../../icons/location-dot-solid.svg";
+import UtensilsIcon from "../../icons/utensils-solid.svg";
+
+interface Props {
+	waypoint: WalkWaypointsWaypointBlock;
+}
+
+const { waypoint } = Astro.props;
+const { latitude, longitude, title, icon, text, images, videos } = waypoint;
+
+// Coordinates are optional: they can be added later in the editor
+const hasPosition = typeof latitude === "number" && typeof longitude === "number";
+const round = (value: number) => Number(value.toFixed(5));
+const position = hasPosition ? `${round(latitude)}, ${round(longitude)}` : undefined;
+const heading = [position, title].filter(Boolean).join(" – ");
+const headingId = `waypoint-${waypoint._key}`;
+const MarkerIcon = icon === "food" ? UtensilsIcon : LocationIcon;
+---
+
+<section
+	class="waypoint"
+	aria-labelledby={headingId}
+	data-latitude={hasPosition ? latitude : undefined}
+	data-longitude={hasPosition ? longitude : undefined}
+	data-icon={icon ?? "pin"}
+	data-title={title ?? position}
+>
+	<h2 id={headingId}>
+		{hasPosition && <MarkerIcon aria-hidden="true" />}
+		{heading}
+	</h2>
+
+	{
+		images && images.length > 0 && (
+			<figure>
+				{images.map(({ image, flex, new_row }) => (
+					<>
+						{new_row && <span class="row-break" />}
+						<Image image={image} style={flex ? `flex: ${flex}` : undefined} loading="lazy" />
+					</>
+				))}
+			</figure>
+		)
+	}
+
+	{
+		videos?.map((video) => (
+			<iframe
+				class="video"
+				src={video.url}
+				title={video.title ?? "Video"}
+				loading="lazy"
+				allow="accelerometer; clipboard-write; encrypted-media; gyroscope"
+				referrerpolicy="strict-origin-when-cross-origin"
+				allowfullscreen
+			/>
+		))
+	}
+
+	{text && <p>{text}</p>}
+</section>
+
+<style>
+	.waypoint {
+		margin-block-end: 1em;
+	}
+
+	h2 {
+		display: flex;
+		align-items: baseline;
+		gap: 0.4em;
+		font-size: 1em;
+		text-align: start;
+	}
+
+	h2 svg {
+		inline-size: 0.75em;
+		block-size: auto;
+		fill: currentColor;
+		flex-shrink: 0;
+	}
+
+	figure {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1em;
+		margin: 0;
+	}
+
+	figure :global(img) {
+		flex: 1;
+		inline-size: 100%;
+		min-inline-size: 0;
+		block-size: auto;
+		object-fit: cover;
+	}
+
+	.row-break {
+		flex-basis: 100%;
+		block-size: 0;
+	}
+
+	.video {
+		inline-size: 100%;
+		aspect-ratio: 4 / 3;
+		margin-block-start: 1em;
+		border: 0;
+	}
+</style>

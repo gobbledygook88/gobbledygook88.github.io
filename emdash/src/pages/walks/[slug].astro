@@ -1,0 +1,13 @@
+---
+import { getEmDashEntry } from "emdash";
+import TripPage from "../../components/trip/TripPage.astro";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.rewrite("/404");
+
+const { entry: trip, cacheHint } = await getEmDashEntry("walks", slug);
+if (!trip) return Astro.rewrite("/404");
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+---
+
+<TripPage trip={trip} collection="walks" />

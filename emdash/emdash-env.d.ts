@@ -5,20 +5,6 @@
 
 import type { BylineSummary, ContentBylineCredit, TaxonomyTerm, PortableTextBlock } from "emdash";
 
-export interface Page {
-  id: string;
-  slug: string | null;
-  status: string;
-  title: string;
-  content?: PortableTextBlock[];
-  createdAt: Date;
-  updatedAt: Date;
-  publishedAt: Date | null;
-  byline?: BylineSummary | null;
-  bylines?: ContentBylineCredit[];
-  terms?: Record<string, TaxonomyTerm[]>;
-}
-
 export interface Post {
   id: string;
   slug: string | null;
@@ -35,9 +21,113 @@ export interface Post {
   terms?: Record<string, TaxonomyTerm[]>;
 }
 
+export interface WalkWaypointsWaypointV1Block {
+  _type: "waypoint";
+  _version: 1;
+  _key: string;
+  "title"?: string | null;
+  "latitude": number;
+  "longitude": number;
+  "icon"?: "pin" | "food" | "train" | null;
+  "text"?: string | null;
+  "images"?: { "image": { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown>; darkVariant?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> } }; "flex"?: "auto" | "1" | "2" | null; "new_row"?: boolean | null }[] | null;
+  "videos"?: { "url": string; "title"?: string | null }[] | null;
+}
+
+export type WalkWaypointsWaypointBlock = WalkWaypointsWaypointV1Block;
+
+export type WalkWaypointsBlock = WalkWaypointsWaypointBlock;
+
+export interface Walk {
+  id: string;
+  slug: string | null;
+  status: string;
+  title: string;
+  content?: PortableTextBlock[];
+  route_start: string;
+  route_end: string;
+  route_type?: "Linear" | "Circular";
+  distance?: string;
+  duration: string;
+  gpx_url?: string;
+  gpx_url_text?: string;
+  map_data?: { id: string; url?: string; src?: string; filename?: string; mimeType?: string; size?: number; provider?: string; meta?: Record<string, unknown> };
+  map_latitude?: number;
+  map_longitude?: number;
+  map_zoom?: number;
+  video?: { "url": string; "title"?: string | null; "player"?: "youtube" | "vimeo" | null; "orientation"?: "horizontal" | "vertical" | null; "autoplay"?: boolean | null; "mute"?: boolean | null; "loop"?: boolean | null }[];
+  waypoints?: WalkWaypointsBlock[];
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt: Date | null;
+  byline?: BylineSummary | null;
+  bylines?: ContentBylineCredit[];
+  terms?: Record<string, TaxonomyTerm[]>;
+}
+
+export interface TravelWaypointsWaypointV1Block {
+  _type: "waypoint";
+  _version: 1;
+  _key: string;
+  "title"?: string | null;
+  "latitude": number;
+  "longitude": number;
+  "icon"?: "pin" | "food" | "train" | null;
+  "text"?: string | null;
+  "images"?: { "image": { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown>; darkVariant?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> } }; "flex"?: "auto" | "1" | "2" | null; "new_row"?: boolean | null }[] | null;
+  "videos"?: { "url": string; "title"?: string | null }[] | null;
+}
+
+export type TravelWaypointsWaypointBlock = TravelWaypointsWaypointV1Block;
+
+export type TravelWaypointsBlock = TravelWaypointsWaypointBlock;
+
+export interface Travel {
+  id: string;
+  slug: string | null;
+  status: string;
+  title: string;
+  content?: PortableTextBlock[];
+  route_start: string;
+  route_end: string;
+  route_type?: "Linear" | "Circular";
+  distance?: string;
+  duration: string;
+  gpx_url?: string;
+  gpx_url_text?: string;
+  map_data?: { id: string; url?: string; src?: string; filename?: string; mimeType?: string; size?: number; provider?: string; meta?: Record<string, unknown> };
+  map_latitude?: number;
+  map_longitude?: number;
+  map_zoom?: number;
+  video?: { "url": string; "title"?: string | null; "player"?: "youtube" | "vimeo" | null; "orientation"?: "horizontal" | "vertical" | null; "autoplay"?: boolean | null; "mute"?: boolean | null; "loop"?: boolean | null }[];
+  waypoints?: TravelWaypointsBlock[];
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt: Date | null;
+  byline?: BylineSummary | null;
+  bylines?: ContentBylineCredit[];
+  terms?: Record<string, TaxonomyTerm[]>;
+}
+
+export interface Page {
+  id: string;
+  slug: string | null;
+  status: string;
+  title: string;
+  content?: PortableTextBlock[];
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt: Date | null;
+  byline?: BylineSummary | null;
+  bylines?: ContentBylineCredit[];
+  terms?: Record<string, TaxonomyTerm[]>;
+}
+
 declare module "emdash" {
   interface EmDashCollections {
-    pages: Page;
     posts: Post;
+    walks: Walk;
+    travel: Travel;
+    pages: Page;
   }
 }

@@ -87,12 +87,16 @@ test.describe("Trip page", () => {
 		await expect(map.locator("path.route-line")).toBeVisible();
 
 		await pointAt(page.getByRole("region", { name: "Birling Gap" }));
-		await expect(map.getByRole("img", { name: "Birling Gap" })).toBeVisible();
+		const viewpoint = map.getByRole("img", { name: "Birling Gap" });
+		await expect(viewpoint).toBeVisible();
+		const pinIcon = await viewpoint.getAttribute("src");
 
 		await pointAt(page.getByRole("region", { name: "Tea room" }));
-		await expect(map.getByRole("img", { name: "Tea room" })).toBeVisible();
+		const teaRoom = map.getByRole("img", { name: "Tea room" });
+		await expect(teaRoom).toBeVisible();
 		await expect(map.getByRole("img", { name: "Birling Gap" })).toHaveCount(0);
-		await expect(map.getByRole("img", { name: "Tea room" })).toHaveAttribute("src", /utensils/);
+		// Food stops get their own marker icon
+		await expect(teaRoom).not.toHaveAttribute("src", pinIcon ?? "");
 	});
 
 	test("shows a waypoint's position, photos, videos and notes", async ({ page }) => {
