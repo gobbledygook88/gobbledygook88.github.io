@@ -3,6 +3,7 @@ name: Build and deploy website to GitHub Pages
 on:
   push:
     branches: ["main"]
+    paths-ignore: ["emdash/**", ".github/workflows/emdash.yml"]
 
   workflow_dispatch:
 
