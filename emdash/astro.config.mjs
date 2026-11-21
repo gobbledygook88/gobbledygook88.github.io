@@ -1,12 +1,34 @@
 import cloudflare from "@astrojs/cloudflare";
+import { cacheCloudflare } from "@astrojs/cloudflare/cache";
 import react from "@astrojs/react";
 import { d1, r2 } from "@emdash-cms/cloudflare";
 import { defineConfig, fontProviders } from "astro/config";
 import emdash from "emdash/astro";
 
+/**
+ * Cache rendered pages in Cloudflare's cache so most visits don't run the
+ * Worker: Workers Free allows only 10 ms of CPU per request. Pages re-render
+ * after a day (serving the stale copy for up to a week while they do), and
+ * EmDash purges a collection's tag whenever its content is published or
+ * changed. Each deploy starts with an empty cache.
+ */
+const DAY = 86_400;
+const cached = (...tags) => ({ maxAge: DAY, swr: 7 * DAY, tags });
+
 export default defineConfig({
 	output: "server",
 	adapter: cloudflare(),
+	cache: { provider: cacheCloudflare() },
+	routeRules: {
+		"/": cached(),
+		"/blog": cached("posts"),
+		"/blog/[slug]": cached("posts"),
+		"/walks": cached("walks"),
+		"/walks/[slug]": cached("walks"),
+		"/travel": cached("travel"),
+		"/travel/[slug]": cached("travel"),
+		"/travel/logbook": cached(),
+	},
 	image: {
 		layout: "constrained",
 		responsiveStyles: true,
@@ -16,6 +38,8 @@ export default defineConfig({
 		emdash({
 			database: d1({ binding: "DB", session: "auto", coalesce: true }),
 			storage: r2({ binding: "MEDIA" }),
+			// Logged-in editors get the cached public page, so load the toolbar client-side
+			toolbar: "client",
 		}),
 	],
 	fonts: [

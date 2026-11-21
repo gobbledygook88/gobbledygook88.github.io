@@ -56,7 +56,7 @@ and progress log live outside git in `.context/emdash-migration-plan.md` at the 
 | Home | `/` | Site name, section links, and the "crumb trail" line (`CrumbTrail.astro`) that redraws on tap |
 | 404  | any unknown path | Uses `SiteLayout` |
 | Blog | `/blog/` | Published posts, newest first |
-| Blog post | `/blog/[slug]/` | `PostBody.astro`: Portable Text with `CodeBlock` (Shiki, server-side, Solarized Light; languages in `src/lib/highlight.ts`) and `MathFormula` (`math` objects with a `latex` string, inline or block; KaTeX to MathML in `src/lib/math.ts`) |
+| Blog post | `/blog/[slug]/` | `PostBody.astro`: Portable Text with `CodeBlock` (plain `<pre><code>` from the server; `scripts/code-highlighter.ts` colours it in the browser with highlight.js, Solarized Light, loaded only on pages with code) and `MathFormula` (`math` objects with a `latex` string, inline or block; KaTeX to MathML in `src/lib/math.ts`) |
 | Walks / Travel | `/walks/`, `/travel/` | Newest first (`EntryList.astro`); travel starts with a Logbook link |
 | Walk / trip | `/walks/[slug]/`, `/travel/[slug]/` | `components/trip/TripPage.astro`: sticky map (`RouteMap` + `scripts/route-map.ts`, Leaflet bundled, OpenStreetMap tiles), headline video, route summary, then the story and `Waypoint`s. Hovering/tapping a waypoint with coordinates moves the map marker |
 | Logbook | `/travel/logbook/` | Static data, not CMS content: statistics in `src/data/logbook-statistics.json` and map layers in `public/travel/logbook/*.geojson`, regenerated from the repo root's `logbook/` by `scripts/update-logbook-data.sh` (runs the Python pipeline). Maps load when scrolled to (`scripts/logbook-map.ts`); thousands of places draw on one canvas |
@@ -78,6 +78,14 @@ empty database: after setup, change the live schema through the admin, CLI or AP
 - Maps share `src/scripts/map-base.ts` (Leaflet bundled from npm, OpenStreetMap tiles). The reset in
   `site.css` skips anything inside `.leaflet-container`, which sizes its own tiles, markers and canvases.
 - Keep the look of the original site: minimal, centred, Oxygen, orange `--color-accent` links in posts.
+
+### Performance: Workers Free (10 ms CPU per request)
+
+The site runs on the Workers **Free** plan, which allows 10 ms of CPU per request (error 1102 beyond it).
+Keep server rendering cheap: no syntax highlighting or other heavy work per request (server-side Shiki
+took ~500 ms for one post). Rendered pages are cached at the edge (`cache` + `routeRules` in
+`astro.config.mjs`); every new public route needs a rule tagged with its collection so EmDash purges it
+on publish. Check CPU with `wrangler tail biscuit-crumbs-staging --format json` (`cpuTime`, `outcome`).
 
 ### Testing
 

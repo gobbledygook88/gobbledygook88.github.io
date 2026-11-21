@@ -26,8 +26,8 @@ export interface WalkWaypointsWaypointV1Block {
   _version: 1;
   _key: string;
   "title"?: string | null;
-  "latitude": number;
-  "longitude": number;
+  "latitude"?: number | null;
+  "longitude"?: number | null;
   "icon"?: "pin" | "food" | "train" | null;
   "text"?: string | null;
   "images"?: { "image": { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown>; darkVariant?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> } }; "flex"?: "auto" | "1" | "2" | null; "new_row"?: boolean | null }[] | null;
@@ -70,8 +70,8 @@ export interface TravelWaypointsWaypointV1Block {
   _version: 1;
   _key: string;
   "title"?: string | null;
-  "latitude": number;
-  "longitude": number;
+  "latitude"?: number | null;
+  "longitude"?: number | null;
   "icon"?: "pin" | "food" | "train" | null;
   "text"?: string | null;
   "images"?: { "image": { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown>; darkVariant?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> } }; "flex"?: "auto" | "1" | "2" | null; "new_row"?: boolean | null }[] | null;
