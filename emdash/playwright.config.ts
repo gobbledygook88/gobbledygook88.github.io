@@ -1,14 +1,15 @@
 import { defineConfig, devices } from "@playwright/test";
-
-const PORT = 8788;
+import { PORT, STATE_DIR } from "./e2e/serve-config";
 
 /**
  * Outside-in tests: drive the real built Worker (`wrangler dev`) in a browser.
- * The server starts from an empty local database each run, so EmDash applies
- * seed/seed.json on the first request, exactly as a fresh deployment would.
+ * The server starts from an empty local database each run and is built with a
+ * test-only seed (the real schema plus e2e/fixtures content), which EmDash
+ * applies on the first request, as on a fresh deployment.
  */
 export default defineConfig({
 	testDir: "./e2e",
+	globalSetup: "./e2e/global-setup.ts",
 	fullyParallel: true,
 	forbidOnly: !!process.env.CI,
 	retries: process.env.CI ? 1 : 0,
@@ -22,7 +23,7 @@ export default defineConfig({
 		{ name: "mobile", use: { ...devices["Pixel 7"] } },
 	],
 	webServer: {
-		command: `./e2e/serve.sh ${PORT}`,
+		command: `./e2e/serve.sh ${PORT} ${STATE_DIR}`,
 		url: `http://localhost:${PORT}/`,
 		timeout: 180_000,
 		reuseExistingServer: !process.env.CI,

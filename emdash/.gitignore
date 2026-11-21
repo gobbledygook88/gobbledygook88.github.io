@@ -25,3 +25,6 @@ playwright-report
 # The repo root ignores "Icon?" (macOS folder icons), which matches "icons" on
 # case-insensitive filesystems
 !/src/icons/
+
+# Test-only seed written by e2e/fixtures/prepare.mjs (never commit)
+.emdash/seed.json

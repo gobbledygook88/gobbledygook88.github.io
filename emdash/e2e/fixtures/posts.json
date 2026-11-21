@@ -1,0 +1,155 @@
+[
+	{
+		"id": "post-stenography",
+		"slug": "learning-stenography",
+		"status": "published",
+		"publishedAt": "2025-02-06T09:00:00.000Z",
+		"data": {
+			"title": "Learning stenography",
+			"content": [
+				{
+					"_type": "block",
+					"_key": "p1",
+					"style": "normal",
+					"markDefs": [{ "_type": "link", "_key": "plover", "href": "https://www.openstenoproject.org/plover/" }],
+					"children": [
+						{ "_type": "span", "_key": "s1", "text": "Setup was simple: install " },
+						{ "_type": "span", "_key": "s2", "text": "Plover", "marks": ["plover"] },
+						{ "_type": "span", "_key": "s3", "text": " and plug in the keyboard." }
+					]
+				},
+				{
+					"_type": "block",
+					"_key": "h1",
+					"style": "h2",
+					"children": [{ "_type": "span", "_key": "s4", "text": "Resources" }]
+				},
+				{
+					"_type": "block",
+					"_key": "l1",
+					"style": "normal",
+					"listItem": "bullet",
+					"level": 1,
+					"children": [{ "_type": "span", "_key": "s5", "text": "Art of Chording" }]
+				},
+				{
+					"_type": "block",
+					"_key": "l2",
+					"style": "normal",
+					"listItem": "bullet",
+					"level": 1,
+					"children": [{ "_type": "span", "_key": "s6", "text": "Typey Type" }]
+				}
+			]
+		}
+	},
+	{
+		"id": "post-packing-list",
+		"slug": "thru-hiking-packing-list",
+		"status": "published",
+		"publishedAt": "2024-07-24T09:00:00.000Z",
+		"data": {
+			"title": "Thru-hiking / camping packing list",
+			"content": [
+				{
+					"_type": "block",
+					"_key": "p1",
+					"style": "normal",
+					"children": [{ "_type": "span", "_key": "s1", "text": "Everything I carried on the South Downs Way." }]
+				},
+				{
+					"_type": "table",
+					"_key": "t1",
+					"hasHeaderRow": true,
+					"rows": [
+						{
+							"_type": "tableRow",
+							"_key": "r1",
+							"cells": [
+								{ "_type": "tableCell", "_key": "c1", "isHeader": true, "content": [{ "_type": "span", "_key": "x1", "text": "Item" }] },
+								{ "_type": "tableCell", "_key": "c2", "isHeader": true, "content": [{ "_type": "span", "_key": "x2", "text": "Weight" }] }
+							]
+						},
+						{
+							"_type": "tableRow",
+							"_key": "r2",
+							"cells": [
+								{ "_type": "tableCell", "_key": "c3", "content": [{ "_type": "span", "_key": "x3", "text": "Tent" }] },
+								{ "_type": "tableCell", "_key": "c4", "content": [{ "_type": "span", "_key": "x4", "text": "1.2kg" }] }
+							]
+						}
+					]
+				}
+			]
+		}
+	},
+	{
+		"id": "post-cpp",
+		"slug": "cpp",
+		"status": "published",
+		"publishedAt": "2013-11-20T09:00:00.000Z",
+		"data": {
+			"title": "Notes On: C++",
+			"content": [
+				{
+					"_type": "block",
+					"_key": "p1",
+					"style": "normal",
+					"children": [
+						{ "_type": "span", "_key": "s1", "text": "Every program starts at " },
+						{ "_type": "span", "_key": "s2", "text": "main", "marks": ["code"] },
+						{ "_type": "span", "_key": "s3", "text": "." }
+					]
+				},
+				{
+					"_type": "code",
+					"_key": "c1",
+					"language": "cpp",
+					"code": "#include <iostream>                            // Include input/output library\n\nint main() {                                   // `main` function declaration and block\n    std::cout << \"Hello world!\" << std::endl;  // Print to terminal with streams\n    return 0;                                  // Return statement\n}"
+				}
+			]
+		}
+	},
+	{
+		"id": "post-poisson",
+		"slug": "parallel-poisson-solver",
+		"status": "published",
+		"publishedAt": "2013-11-08T09:00:00.000Z",
+		"data": {
+			"title": "Parallel Poisson solver",
+			"content": [
+				{
+					"_type": "block",
+					"_key": "p1",
+					"style": "normal",
+					"children": [
+						{ "_type": "span", "_key": "s1", "text": "A solver for the Poisson equation, for " },
+						{ "_type": "math", "_key": "m1", "latex": "\\mathbf{r} \\in \\mathbb{R}^2" },
+						{ "_type": "span", "_key": "s2", "text": "," }
+					]
+				},
+				{
+					"_type": "math",
+					"_key": "m2",
+					"latex": "\\nabla \\varphi(\\mathbf{r}) = \\rho(\\mathbf{r})"
+				}
+			]
+		}
+	},
+	{
+		"id": "post-draft",
+		"slug": "sso-and-saml",
+		"status": "draft",
+		"data": {
+			"title": "SSO and SAML",
+			"content": [
+				{
+					"_type": "block",
+					"_key": "p1",
+					"style": "normal",
+					"children": [{ "_type": "span", "_key": "s1", "text": "Not ready yet." }]
+				}
+			]
+		}
+	}
+]
