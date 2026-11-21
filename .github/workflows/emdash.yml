@@ -131,6 +131,19 @@ jobs:
       # Build again rather than share dist/: the build also writes
       # .wrangler/deploy/config.json, which points wrangler at dist/server/wrangler.json
       - run: pnpm build
+      # EmDash D1 migrations are deployment-managed: the Worker won't run them
+      # reliably on its own (a fresh DB stalled mid-way on first request).
+      # The build writes the manifest to .emdash/migrations.json.
+      - name: Apply database migrations
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          migration_status=$(pnpm exec emdash migrate --status --json --wrangler-config wrangler.jsonc)
+          echo "$migration_status" | jq '{target: .target.label, pending: .pending, unknownApplied: .unknownApplied}'
+          fingerprint=$(echo "$migration_status" | jq -r '.target.fingerprint')
+          pnpm exec emdash migrate --wrangler-config wrangler.jsonc \
+            --expected-target-fingerprint "$fingerprint"
       - name: Deploy to staging
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
