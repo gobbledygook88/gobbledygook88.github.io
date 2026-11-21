@@ -36,6 +36,25 @@
 	},
 	// Sandboxed plugins require Worker Loader, available on Workers paid plans. Uncomment to enable:
 	// "worker_loaders": [{ "binding": "LOADER" }],
+	// PR Previews (`wrangler preview`). Version URLs aren't generated for Workers
+	// with Durable Objects, so PRs use Previews instead. Bindings aren't inherited:
+	// every Preview shares the *staging* D1/R2/KV — never production. Each Preview
+	// gets its own Durable Object namespace. Cron triggers don't run on Previews.
+	"previews": {
+		"d1_databases": [
+			{
+				"binding": "DB",
+				"database_name": "biscuit-crumbs-staging",
+				"database_id": "2974d052-7782-4915-bb1a-0180ae131982",
+			},
+		],
+		"r2_buckets": [{ "binding": "MEDIA", "bucket_name": "biscuit-crumbs-media-staging" }],
+		"kv_namespaces": [{ "binding": "SESSION", "id": "ba888d0d64c940a886b3b095d155390f" }],
+		"durable_objects": {
+			"bindings": [{ "name": "EMDASH_ROOMS", "class_name": "EmDashRoom" }],
+		},
+		"images": { "binding": "IMAGES" },
+	},
 	// General maintenance cron trigger
 	"triggers": {
 		"crons": ["* * * * *"],

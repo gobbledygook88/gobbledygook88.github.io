@@ -1,14 +1,18 @@
 name: EmDash site
 
-# Staging deploys on merge to main; preview versions for pull requests.
-# Previews are versions of the staging Worker, so they share staging D1/R2 —
-# never production.
+# - Pull requests: a Workers Preview named pr-<number>, deleted when the PR closes
+# - main: migrate the staging D1 database, then deploy the staging Worker
+#
+# Previews (not version URLs: those aren't generated for Workers with Durable
+# Objects) use the `previews` block in emdash/wrangler.jsonc, which points at
+# the *staging* D1/R2/KV — never production.
 
 on:
   push:
     branches: ["main"]
     paths: ["emdash/**", ".github/workflows/emdash.yml"]
   pull_request:
+    types: [opened, synchronize, reopened, closed]
     paths: ["emdash/**", ".github/workflows/emdash.yml"]
   workflow_dispatch:
 
@@ -17,12 +21,13 @@ permissions:
 
 defaults:
   run:
-    # Explicit bash runs steps with -eo pipefail, so `wrangler | tee` can't hide failures
+    # Explicit bash runs steps with -eo pipefail, so piped failures can't be hidden
     shell: bash
     working-directory: emdash
 
 jobs:
   check:
+    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -42,6 +47,7 @@ jobs:
     # Secrets aren't available to fork or Dependabot PRs
     if: >-
       github.event_name == 'pull_request' &&
+      github.event.action != 'closed' &&
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.actor != 'dependabot[bot]'
     needs: check
@@ -66,32 +72,44 @@ jobs:
       # Build again rather than share dist/: the build also writes
       # .wrangler/deploy/config.json, which points wrangler at dist/server/wrangler.json
       - run: pnpm build
-      - name: Upload preview version
-        id: upload
+      # Previews don't run migrations: they share the staging database, which
+      # only main migrates. A PR that upgrades EmDash will show "migrations
+      # required" in its Preview until it merges.
+      - name: Deploy Preview
+        id: preview
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          pnpm wrangler versions upload \
-            --preview-alias "pr-${PR_NUMBER}" \
+          pnpm wrangler preview \
+            --name "pr-${PR_NUMBER}" \
             --tag "${COMMIT_SHA::7}" \
-            --message "PR #${PR_NUMBER}" | tee upload.log
-          alias_url=$(grep -oE 'https://pr-[^ ]+\.workers\.dev' upload.log | head -1)
-          version_url=$(grep -oE 'https://[0-9a-f]{8}-[^ ]+\.workers\.dev' upload.log | head -1)
-          if [ -z "$alias_url" ]; then
-            echo "::error::No preview alias URL in wrangler output"
+            --message "PR #${PR_NUMBER}" \
+            --ignore-base-config \
+            --json > preview.out
+          # Wrangler logs to stdout too; the JSON result starts at the last bare "{" line
+          awk '/^\{$/ { buf = "" } { buf = buf $0 "\n" } END { printf "%s", buf }' preview.out > preview.json
+          preview_url=$(jq -r '.preview.urls[0] // empty' preview.json)
+          deployment_url=$(jq -r '.deployment.urls[0] // empty' preview.json)
+          if [ -z "$preview_url" ]; then
+            cat preview.out
+            echo "::error::No Preview URL in wrangler output"
             exit 1
           fi
-          echo "alias_url=${alias_url}" >> "$GITHUB_OUTPUT"
-          echo "version_url=${version_url}" >> "$GITHUB_OUTPUT"
-      - name: Comment preview URL on PR
+          echo "preview_url=${preview_url}" >> "$GITHUB_OUTPUT"
+          echo "deployment_url=${deployment_url}" >> "$GITHUB_OUTPUT"
+      - name: Check the Preview responds
+        env:
+          PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
+        run: curl --fail --show-error --silent --output /dev/null --retry 3 --retry-all-errors "$PREVIEW_URL/"
+      - name: Comment Preview URL on PR
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          ALIAS_URL: ${{ steps.upload.outputs.alias_url }}
-          VERSION_URL: ${{ steps.upload.outputs.version_url }}
+          PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
+          DEPLOYMENT_URL: ${{ steps.preview.outputs.deployment_url }}
           COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           body=$(cat <<EOF
@@ -99,14 +117,41 @@ jobs:
 
           | | |
           |---|---|
-          | Preview (latest commit) | ${ALIAS_URL} |
-          | This version | ${VERSION_URL:-not found in wrangler output} |
+          | Preview (latest commit) | ${PREVIEW_URL} |
+          | This deployment | ${DEPLOYMENT_URL:-n/a} |
           | Commit | \`${COMMIT_SHA::7}\` |
 
-          Uses the **staging** D1 database and R2 bucket.
+          Shares the **staging** database and media bucket. For checking public
+          pages: admin passkeys are tied to the staging hostname, so log in there.
           EOF
           )
           gh pr comment "$PR_NUMBER" --edit-last --create-if-none --body "$body"
+
+  cleanup-preview:
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.action == 'closed' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: emdash/.nvmrc
+          cache: pnpm
+          cache-dependency-path: emdash/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - name: Delete Preview
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          pnpm wrangler preview delete --name "pr-${PR_NUMBER}" --skip-confirmation \
+            || echo "::warning::Could not delete Preview pr-${PR_NUMBER} (it may never have been created)"
 
   deploy-staging:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
@@ -114,6 +159,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: emdash-staging
+      url: https://biscuit-crumbs-staging.marcusmo88.workers.dev
     concurrency:
       group: emdash-staging
       cancel-in-progress: false
