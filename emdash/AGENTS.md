@@ -46,7 +46,8 @@ This template ships with `.mcp.json`, `.cursor/mcp.json`, and `.vscode/mcp.json`
 ## This Site
 
 Biscuit Crumbs (marcusmo.co.uk): a personal blog, walks and travel site, migrated from a custom Python
-static generator (`app/` and `scripts/` at the repo root, still live until cutover). The migration plan
+static generator (removed; see git history before #192). The only Python left is the logbook data pipeline
+(`logbook/` and `scripts/` at the repo root, run by `scripts/update-logbook-data.sh`). The migration plan
 and progress log live outside git in `.context/emdash-migration-plan.md` at the repo root.
 
 ### Pages
