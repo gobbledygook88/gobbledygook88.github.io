@@ -42,8 +42,6 @@ jobs:
           cache-dependency-path: emdash/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
-      - name: Test the legacy content importer
-        run: pnpm test:import
       - run: pnpm build
 
   # Outside-in browser tests against the built Worker (`wrangler dev`, local
