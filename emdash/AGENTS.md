@@ -55,9 +55,11 @@ and progress log live outside git in `.context/emdash-migration-plan.md` at the 
 | ---- | ---- | ----- |
 | Home | `/` | Site name, section links, and the "crumb trail" line (`CrumbTrail.astro`) that redraws on tap |
 | 404  | any unknown path | Uses `SiteLayout` |
+| Blog | `/blog/` | Published posts, newest first |
+| Blog post | `/blog/[slug]/` | `PostBody.astro`: Portable Text with `CodeBlock` (Shiki, server-side, Solarized Light; languages in `src/lib/highlight.ts`) and `MathFormula` (`math` objects with a `latex` string, inline or block; KaTeX to MathML in `src/lib/math.ts`) |
 
-Blog (`/blog/`), walks (`/walks/`) and travel (`/travel/`) pages arrive in Phase 3.2/3.3; their URLs
-must match the old site. The template's blog pages, styles and Inter/JetBrains fonts were removed.
+Walks (`/walks/`) and travel (`/travel/`) pages arrive in Phase 3.3; URLs must match the old site
+(`/<section>/<slug>/`, as set in each collection's `urlPattern`). The template's blog pages, styles and Inter/JetBrains fonts were removed.
 
 ### Schema
 
@@ -76,5 +78,7 @@ empty database: after setup, change the live schema through the admin, CLI or AP
 ### Testing
 
 Outside-in Playwright tests in `e2e/` drive the built Worker (`e2e/serve.sh`) on desktop and mobile.
+Fixture content lives in `e2e/fixtures/*.json` (seed entries plus a `publishedAt`): the test build uses
+a test-only seed, and `e2e/global-setup.ts` completes setup with content and sets publish dates.
 Write the test first (it must fail for the right reason), then implement. Describe behaviour a visitor
 sees, not implementation. CI runs them before deploying staging.
