@@ -5,6 +5,7 @@
  */
 import { readFileSync } from "node:fs";
 import { basename, extname, join } from "node:path";
+import sharp from "sharp";
 import type { ImportPlan, PlannedEntry } from "./convert.ts";
 import { EmDashApi, type MediaItem } from "./emdash-api.ts";
 
@@ -22,6 +23,17 @@ const MIME_TYPES: Record<string, string> = {
 	".geojson": "application/geo+json",
 };
 
+/** Wide enough for a blurhash placeholder; EmDash decodes this instead of the photo */
+const THUMBNAIL_WIDTH = 32;
+
+/** Dimensions and a tiny thumbnail, so the server needn't decode the photo. */
+async function imageDetails(bytes: Buffer) {
+	const image = sharp(bytes).rotate();
+	const { width, height } = await image.metadata();
+	const thumbnail = await image.clone().resize({ width: THUMBNAIL_WIDTH }).jpeg({ quality: 70 }).toBuffer();
+	return { width, height, thumbnail: new Blob([thumbnail], { type: "image/jpeg" }) };
+}
+
 /** Map files sit beside their trip (`_walks/…`), so their folder names the collection. */
 const MAP_FILE_COLLECTIONS: Record<string, string> = { _walks: "walks", _travel: "travel" };
 
@@ -34,12 +46,17 @@ async function uploadMedia(api: EmDashApi, plan: ImportPlan, siteRoot: string) {
 	const uploaded = new Map<string, MediaItem>();
 	for (const [index, { path }] of plan.media.entries()) {
 		const extension = extname(path).toLowerCase();
-		const file = new Blob([readFileSync(join(siteRoot, path))], {
-			type: MIME_TYPES[extension] ?? "application/octet-stream",
-		});
-		// GeoJSON is only allowed when uploaded for the map_data field
-		const fieldId = extension === ".geojson" ? mapFieldIds[path.split("/")[0]!] : undefined;
-		uploaded.set(path, await api.upload(file, basename(path), fieldId));
+		const bytes = readFileSync(join(siteRoot, path));
+		const mimeType = MIME_TYPES[extension] ?? "application/octet-stream";
+		const file = new Blob([bytes], { type: mimeType });
+		const options =
+			extension === ".geojson"
+				? // GeoJSON is only allowed when uploaded for the map_data field
+					{ fieldId: mapFieldIds[path.split("/")[0]!] }
+				: mimeType.startsWith("image/")
+					? await imageDetails(bytes)
+					: {};
+		uploaded.set(path, await api.upload(file, basename(path), options));
 		process.stderr.write(`\ruploaded ${index + 1}/${plan.media.length} files`);
 	}
 	process.stderr.write("\n");

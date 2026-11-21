@@ -149,11 +149,26 @@ export class EmDashApi {
 		return Object.fromEntries(item.fields.map((field) => [field.slug, field.id]));
 	}
 
-	/** Uploads a file; EmDash returns the existing item when the same bytes were uploaded before. */
-	async upload(file: Blob, filename: string, fieldId?: string): Promise<MediaItem> {
+	/**
+	 * Uploads a file; EmDash returns the existing item when the same bytes were
+	 * uploaded before. For images, pass the dimensions and a small thumbnail
+	 * (as the admin does): EmDash then builds the blurhash placeholder from the
+	 * thumbnail instead of decoding the whole photo, which exceeds Workers
+	 * Free's 10 ms CPU limit for photos over ~50 KB.
+	 */
+	async upload(
+		file: Blob,
+		filename: string,
+		options: { fieldId?: string; width?: number; height?: number; thumbnail?: Blob } = {},
+	): Promise<MediaItem> {
 		const form = new FormData();
 		form.append("file", file, filename);
-		if (fieldId) form.append("fieldId", fieldId);
+		if (options.fieldId) form.append("fieldId", options.fieldId);
+		if (options.width && options.height) {
+			form.append("width", String(options.width));
+			form.append("height", String(options.height));
+		}
+		if (options.thumbnail) form.append("thumbnail", options.thumbnail, `thumbnail-${filename}`);
 		const { item } = await this.#request<{ item: MediaItem }>("POST", "/media", form);
 		return item;
 	}

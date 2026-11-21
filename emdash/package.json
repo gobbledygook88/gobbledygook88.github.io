@@ -39,6 +39,7 @@
 		"@types/markdown-it": "^14.2.0",
 		"lightningcss": "^1.33.0",
 		"markdown-it": "^15.0.3",
+		"sharp": "^0.35.5",
 		"wrangler": "^4.125.0",
 		"yaml": "^2.9.1"
 	}
