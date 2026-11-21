@@ -8,6 +8,7 @@ repos:
         exclude: ^emdash/emdash-env\.d\.ts$
       - id: trailing-whitespace
 
+  # Python remains for the logbook data pipeline (scripts/)
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.9.3
     hooks:
@@ -15,18 +16,9 @@ repos:
         args: [--fix, --exit-non-zero-on-fix, --show-fixes]
       - id: ruff-format
 
+  # Site photos live in R2 (uploaded through the EmDash admin), but images
+  # still get committed, e.g. e2e fixtures: keep location data out of git
   - repo: https://github.com/stefmolin/exif-stripper
     rev: 0.6.1
     hooks:
       - id: strip-exif
-
-  - repo: local
-    hooks:
-      - id: resize-logos
-        name: Resize Logos
-        entry: scripts/resize_images.py
-        language: python
-        language_version: python3
-        additional_dependencies: [pillow, pyprojroot]
-        types: [image]
-        pass_filenames: false

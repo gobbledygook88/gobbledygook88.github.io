@@ -6,8 +6,35 @@ updates:
       interval: "weekly"
       day: "monday"
       time: "06:00"
+  # Logbook data pipeline (pyproject.toml, uv.lock)
   - package-ecosystem: "uv"
     directory: "/"
     schedule:
       interval: "daily"
       time: "07:00"
+  # The EmDash site (the npm ecosystem also covers pnpm-lock.yaml)
+  - package-ecosystem: "npm"
+    directory: "/emdash"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+    # At least pnpm's minimumReleaseAge (1 day, in emdash/pnpm-workspace.yaml),
+    # which would otherwise reject the update; EmDash is exempt in both
+    cooldown:
+      default-days: 3
+      exclude:
+        - "emdash"
+        - "@emdash-cms/*"
+    groups:
+      # Released in lockstep, so update them together, majors included
+      emdash:
+        patterns:
+          - "emdash"
+          - "@emdash-cms/*"
+      minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
