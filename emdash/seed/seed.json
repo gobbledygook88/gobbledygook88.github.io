@@ -30,7 +30,6 @@
 							"slug": "latitude",
 							"label": "Latitude",
 							"type": "number",
-							"required": true,
 							"validation": {
 								"min": -90,
 								"max": 90
@@ -40,7 +39,6 @@
 							"slug": "longitude",
 							"label": "Longitude",
 							"type": "number",
-							"required": true,
 							"validation": {
 								"min": -180,
 								"max": 180
