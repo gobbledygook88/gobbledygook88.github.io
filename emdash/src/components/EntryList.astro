@@ -1,0 +1,34 @@
+---
+/**
+ * The centred list of titles used by the blog, walks and travel indexes.
+ * Anything in the default slot (e.g. the logbook link) comes first.
+ */
+interface Props {
+	entries: { id: string; data: { title: string } }[];
+	/** URL prefix, e.g. "/walks/" */
+	section: string;
+}
+
+const { entries, section } = Astro.props;
+---
+
+<ul class="entries">
+	<slot />
+	{
+		entries.map((entry) => (
+			<li>
+				<a href={`${section}${entry.id}/`}>{entry.data.title}</a>
+			</li>
+		))
+	}
+</ul>
+
+<style>
+	.entries {
+		margin-block-end: 2em;
+		padding: 0;
+		list-style: none;
+		line-height: 2;
+		text-align: center;
+	}
+</style>

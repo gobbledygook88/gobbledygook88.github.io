@@ -1,0 +1,60 @@
+[
+	{
+		"id": "travel-round-the-world",
+		"slug": "round-the-world",
+		"status": "published",
+		"publishedAt": "2024-07-14T09:00:00.000Z",
+		"data": {
+			"title": "Round the world",
+			"content": [
+				{
+					"_type": "block",
+					"_key": "p1",
+					"style": "normal",
+					"children": [{ "_type": "span", "_key": "s1", "text": "Five months, mostly by train." }]
+				}
+			],
+			"route_start": "London",
+			"route_end": "London",
+			"duration": "5 months",
+			"video": [
+				{
+					"_key": "v1",
+					"url": "https://player.vimeo.com/video/1065483186?h=46c1385b66",
+					"title": "2024 Round the world",
+					"player": "vimeo",
+					"orientation": "horizontal",
+					"autoplay": true,
+					"mute": true,
+					"loop": true
+				}
+			]
+		}
+	},
+	{
+		"id": "travel-new-york",
+		"slug": "new-york",
+		"status": "published",
+		"publishedAt": "2023-09-07T09:00:00.000Z",
+		"data": {
+			"title": "New York",
+			"route_start": "New York",
+			"route_end": "New York",
+			"duration": "5 days",
+			"map_latitude": 40.7634,
+			"map_longitude": -73.9805,
+			"map_zoom": 11,
+			"waypoints": [
+				{
+					"_type": "waypoint",
+					"_version": 1,
+					"_key": "high-line",
+					"title": "The High Line",
+					"latitude": 40.748,
+					"longitude": -74.0048,
+					"text": "A park on an old railway."
+				}
+			]
+		}
+	}
+]

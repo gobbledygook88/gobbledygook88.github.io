@@ -1,5 +1,6 @@
 ---
 import { getEmDashCollection } from "emdash";
+import EntryList from "../../components/EntryList.astro";
 import SiteLayout from "../../layouts/SiteLayout.astro";
 
 const { entries: posts, cacheHint } = await getEmDashCollection("posts", {
@@ -11,24 +12,6 @@ if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 <SiteLayout title="Blog">
 	<div class="site">
 		<h1 class="visually-hidden">Blog</h1>
-		<ul class="posts">
-			{
-				posts.map((post) => (
-					<li>
-						<a href={`/blog/${post.id}/`}>{post.data.title}</a>
-					</li>
-				))
-			}
-		</ul>
+		<EntryList entries={posts} section="/blog/" />
 	</div>
 </SiteLayout>
-
-<style>
-	.posts {
-		margin-block-end: 2em;
-		padding: 0;
-		list-style: none;
-		line-height: 2;
-		text-align: center;
-	}
-</style>

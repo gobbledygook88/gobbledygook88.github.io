@@ -1,0 +1,74 @@
+---
+/** Where, how far and how long: the metadata list beside the map. */
+import type { Walk } from "../../../emdash-env";
+import LocationIcon from "../../icons/location-dot-solid.svg";
+import MapIcon from "../../icons/map-solid.svg";
+import CircularIcon from "../../icons/person-walking-arrow-loop-left-solid.svg";
+import LinearIcon from "../../icons/person-walking-arrow-right-solid.svg";
+import RoadIcon from "../../icons/road-solid.svg";
+import StopwatchIcon from "../../icons/stopwatch-solid.svg";
+
+interface Props {
+	trip: Pick<
+		Walk,
+		"route_start" | "route_end" | "route_type" | "distance" | "duration" | "gpx_url" | "gpx_url_text"
+	>;
+}
+
+const { trip } = Astro.props;
+const place =
+	trip.route_start === trip.route_end ? trip.route_start : `${trip.route_start} to ${trip.route_end}`;
+const RouteTypeIcon = trip.route_type === "Circular" ? CircularIcon : LinearIcon;
+---
+
+<ul class="route-summary" aria-label="Route summary">
+	<li><LocationIcon aria-hidden="true" />{place}</li>
+	{
+		trip.route_type && (
+			<li>
+				<RouteTypeIcon aria-hidden="true" />
+				{trip.route_type}
+			</li>
+		)
+	}
+	{
+		trip.distance && (
+			<li>
+				<RoadIcon aria-hidden="true" />
+				{trip.distance}
+			</li>
+		)
+	}
+	<li><StopwatchIcon aria-hidden="true" />{trip.duration}</li>
+	{
+		trip.gpx_url && trip.gpx_url_text && (
+			<li>
+				<MapIcon aria-hidden="true" />
+				<a href={trip.gpx_url}>{trip.gpx_url_text}</a>
+			</li>
+		)
+	}
+</ul>
+
+<style>
+	.route-summary {
+		display: flex;
+		flex-wrap: wrap;
+		margin-block: 1em;
+		padding: 0;
+		list-style: none;
+	}
+
+	li {
+		flex-grow: 1;
+		text-align: center;
+	}
+
+	svg {
+		display: block;
+		margin: 0 auto 1em;
+		block-size: 20px;
+		inline-size: auto;
+		fill: currentColor;
+	}
+</style>

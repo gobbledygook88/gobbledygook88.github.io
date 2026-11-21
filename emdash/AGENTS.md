@@ -57,9 +57,11 @@ and progress log live outside git in `.context/emdash-migration-plan.md` at the 
 | 404  | any unknown path | Uses `SiteLayout` |
 | Blog | `/blog/` | Published posts, newest first |
 | Blog post | `/blog/[slug]/` | `PostBody.astro`: Portable Text with `CodeBlock` (Shiki, server-side, Solarized Light; languages in `src/lib/highlight.ts`) and `MathFormula` (`math` objects with a `latex` string, inline or block; KaTeX to MathML in `src/lib/math.ts`) |
+| Walks / Travel | `/walks/`, `/travel/` | Newest first (`EntryList.astro`); travel starts with a Logbook link |
+| Walk / trip | `/walks/[slug]/`, `/travel/[slug]/` | `components/trip/TripPage.astro`: sticky map (`RouteMap` + `scripts/route-map.ts`, Leaflet bundled, OpenStreetMap tiles), headline video, route summary, then the story and `Waypoint`s. Hovering/tapping a waypoint with coordinates moves the map marker |
 
-Walks (`/walks/`) and travel (`/travel/`) pages arrive in Phase 3.3; URLs must match the old site
-(`/<section>/<slug>/`, as set in each collection's `urlPattern`). The template's blog pages, styles and Inter/JetBrains fonts were removed.
+URLs must match the old site (`/<section>/<slug>/`, as set in each collection's `urlPattern`). The logbook
+(`/travel/logbook/`) arrives in Phase 3.4. The template's blog pages, styles and Inter/JetBrains fonts were removed.
 
 ### Schema
 
@@ -80,5 +82,7 @@ empty database: after setup, change the live schema through the admin, CLI or AP
 Outside-in Playwright tests in `e2e/` drive the built Worker (`e2e/serve.sh`) on desktop and mobile.
 Fixture content lives in `e2e/fixtures/*.json` (seed entries plus a `publishedAt`): the test build uses
 a test-only seed, and `e2e/global-setup.ts` completes setup with content and sets publish dates.
+Fixture files (route GeoJSON, photos) use the fake host `https://fixtures.test/`; `e2e/support/network.ts`
+serves them, map tiles and video players from `e2e/fixtures/files/` so tests run offline.
 Write the test first (it must fail for the right reason), then implement. Describe behaviour a visitor
 sees, not implementation. CI runs them before deploying staging.

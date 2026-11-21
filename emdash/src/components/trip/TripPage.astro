@@ -1,0 +1,97 @@
+---
+/**
+ * A walk or travel entry: title across the top, then (on wide screens) the
+ * map, video and route summary in a sticky column beside the story and
+ * waypoints. On phones everything stacks.
+ */
+import type { ContentEntry } from "emdash";
+import type { Walk } from "../../../emdash-env";
+import { fileUrl } from "../../lib/media";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import PostBody from "../PostBody.astro";
+import HeadlineVideo from "./HeadlineVideo.astro";
+import RouteMap from "./RouteMap.astro";
+import RouteSummary from "./RouteSummary.astro";
+import Waypoint from "./Waypoint.astro";
+
+interface Props {
+	trip: ContentEntry<Walk>;
+	collection: "walks" | "travel";
+}
+
+const { trip, collection } = Astro.props;
+const { data } = trip;
+const routeUrl = fileUrl(data.map_data);
+// Unset fields come back from the database as null
+const hasCentre = typeof data.map_latitude === "number" && typeof data.map_longitude === "number";
+const hasMap = Boolean(routeUrl) || hasCentre;
+const video = data.video?.[0];
+---
+
+<SiteLayout
+	title={data.title}
+	type="article"
+	content={{ collection, id: data.id, slug: trip.id }}
+>
+	<article class="site trip">
+		<h1 {...trip.edit.title}>{data.title}</h1>
+
+		<aside>
+			{
+				hasMap && (
+					<RouteMap
+						routeUrl={routeUrl}
+						latitude={data.map_latitude ?? undefined}
+						longitude={data.map_longitude ?? undefined}
+						zoom={data.map_zoom ?? undefined}
+					/>
+				)
+			}
+			{video && <HeadlineVideo video={video} />}
+			<RouteSummary trip={data} />
+		</aside>
+
+		<div class="story">
+			<PostBody content={data.content} />
+			{
+				data.waypoints && data.waypoints.length > 0 && (
+					<div class="waypoints">
+						{data.waypoints.map((waypoint) => (
+							<Waypoint waypoint={waypoint} />
+						))}
+					</div>
+				)
+			}
+		</div>
+	</article>
+</SiteLayout>
+
+<style>
+	aside {
+		position: sticky;
+		inset-block-start: 0;
+		z-index: 1;
+		background-color: var(--color-background);
+	}
+
+	.waypoints {
+		/* Room to scroll the last waypoint up beside the sticky map */
+		margin-block-end: 20em;
+	}
+
+	@media (min-width: 768px) {
+		/* Full width (less the page gutters), as the old two-column layout was */
+		.trip {
+			--content-width: 100%;
+
+			display: grid;
+			grid-template-columns: 1fr minmax(10px, 2fr);
+			column-gap: 2em;
+			align-items: start;
+		}
+
+		.trip > h1 {
+			grid-column: 1 / -1;
+		}
+	}
+</style>

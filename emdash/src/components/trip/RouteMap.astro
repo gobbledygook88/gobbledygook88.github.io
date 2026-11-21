@@ -1,0 +1,35 @@
+---
+/** The trip's map. Leaflet is bundled with the site (no CDN). */
+interface Props {
+	routeUrl?: string;
+	latitude?: number;
+	longitude?: number;
+	zoom?: number;
+}
+
+const { routeUrl, latitude, longitude, zoom } = Astro.props;
+---
+
+<section
+	class="route-map"
+	aria-label="Map of the route"
+	data-route-url={routeUrl}
+	data-latitude={latitude}
+	data-longitude={longitude}
+	data-zoom={zoom}
+>
+</section>
+
+<script>
+	import { initRouteMap } from "../../scripts/route-map";
+
+	for (const element of document.querySelectorAll<HTMLElement>(".route-map")) {
+		initRouteMap(element);
+	}
+</script>
+
+<style>
+	.route-map {
+		aspect-ratio: 4 / 3;
+	}
+</style>
