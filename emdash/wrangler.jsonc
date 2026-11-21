@@ -65,6 +65,9 @@
 		// every one is repeated here, pointing at production's own resources (WEUR).
 		"production": {
 			"name": "biscuit-crumbs",
+			// Serves marcusmo.co.uk (attached at cutover, 2026-11-21); www redirects
+			// here with a zone redirect rule
+			"routes": [{ "pattern": "marcusmo.co.uk", "custom_domain": true }],
 			"d1_databases": [
 				{
 					"binding": "DB",
