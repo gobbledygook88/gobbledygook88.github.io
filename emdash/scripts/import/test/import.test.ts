@@ -33,6 +33,7 @@ interface PlannedEntry {
 interface Plan {
 	entries: PlannedEntry[];
 	media: { path: string }[];
+	warnings: string[];
 }
 
 function dryRun(...args: string[]): Plan {
@@ -138,8 +139,9 @@ describe("blog posts", () => {
 
 	test("have categories and tags turned into taxonomy terms", () => {
 		assert.deepEqual(entry("posts", "c").taxonomies, { category: ["notes-on"] });
+		// Tags were space-separated in the old frontmatter
 		assert.deepEqual(entry("posts", "simple-latex-drafting-commands").taxonomies, {
-			tag: ["latex", "quick-tips"],
+			tag: ["latex", "quick-tip"],
 		});
 		assert.equal(entry("posts", "notes-on").taxonomies, undefined);
 	});
@@ -196,6 +198,8 @@ describe("walks and travel", () => {
 			[{ url: "https://www.youtube.com/embed/fixture", title: "Waves at Birling Gap" }],
 		);
 		assert.equal(teaRoom?.icon, "food");
+		// Its only photo's file doesn't exist (a placeholder in the old site)
+		assert.equal(teaRoom?.images, undefined);
 		assert.equal(noCoordinates?.latitude, undefined);
 		assert.equal(noCoordinates?.text, "Somewhere without coordinates.");
 	});
@@ -236,6 +240,13 @@ describe("the import", () => {
 			"img/origami/paper_stack.JPG",
 			"img/walks/2022-08-14-seven-sisters/cliffs.jpg",
 			"img/walks/2022-08-14-seven-sisters/lighthouse.jpg",
+		]);
+	});
+
+	test("skips files that don't exist, and says so", () => {
+		assert.ok(plan.media.every((file) => !file.path.endsWith("/.jpg")));
+		assert.deepEqual(plan.warnings, [
+			"_walks/2022-08-14-seven-sisters.md: skipped missing file img/walks/2022-08-14-seven-sisters/.jpg",
 		]);
 	});
 

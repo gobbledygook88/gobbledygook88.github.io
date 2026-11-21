@@ -34,6 +34,8 @@ route:
     longitude: 0.1527
     icon: food
     text: Scones with a view.
+    images:
+    - url: /walks/2022-08-14-seven-sisters/.jpg
   - text: Somewhere without coordinates.
 ---
 

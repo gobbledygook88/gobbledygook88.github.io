@@ -2,7 +2,7 @@
 layout: blog
 title: Simple LaTeX Drafting Commands
 categories: blog
-tags: latex, quick-tips
+tags: latex quick-tip
 ---
 
 Add these to your preamble:
