@@ -131,7 +131,10 @@ export class EmDashApi {
 					await sleep(RETRY_DELAY_MS * attempt);
 					continue;
 				}
-				throw new ApiError(response.status, `${method} ${path}: ${response.status} ${text.slice(0, 120)}`);
+				// Cloudflare's error pages name the limit hit, e.g. "Error 1102"
+				const cloudflareError = /Error (?:code:? )?(\d{4})/.exec(text)?.[1];
+				const detail = cloudflareError ? `Cloudflare error ${cloudflareError}` : text.slice(0, 120);
+				throw new ApiError(response.status, `${method} ${path}: ${response.status} ${detail}`);
 			}
 			if (!response.ok) {
 				throw new ApiError(response.status, `${method} ${path}: ${response.status} ${JSON.stringify(json.error ?? json)}`);
