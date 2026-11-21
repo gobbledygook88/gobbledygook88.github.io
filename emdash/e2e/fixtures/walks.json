@@ -1,0 +1,92 @@
+[
+	{
+		"id": "walk-seven-sisters",
+		"slug": "seven-sisters",
+		"status": "published",
+		"publishedAt": "2022-08-14T09:00:00.000Z",
+		"data": {
+			"title": "Seven Sisters",
+			"content": [
+				{
+					"_type": "block",
+					"_key": "p1",
+					"style": "normal",
+					"children": [{ "_type": "span", "_key": "s1", "text": "Via Birling Gap and the Seven Sisters cliffs." }]
+				}
+			],
+			"route_start": "Eastbourne",
+			"route_end": "East Dean",
+			"route_type": "Linear",
+			"distance": "11km",
+			"duration": "3 hours",
+			"gpx_url": "https://www.alltrails.com/explore/map/seven-sisters",
+			"gpx_url_text": "AllTrails",
+			"map_data": {
+				"id": "fixture-seven-sisters-route",
+				"src": "https://fixtures.test/seven-sisters.geojson",
+				"filename": "seven-sisters.geojson",
+				"mimeType": "application/geo+json"
+			},
+			"waypoints": [
+				{
+					"_type": "waypoint",
+					"_version": 1,
+					"_key": "birling-gap",
+					"title": "Birling Gap",
+					"latitude": 50.742,
+					"longitude": 0.2032,
+					"icon": "pin",
+					"text": "The cliffs drop straight to the beach here.",
+					"images": [
+						{ "_key": "i1", "image": { "id": "fixture-cliffs", "src": "https://fixtures.test/cliffs.png", "alt": "White chalk cliffs" } },
+						{ "_key": "i2", "image": { "id": "fixture-beach", "src": "https://fixtures.test/beach.png", "alt": "Pebble beach" } },
+						{ "_key": "i3", "image": { "id": "fixture-lighthouse", "src": "https://fixtures.test/lighthouse.png", "alt": "Belle Tout lighthouse" }, "new_row": true }
+					],
+					"videos": [{ "_key": "v1", "url": "https://www.youtube.com/embed/fixture", "title": "Waves at Birling Gap" }]
+				},
+				{
+					"_type": "waypoint",
+					"_version": 1,
+					"_key": "tea-room",
+					"title": "Tea room",
+					"latitude": 50.7558,
+					"longitude": 0.1527,
+					"icon": "food",
+					"text": "Scones with a view."
+				},
+				{
+					"_type": "waypoint",
+					"_version": 1,
+					"_key": "cuckmere",
+					"title": "Cuckmere Haven",
+					"text": "Coordinates still to be added."
+				}
+			]
+		}
+	},
+	{
+		"id": "walk-box-hill",
+		"slug": "box-hill",
+		"status": "published",
+		"publishedAt": "2020-09-21T09:00:00.000Z",
+		"data": {
+			"title": "Box Hill",
+			"route_start": "Box Hill",
+			"route_end": "Box Hill",
+			"route_type": "Circular",
+			"distance": "8km",
+			"duration": "2.5 hours"
+		}
+	},
+	{
+		"id": "walk-draft",
+		"slug": "unfinished-walk",
+		"status": "draft",
+		"data": {
+			"title": "Unfinished walk",
+			"route_start": "Somewhere",
+			"route_end": "Elsewhere",
+			"duration": "1 hour"
+		}
+	}
+]

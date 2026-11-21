@@ -1,0 +1,19 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"properties": { "name": "Seven Sisters" },
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[0.2819, 50.7695],
+					[0.2421, 50.7378],
+					[0.2032, 50.7412],
+					[0.1527, 50.7558],
+					[0.1395, 50.7713]
+				]
+			}
+		}
+	]
+}

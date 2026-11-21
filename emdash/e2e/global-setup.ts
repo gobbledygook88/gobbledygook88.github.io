@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import type { FullConfig } from "@playwright/test";
 import { STATE_DIR } from "./serve-config";
 
@@ -8,7 +8,7 @@ interface FixtureEntry {
 	publishedAt?: string;
 }
 
-const FIXTURES: Record<string, string> = { posts: "./fixtures/posts.json" };
+const FIXTURES_DIR = new URL("./fixtures/", import.meta.url);
 const MAX_SETUP_ATTEMPTS = 20;
 
 /**
@@ -48,8 +48,11 @@ async function applySeedContent(baseURL: string) {
 }
 
 function setPublishDates() {
-	const statements = Object.entries(FIXTURES).flatMap(([collection, path]) => {
-		const entries: FixtureEntry[] = JSON.parse(readFileSync(new URL(path, import.meta.url), "utf8"));
+	// e2e/fixtures/<collection>.json
+	const fixtureFiles = readdirSync(FIXTURES_DIR).filter((file) => file.endsWith(".json"));
+	const statements = fixtureFiles.flatMap((file) => {
+		const collection = file.replace(/\.json$/, "");
+		const entries: FixtureEntry[] = JSON.parse(readFileSync(new URL(file, FIXTURES_DIR), "utf8"));
 		return entries
 			.filter((entry) => entry.publishedAt)
 			.map(
