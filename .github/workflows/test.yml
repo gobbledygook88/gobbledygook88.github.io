@@ -1,10 +1,13 @@
-name: Test branch
+name: Lint Python
 
+# Lints the logbook data pipeline (scripts/*.py). Deliberately runs on every
+# pull request, with no `paths` filter: branch protection on main requires the
+# `lint` check, and a filtered-out workflow never reports it, which would block
+# merging EmDash-only PRs. The run takes seconds.
 on: pull_request
 
 permissions:
   contents: read
-  id-token: write
 
 jobs:
   lint:
