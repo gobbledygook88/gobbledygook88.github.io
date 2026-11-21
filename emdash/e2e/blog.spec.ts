@@ -56,22 +56,31 @@ test.describe("Blog post", () => {
 		await expect(page.getByRole("heading", { level: 1, name: "Learning stenography" })).toBeVisible();
 	});
 
-	test("highlights code without downloading a highlighter", async ({ page }) => {
+	test("highlights code in the reader's browser once the page has loaded", async ({ page }) => {
+		await page.goto("/blog/cpp/");
+
+		const code = page.getByRole("article").locator("pre code");
+		await expect(code).toContainText('std::cout << "Hello world!" << std::endl;');
+		// Highlighting runs in the browser: Workers Free allows 10 ms of CPU per request
+		await expect
+			.poll(() =>
+				code
+					.locator("span")
+					.evaluateAll((spans) => new Set(spans.map((span) => getComputedStyle(span).color)).size),
+			)
+			.toBeGreaterThan(2);
+		await expect(page.getByRole("article").locator("p code")).toHaveText("main");
+	});
+
+	test("doesn't download the highlighter for posts without code", async ({ page }) => {
 		const scripts: string[] = [];
 		page.on("request", (request) => {
 			if (request.resourceType() === "script") scripts.push(request.url());
 		});
 
-		await page.goto("/blog/cpp/");
+		await page.goto("/blog/learning-stenography/", { waitUntil: "networkidle" });
 
-		const code = page.getByRole("article").locator("pre code");
-		await expect(code).toContainText('std::cout << "Hello world!" << std::endl;');
-		const colours = await code
-			.locator("span")
-			.evaluateAll((spans) => new Set(spans.map((span) => getComputedStyle(span).color)).size);
-		expect(colours).toBeGreaterThan(2);
-		await expect(page.getByRole("article").locator("p code")).toHaveText("main");
-		expect(scripts.filter((url) => /highlight|hljs|prism|shiki/i.test(url))).toEqual([]);
+		expect(scripts.filter((url) => /highlight/i.test(url))).toEqual([]);
 	});
 
 	test("lets wide code scroll inside its box on narrow screens", async ({ page }) => {
