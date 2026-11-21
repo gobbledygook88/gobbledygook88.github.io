@@ -34,6 +34,21 @@ interface StoredLogin {
 	expiresAt?: string;
 }
 
+const TRANSIENT_STATUSES = new Set([502, 503, 504]);
+const MAX_ATTEMPTS = 5;
+const RETRY_DELAY_MS = 500;
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+function parseJson(text: string): any {
+	if (!text) return {};
+	try {
+		return JSON.parse(text);
+	} catch {
+		return undefined;
+	}
+}
+
 class ApiError extends Error {
 	readonly status: number;
 	constructor(status: number, message: string) {
@@ -83,9 +98,9 @@ export class EmDashApi {
 		return true;
 	}
 
-	async #request<T>(method: string, path: string, body?: unknown, retried = false): Promise<T> {
+	async #send(method: string, path: string, body?: unknown): Promise<Response> {
 		const isForm = body instanceof FormData;
-		const response = await fetch(`${this.#baseUrl}/_emdash/api${path}`, {
+		return fetch(`${this.#baseUrl}/_emdash/api${path}`, {
 			method,
 			headers: {
 				Authorization: `Bearer ${this.#login.accessToken}`,
@@ -94,15 +109,35 @@ export class EmDashApi {
 			},
 			body: body === undefined ? undefined : isForm ? body : JSON.stringify(body),
 		});
-		if (response.status === 401 && !retried && (await this.#refresh())) {
-			return this.#request(method, path, body, true);
+	}
+
+	/**
+	 * Sends a request, refreshing the login on a 401 and retrying transient
+	 * failures: on Workers Free a cold request can exceed the 10 ms CPU limit
+	 * and come back as a 503 "error code: 1102" page instead of JSON.
+	 */
+	async #request<T>(method: string, path: string, body?: unknown): Promise<T> {
+		let refreshed = false;
+		for (let attempt = 1; ; attempt++) {
+			const response = await this.#send(method, path, body);
+			if (response.status === 401 && !refreshed && (await this.#refresh())) {
+				refreshed = true;
+				continue;
+			}
+			const text = await response.text();
+			const json = parseJson(text);
+			if (json === undefined || TRANSIENT_STATUSES.has(response.status)) {
+				if (attempt < MAX_ATTEMPTS) {
+					await sleep(RETRY_DELAY_MS * attempt);
+					continue;
+				}
+				throw new ApiError(response.status, `${method} ${path}: ${response.status} ${text.slice(0, 120)}`);
+			}
+			if (!response.ok) {
+				throw new ApiError(response.status, `${method} ${path}: ${response.status} ${JSON.stringify(json.error ?? json)}`);
+			}
+			return (json.data ?? json) as T;
 		}
-		const text = await response.text();
-		const json = text ? JSON.parse(text) : {};
-		if (!response.ok) {
-			throw new ApiError(response.status, `${method} ${path}: ${response.status} ${JSON.stringify(json.error ?? json)}`);
-		}
-		return (json.data ?? json) as T;
 	}
 
 	/** Field IDs by slug for a collection (uploads name the field they're for). */

@@ -13,6 +13,47 @@ export type Block = { _type: string; _key?: string; [field: string]: any };
 export type AssetRef = { $asset: string };
 
 const markdown = new MarkdownIt({ html: true });
+// A line break inside a paragraph is just a space in Markdown (the old site rendered it so);
+// left as a newline, the Portable Text renderer would show a visible break
+markdown.renderer.rules.softbreak = () => " ";
+
+type Alignment = "left" | "center" | "right" | undefined;
+const ALIGNMENT = /text-align:\s*(left|center|right)/;
+
+/**
+ * Column alignments of each table in the document, in order. The HTML
+ * converter drops markdown-it's `style="text-align:…"`, so they're read from
+ * the parse tokens instead. Raw HTML tables take a slot with no alignments.
+ */
+function tableAlignments(source: string): Alignment[][] {
+	const tables: Alignment[][] = [];
+	let header: Alignment[] | undefined;
+	for (const token of markdown.parse(source, {})) {
+		if (token.type === "html_block" && token.content.includes("<table")) tables.push([]);
+		if (token.type === "thead_open") header = [];
+		if (token.type === "th_open" && header) {
+			header.push(ALIGNMENT.exec(token.attrGet("style") ?? "")?.[1] as Alignment);
+		}
+		if (token.type === "thead_close" && header) {
+			tables.push(header);
+			header = undefined;
+		}
+	}
+	return tables;
+}
+
+function withAlignments(table: Block, alignments: Alignment[]): Block {
+	if (!alignments.some(Boolean)) return table;
+	return {
+		...table,
+		rows: table.rows.map((row: Block) => ({
+			...row,
+			cells: row.cells.map((cell: Block, column: number) =>
+				alignments[column] ? { ...cell, textAlign: alignments[column] } : cell,
+			),
+		})),
+	};
+}
 
 /** Shiki's names for languages the old posts' `language-…` classes spell differently. */
 const LANGUAGE_NAMES: Record<string, string> = { "c++": "cpp", protobuf: "proto" };
@@ -91,6 +132,11 @@ function fixUpBlock(block: Block, formulas: string[], media: MediaFiles, source:
 export function markdownToPortableText(body: string, media: MediaFiles, source: string): Block[] {
 	if (!body.trim()) return [];
 	const formulas: string[] = [];
-	const html = markdown.render(preprocess(body, formulas));
-	return (htmlToPortableText(html) as Block[]).flatMap((block) => fixUpBlock(block, formulas, media, source) ?? []);
+	const markdownSource = preprocess(body, formulas);
+	const alignments = tableAlignments(markdownSource);
+	return (htmlToPortableText(markdown.render(markdownSource)) as Block[]).flatMap((block) => {
+		const fixed = fixUpBlock(block, formulas, media, source);
+		if (fixed?._type === "table") return withAlignments(fixed, alignments.shift() ?? []);
+		return fixed ?? [];
+	});
 }

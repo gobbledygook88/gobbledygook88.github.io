@@ -62,6 +62,10 @@ describe("blog posts", () => {
 		assert.match(post.publishedAt ?? "", /^2013-11-20T/);
 	});
 
+	test("join a paragraph's lines with spaces, as Markdown does", () => {
+		assert.equal(textOf(contentOf(entry("posts", "c"))[0]!), "The language that started it all.");
+	});
+
 	test("published on the same day keep the old site's order", () => {
 		// The old index listed same-day posts in reverse filename order
 		assert.ok(entry("posts", "cpp").publishedAt! > entry("posts", "c").publishedAt!);
@@ -125,7 +129,7 @@ describe("blog posts", () => {
 		assert.equal(image?.alt, "Stack of cut yellow paper");
 
 		const table = content.find((block) => block._type === "table") as
-			| { rows: { cells: { content: { text: string }[]; isHeader?: boolean }[] }[] }
+			| { rows: { cells: { content: { text: string }[]; isHeader?: boolean; textAlign?: string }[] }[] }
 			| undefined;
 		assert.deepEqual(
 			table?.rows.map((row) => row.cells.map((cell) => cell.content.map((span) => span.text).join(""))),
@@ -135,6 +139,14 @@ describe("blog posts", () => {
 			],
 		);
 		assert.equal(table?.rows[0]?.cells[0]?.isHeader, true);
+		// The Pieces column was right-aligned (`-----:`)
+		assert.deepEqual(
+			table?.rows.map((row) => row.cells.map((cell) => cell.textAlign)),
+			[
+				[undefined, "right"],
+				[undefined, "right"],
+			],
+		);
 	});
 
 	test("have categories and tags turned into taxonomy terms", () => {

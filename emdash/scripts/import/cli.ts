@@ -45,7 +45,13 @@ const entries = fullPlan.entries.filter(
 	(entry) =>
 		(!options.only || entry.collection === options.only) && (!options.slug || entry.slug === options.slug),
 );
-const plan: ImportPlan = { entries, media: referencedMedia(entries), warnings: fullPlan.warnings };
+const sources = new Set(entries.map((entry) => entry.source));
+const plan: ImportPlan = {
+	entries,
+	media: referencedMedia(entries),
+	// Warnings start with the file they're about
+	warnings: fullPlan.warnings.filter((warning) => sources.has(warning.split(":")[0]!)),
+};
 
 if (options["dry-run"]) {
 	process.stdout.write(`${JSON.stringify(plan, null, "\t")}\n`);
