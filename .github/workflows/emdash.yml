@@ -1,0 +1,132 @@
+name: EmDash site
+
+# Staging deploys on merge to main; preview versions for pull requests.
+# Previews are versions of the staging Worker, so they share staging D1/R2 —
+# never production.
+
+on:
+  push:
+    branches: ["main"]
+    paths: ["emdash/**", ".github/workflows/emdash.yml"]
+  pull_request:
+    paths: ["emdash/**", ".github/workflows/emdash.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: emdash
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: emdash/.nvmrc
+          cache: pnpm
+          cache-dependency-path: emdash/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm build
+
+  preview:
+    # Secrets aren't available to fork or Dependabot PRs
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.actor != 'dependabot[bot]'
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    concurrency:
+      group: emdash-preview-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: emdash/.nvmrc
+          cache: pnpm
+          cache-dependency-path: emdash/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      # Build again rather than share dist/: the build also writes
+      # .wrangler/deploy/config.json, which points wrangler at dist/server/wrangler.json
+      - run: pnpm build
+      - name: Upload preview version
+        id: upload
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          pnpm wrangler versions upload \
+            --preview-alias "pr-${PR_NUMBER}" \
+            --tag "${COMMIT_SHA::7}" \
+            --message "PR #${PR_NUMBER}" | tee upload.log
+          alias_url=$(grep -oE 'https://pr-[^ ]+\.workers\.dev' upload.log | head -1)
+          version_url=$(grep -oE 'https://[0-9a-f]{8}-[^ ]+\.workers\.dev' upload.log | head -1)
+          echo "alias_url=${alias_url}" >> "$GITHUB_OUTPUT"
+          echo "version_url=${version_url}" >> "$GITHUB_OUTPUT"
+      - name: Comment preview URL on PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          ALIAS_URL: ${{ steps.upload.outputs.alias_url }}
+          VERSION_URL: ${{ steps.upload.outputs.version_url }}
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          body=$(cat <<EOF
+          ### EmDash preview
+
+          | | |
+          |---|---|
+          | Preview (latest commit) | ${ALIAS_URL:-not found in wrangler output} |
+          | This version | ${VERSION_URL:-not found in wrangler output} |
+          | Commit | \`${COMMIT_SHA::7}\` |
+
+          Uses the **staging** D1 database and R2 bucket.
+          EOF
+          )
+          gh pr comment "$PR_NUMBER" --edit-last --create-if-none --body "$body"
+
+  deploy-staging:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: check
+    runs-on: ubuntu-latest
+    environment:
+      name: emdash-staging
+    concurrency:
+      group: emdash-staging
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: emdash/.nvmrc
+          cache: pnpm
+          cache-dependency-path: emdash/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      # Build again rather than share dist/: the build also writes
+      # .wrangler/deploy/config.json, which points wrangler at dist/server/wrangler.json
+      - run: pnpm build
+      - name: Deploy to staging
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: pnpm wrangler deploy --message "main@${GITHUB_SHA::7}"

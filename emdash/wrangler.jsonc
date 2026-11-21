@@ -10,6 +10,8 @@
 		{
 			"binding": "DB",
 			"database_name": "biscuit-crumbs-staging",
+			// Created in WEUR (2026-11-21)
+			"database_id": "2974d052-7782-4915-bb1a-0180ae131982",
 		},
 	],
 	"r2_buckets": [
