@@ -58,9 +58,11 @@ test.describe("Logbook", () => {
 
 		const map = page.getByRole("region", { name: "Map of the furthest places" });
 		await map.scrollIntoViewIfNeeded();
-		await map.getByRole("img", { name: stats.most_eastern_place }).click();
+		// Markers that open a pop-up are buttons (keyboard-focusable). The northern
+		// place stands alone at world zoom; the southern and eastern are both in NZ.
+		await map.getByRole("button", { name: stats.most_northern_place }).click();
 
-		await expect(map.locator(".leaflet-popup")).toHaveText(stats.most_eastern_place);
+		await expect(map.locator(".leaflet-popup-content")).toHaveText(stats.most_northern_place);
 	});
 
 	test("draws every map", async ({ page }) => {

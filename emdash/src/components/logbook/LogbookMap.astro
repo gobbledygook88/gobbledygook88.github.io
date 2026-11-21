@@ -1,0 +1,38 @@
+---
+/** One logbook map; it loads when scrolled into view (see scripts/logbook-map.ts). */
+interface Props {
+	/** Accessible name, e.g. "Map of countries visited" */
+	label: string;
+	/** GeoJSON file in public/travel/logbook/ */
+	layer: string;
+	kind?: "areas" | "places" | "pins";
+	/** Fixed starting view; otherwise the map fits its layer */
+	view?: { latitude: number; longitude: number; zoom: number };
+}
+
+const { label, layer, kind = "areas", view } = Astro.props;
+---
+
+<section
+	class="logbook-map"
+	aria-label={label}
+	data-layer-url={`/travel/logbook/${layer}`}
+	data-kind={kind}
+	data-latitude={view?.latitude}
+	data-longitude={view?.longitude}
+	data-zoom={view?.zoom}
+>
+</section>
+
+<script>
+	import { initLogbookMaps } from "../../scripts/logbook-map";
+
+	initLogbookMaps(document.querySelectorAll<HTMLElement>(".logbook-map"));
+</script>
+
+<style>
+	.logbook-map {
+		aspect-ratio: 4 / 3;
+		margin-block: 1em;
+	}
+</style>

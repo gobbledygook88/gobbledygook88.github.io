@@ -1,41 +1,16 @@
 /**
- * The trip map: OpenStreetMap tiles, the route line from the trip's GeoJSON,
+ * The trip map: the route line from the trip's GeoJSON (or the given centre),
  * and a marker that follows the waypoint the reader points at.
  */
 import L from "leaflet";
-import "leaflet/dist/leaflet.css";
-import pinIconUrl from "../icons/location-dot-solid.svg?url";
-import foodIconUrl from "../icons/utensils-solid.svg?url";
+import { ACCENT, createMap, fetchGeoJson, ICONS, numberFrom, viewFrom } from "./map-base";
 
-// CARTO's basemaps (used by the old site) now return an "API key required"
-// placeholder. OpenStreetMap's own tiles are free with attribution:
-// https://operations.osmfoundation.org/policies/tiles/
-const TILES = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
-const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>';
-const ROUTE_STYLE: L.PathOptions = {
-	color: "#ff7800",
-	weight: 3,
-	opacity: 0.65,
-	className: "route-line",
-};
-const DEFAULT_VIEW = { center: L.latLng(51.505, -0.09), zoom: 13 };
-
-const markerIcon = (iconUrl: string) =>
-	L.icon({ iconUrl, iconSize: [12, 16], iconAnchor: [6, 16] });
-const ICONS: Record<string, L.Icon> = {
-	food: markerIcon(foodIconUrl),
-	pin: markerIcon(pinIconUrl),
-};
-
-const numberFrom = (value: string | undefined) => {
-	const parsed = Number.parseFloat(value ?? "");
-	return Number.isFinite(parsed) ? parsed : undefined;
-};
+const ROUTE_STYLE: L.PathOptions = { color: ACCENT, weight: 3, opacity: 0.65, className: "route-line" };
 
 async function drawRoute(map: L.Map, url: string, zoom: number | undefined) {
-	const response = await fetch(url);
-	if (!response.ok) return;
-	const route = L.geoJSON(await response.json(), { style: ROUTE_STYLE }).addTo(map);
+	const geoJson = await fetchGeoJson(url);
+	if (!geoJson) return;
+	const route = L.geoJSON(geoJson, { style: ROUTE_STYLE }).addTo(map);
 	map.fitBounds(route.getBounds());
 	if (zoom !== undefined) map.setZoom(zoom);
 }
@@ -65,15 +40,9 @@ function followWaypoints(map: L.Map, waypoints: Iterable<HTMLElement>) {
 }
 
 export function initRouteMap(element: HTMLElement) {
-	const { routeUrl, latitude, longitude, zoom } = element.dataset;
-	const centre = numberFrom(latitude) !== undefined && numberFrom(longitude) !== undefined
-		? L.latLng(numberFrom(latitude)!, numberFrom(longitude)!)
-		: DEFAULT_VIEW.center;
-	const zoomLevel = numberFrom(zoom);
+	const map = createMap(element, viewFrom(element.dataset));
+	const { routeUrl, zoom } = element.dataset;
 
-	const map = L.map(element).setView(centre, zoomLevel ?? DEFAULT_VIEW.zoom);
-	L.tileLayer(TILES, { maxZoom: 19, attribution: ATTRIBUTION }).addTo(map);
-
-	if (routeUrl) void drawRoute(map, routeUrl, zoomLevel);
+	if (routeUrl) void drawRoute(map, routeUrl, numberFrom(zoom));
 	followWaypoints(map, document.querySelectorAll<HTMLElement>(".waypoint"));
 }
