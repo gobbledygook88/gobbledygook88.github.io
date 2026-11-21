@@ -83,7 +83,7 @@ empty database: after setup, change the live schema through the admin, CLI or AP
 
 | Environment | Worker | Used for |
 | ----------- | ------ | -------- |
-| production | `biscuit-crumbs` (`env.production` in `wrangler.jsonc`; marcusmo.co.uk after cutover) | The live site. **All content is written here** |
+| production | `biscuit-crumbs` (`env.production` in `wrangler.jsonc`), serving https://marcusmo.co.uk | The live site. **All content is written here** |
 | staging | `biscuit-crumbs-staging` (top level of `wrangler.jsonc`) | Backs PR previews (`pr-<n>-biscuit-crumbs-staging…workers.dev`); its content is a test copy |
 
 Continuous deployment (`.github/workflows/emdash.yml`): a merge to `main` runs the tests, then migrates

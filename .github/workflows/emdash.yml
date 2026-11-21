@@ -234,7 +234,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: emdash-production
-      url: https://biscuit-crumbs.marcusmo88.workers.dev
+      url: https://marcusmo.co.uk
     concurrency:
       group: emdash-production
       cancel-in-progress: false
