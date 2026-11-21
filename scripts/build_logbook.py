@@ -33,10 +33,10 @@ def write_file(destination, contents):
 
 
 def get_countries_with_areas(logbook):
-    return set(
+    return {
         (location["country"], location["area"] if location["area"] != "" else None)
         for location in logbook
-    )
+    }
 
 
 def fetch_country_geojson_files(logbook):
