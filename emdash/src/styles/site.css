@@ -19,11 +19,8 @@
 		text-size-adjust: none;
 	}
 
-	img,
-	picture,
-	video,
-	canvas,
-	svg {
+	/* Leaflet sizes its own tiles, markers and canvases inside zero-size panes */
+	:is(img, picture, video, canvas, svg):not(.leaflet-container *) {
 		display: block;
 		max-inline-size: 100%;
 	}

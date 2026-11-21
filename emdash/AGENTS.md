@@ -59,9 +59,9 @@ and progress log live outside git in `.context/emdash-migration-plan.md` at the 
 | Blog post | `/blog/[slug]/` | `PostBody.astro`: Portable Text with `CodeBlock` (Shiki, server-side, Solarized Light; languages in `src/lib/highlight.ts`) and `MathFormula` (`math` objects with a `latex` string, inline or block; KaTeX to MathML in `src/lib/math.ts`) |
 | Walks / Travel | `/walks/`, `/travel/` | Newest first (`EntryList.astro`); travel starts with a Logbook link |
 | Walk / trip | `/walks/[slug]/`, `/travel/[slug]/` | `components/trip/TripPage.astro`: sticky map (`RouteMap` + `scripts/route-map.ts`, Leaflet bundled, OpenStreetMap tiles), headline video, route summary, then the story and `Waypoint`s. Hovering/tapping a waypoint with coordinates moves the map marker |
+| Logbook | `/travel/logbook/` | Static data, not CMS content: statistics in `src/data/logbook-statistics.json` and map layers in `public/travel/logbook/*.geojson`, regenerated from the repo root's `logbook/` by `scripts/update-logbook-data.sh` (runs the Python pipeline). Maps load when scrolled to (`scripts/logbook-map.ts`); thousands of places draw on one canvas |
 
-URLs must match the old site (`/<section>/<slug>/`, as set in each collection's `urlPattern`). The logbook
-(`/travel/logbook/`) arrives in Phase 3.4. The template's blog pages, styles and Inter/JetBrains fonts were removed.
+URLs must match the old site (`/<section>/<slug>/`, as set in each collection's `urlPattern`). The template's blog pages, styles and Inter/JetBrains fonts were removed.
 
 ### Schema
 
@@ -75,6 +75,8 @@ empty database: after setup, change the live schema through the admin, CLI or AP
   (`--color-*`, `--font-site`, `--content-width`), and the `.site` content column.
 - Component styles are scoped in their `.astro` files. Use logical properties and native nesting.
 - Oxygen is self-hosted via Astro's font API (`--font-oxygen`); never load fonts from a third party.
+- Maps share `src/scripts/map-base.ts` (Leaflet bundled from npm, OpenStreetMap tiles). The reset in
+  `site.css` skips anything inside `.leaflet-container`, which sizes its own tiles, markers and canvases.
 - Keep the look of the original site: minimal, centred, Oxygen, orange `--color-accent` links in posts.
 
 ### Testing

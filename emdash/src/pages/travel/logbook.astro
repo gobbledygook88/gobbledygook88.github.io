@@ -1,0 +1,123 @@
+---
+/**
+ * Where I've been, computed from Google Takeout location data.
+ * Regenerate the data with scripts/update-logbook-data.sh.
+ */
+import LogbookMap from "../../components/logbook/LogbookMap.astro";
+import stats from "../../data/logbook-statistics.json";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+/** Countries per continent, for "visited / total". */
+const COUNTRIES_PER_CONTINENT: Record<string, number> = {
+	Africa: 54,
+	Asia: 49,
+	Europe: 44,
+	"North America": 23,
+	"South America": 12,
+	Oceania: 14,
+};
+
+const totals = [
+	{ term: "Continents", value: String(stats.num_continents) },
+	{ term: "Countries", value: String(stats.num_countries) },
+	{ term: "Cities", value: `> ${stats.num_cities}` },
+];
+const continents = Object.entries(stats.num_countries_per_continent).map(([continent, visited]) => ({
+	term: continent,
+	value: `${visited} / ${COUNTRIES_PER_CONTINENT[continent] ?? "?"}`,
+}));
+const furthestPlaces = [
+	{ term: "Most northern", value: stats.most_northern_place },
+	{ term: "Most southern", value: stats.most_southern_place },
+	{ term: "Most western", value: stats.most_western_place },
+	{ term: "Most eastern", value: stats.most_eastern_place },
+];
+// The borough count includes the City of London, which isn't a borough
+const londonBoroughs = stats.num_london_boroughs - 1;
+---
+
+<SiteLayout title="Logbook">
+	<div class="site logbook">
+		<h1 class="visually-hidden">Logbook</h1>
+		<p>The data on this page has been computed from Google Takeout location data.</p>
+
+		<section aria-labelledby="countries">
+			<h2 id="countries">Countries</h2>
+			<LogbookMap
+				label="Map of countries visited"
+				layer="logbook_countries.geojson"
+				view={{ latitude: 0, longitude: 0, zoom: 1 }}
+			/>
+			{
+				[totals, continents].map((stats) => (
+					<dl class="stats">
+						{stats.map(({ term, value }) => (
+							<div>
+								<dt>{term}</dt>
+								<dd>{value}</dd>
+							</div>
+						))}
+					</dl>
+				))
+			}
+		</section>
+
+		<section aria-labelledby="places">
+			<h2 id="places">Places</h2>
+			<p>
+				Here is a map of all the places I have visited according to Google since 2013. Note, I chose
+				to only show named places so residential addresses will not be shown. A place can be nearly
+				anything, for example, museums, restaurants and even bus stops.
+			</p>
+			<LogbookMap label="Map of places visited" layer="logbook_unique_places.geojson" kind="places" />
+			<p>These are the most northern, southern, western and eastern places I have visited.</p>
+			<LogbookMap label="Map of the furthest places" layer="logbook_cardinal_places.geojson" kind="pins" />
+			<dl class="stats">
+				{
+					furthestPlaces.map(({ term, value }) => (
+						<div>
+							<dt>{term}</dt>
+							<dd>{value}</dd>
+						</div>
+					))
+				}
+			</dl>
+		</section>
+
+		<section aria-labelledby="usa">
+			<h2 id="usa">USA</h2>
+			<p>I have visited {stats.num_usa_states} out of 50 states.</p>
+			<LogbookMap label="Map of USA states visited" layer="logbook_usa_states.geojson" />
+		</section>
+
+		<section aria-labelledby="uk">
+			<h2 id="uk">United Kingdom</h2>
+			<p>I have visited 87 out of 218 counties and unitary authorities.</p>
+			<LogbookMap label="Map of UK counties visited" layer="logbook_uk_counties.geojson" />
+			<p>I have visited {londonBoroughs} out of 32 London boroughs, and the City of London.</p>
+			<LogbookMap label="Map of London boroughs visited" layer="logbook_london_boroughs.geojson" />
+		</section>
+	</div>
+</SiteLayout>
+
+<style>
+	.stats {
+		display: flex;
+		flex-wrap: wrap;
+		margin-block: 1em;
+		padding: 0;
+		text-align: center;
+
+		& > div {
+			flex-grow: 1;
+		}
+	}
+
+	dt {
+		margin-block-end: 1em;
+	}
+
+	dd {
+		margin: 0;
+	}
+</style>

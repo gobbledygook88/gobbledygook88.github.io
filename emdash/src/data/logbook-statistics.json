@@ -1,0 +1,17 @@
+{
+	"num_continents": 4,
+	"num_countries": 25,
+	"num_cities": 187,
+	"num_countries_per_continent": {
+		"Europe": 15,
+		"North America": 2,
+		"Asia": 6,
+		"Oceania": 2
+	},
+	"num_usa_states": 9,
+	"num_london_boroughs": 30,
+	"most_northern_place": "Tromsø Airport",
+	"most_southern_place": "Alpine Centre Cafe & Bar",
+	"most_western_place": "The Snug Cafe",
+	"most_eastern_place": "Weta Cave"
+}
