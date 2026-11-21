@@ -17,6 +17,8 @@ permissions:
 
 defaults:
   run:
+    # Explicit bash runs steps with -eo pipefail, so `wrangler | tee` can't hide failures
+    shell: bash
     working-directory: emdash
 
 jobs:
@@ -78,6 +80,10 @@ jobs:
             --message "PR #${PR_NUMBER}" | tee upload.log
           alias_url=$(grep -oE 'https://pr-[^ ]+\.workers\.dev' upload.log | head -1)
           version_url=$(grep -oE 'https://[0-9a-f]{8}-[^ ]+\.workers\.dev' upload.log | head -1)
+          if [ -z "$alias_url" ]; then
+            echo "::error::No preview alias URL in wrangler output"
+            exit 1
+          fi
           echo "alias_url=${alias_url}" >> "$GITHUB_OUTPUT"
           echo "version_url=${version_url}" >> "$GITHUB_OUTPUT"
       - name: Comment preview URL on PR
@@ -93,7 +99,7 @@ jobs:
 
           | | |
           |---|---|
-          | Preview (latest commit) | ${ALIAS_URL:-not found in wrangler output} |
+          | Preview (latest commit) | ${ALIAS_URL} |
           | This version | ${VERSION_URL:-not found in wrangler output} |
           | Commit | \`${COMMIT_SHA::7}\` |
 
