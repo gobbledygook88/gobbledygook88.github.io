@@ -21,3 +21,7 @@ data.db-*
 # Playwright
 test-results
 playwright-report
+
+# The repo root ignores "Icon?" (macOS folder icons), which matches "icons" on
+# case-insensitive filesystems
+!/src/icons/

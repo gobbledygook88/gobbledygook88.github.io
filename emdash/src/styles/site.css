@@ -1,0 +1,134 @@
+/*
+ * Site-wide styles for Biscuit Crumbs.
+ *
+ * Replaces normalize.css and the "Common" / "Banner" / "Site" sections of the
+ * old main.css. Component-specific styles live with their Astro components.
+ */
+
+@layer reset, base, layout;
+
+@layer reset {
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	html {
+		-webkit-text-size-adjust: none;
+		text-size-adjust: none;
+	}
+
+	img,
+	picture,
+	video,
+	canvas,
+	svg {
+		display: block;
+		max-inline-size: 100%;
+	}
+
+	input,
+	button,
+	textarea,
+	select {
+		font: inherit;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		text-wrap: balance;
+	}
+
+	p {
+		text-wrap: pretty;
+		overflow-wrap: break-word;
+	}
+}
+
+@layer base {
+	:root {
+		color-scheme: light;
+
+		--color-background: #fefefe;
+		--color-text: #444;
+		--color-text-strong: #000;
+		--color-muted: #aaa;
+		--color-accent: #ff7800;
+		--color-border: #ddd;
+		--color-code-background: #fdf6e3;
+		--color-code-text: #586e75;
+
+		--font-site: var(--font-oxygen);
+		--tracking-wide: 0.125em;
+		/* Old layout: 42em column with 2em padding each side */
+		--content-width: 38em;
+		--page-gutter: 2em;
+	}
+
+	body {
+		margin: 0;
+		min-block-size: 100svh;
+		background-color: var(--color-background);
+		color: var(--color-text);
+		font-family: var(--font-site);
+		font-size: 0.875rem;
+		line-height: 1.5;
+		text-align: center;
+	}
+
+	a {
+		color: var(--color-text);
+		text-decoration: none;
+
+		&:hover,
+		&:focus-visible {
+			color: var(--color-text-strong);
+		}
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+	}
+
+	table {
+		margin-inline: auto;
+	}
+
+	th,
+	td {
+		padding-inline: 5px;
+	}
+}
+
+@layer layout {
+	.skip-link {
+		position: absolute;
+		inset-block-start: 0.5em;
+		inset-inline-start: 0.5em;
+		padding: 0.5em 1em;
+		background: var(--color-background);
+		transform: translateY(-200%);
+
+		&:focus-visible {
+			transform: none;
+		}
+	}
+
+	/* The column every content page sits in. */
+	.site {
+		inline-size: min(var(--content-width), 100% - 2 * var(--page-gutter));
+		margin: 3em auto 2em;
+		text-align: justify;
+	}
+
+	/* Page titles were <h2> on the old site; keep their size now they're <h1> */
+	.site > h1 {
+		margin-block: 0.83em;
+		font-size: 1.5em;
+		text-align: start;
+	}
+}

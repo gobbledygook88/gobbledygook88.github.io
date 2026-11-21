@@ -3,7 +3,6 @@ import react from "@astrojs/react";
 import { d1, r2 } from "@emdash-cms/cloudflare";
 import { defineConfig, fontProviders } from "astro/config";
 import emdash from "emdash/astro";
-import { Features } from "lightningcss";
 
 export default defineConfig({
 	output: "server",
@@ -11,17 +10,6 @@ export default defineConfig({
 	image: {
 		layout: "constrained",
 		responsiveStyles: true,
-	},
-	vite: {
-		css: {
-			// Keep light-dark() native so the footer theme switcher works in
-			// production. For older browsers, Lightning CSS otherwise rewrites
-			// it into variables that follow only prefers-color-scheme, which the
-			// :root.light / :root.dark color-scheme rules in Base.astro can't
-			// reach. Browsers without light-dark() get the light fallback in
-			// tokens.css.
-			lightningcss: { exclude: Features.LightDark },
-		},
 	},
 	integrations: [
 		react(),
@@ -31,19 +19,14 @@ export default defineConfig({
 		}),
 	],
 	fonts: [
+		// The site's own typeface, downloaded at build time and served from the
+		// site (no runtime request to Google Fonts).
 		{
 			provider: fontProviders.google(),
-			name: "Inter",
-			cssVariable: "--font-body",
-			weights: [400, 500, 600, 700],
-			fallbacks: ["sans-serif"],
-		},
-		{
-			provider: fontProviders.google(),
-			name: "JetBrains Mono",
-			cssVariable: "--font-mono",
-			weights: [400, 500],
-			fallbacks: ["monospace"],
+			name: "Oxygen",
+			cssVariable: "--font-oxygen",
+			weights: [400, 700],
+			fallbacks: ["Helvetica", "Arial", "sans-serif"],
 		},
 	],
 	devToolbar: { enabled: false },

@@ -58,8 +58,9 @@ test.describe("Site layout", () => {
 			}
 			const loadedOxygenFaces = await page.evaluate(async () => {
 				await document.fonts.ready;
+				// Self-hosted faces get a hashed family name, e.g. "Oxygen-561cc547"
 				return [...document.fonts].filter(
-					(face) => face.family.replaceAll('"', "") === "Oxygen" && face.status === "loaded",
+					(face) => face.family.replaceAll('"', "").startsWith("Oxygen") && face.status === "loaded",
 				).length;
 			});
 			expect(loadedOxygenFaces).toBeGreaterThan(0);
