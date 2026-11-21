@@ -31,7 +31,7 @@ jobs:
     if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v4
         with:
           version: 11
@@ -52,7 +52,7 @@ jobs:
     if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v4
         with:
           version: 11
@@ -89,7 +89,7 @@ jobs:
       group: emdash-preview-${{ github.event.pull_request.number }}
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v4
         with:
           version: 11
@@ -164,7 +164,7 @@ jobs:
       github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v4
         with:
           version: 11
@@ -195,7 +195,7 @@ jobs:
       group: emdash-staging
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v4
         with:
           version: 11
@@ -242,7 +242,7 @@ jobs:
       # Build for (and point wrangler at) env.production in wrangler.jsonc
       CLOUDFLARE_ENV: production
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v4
         with:
           version: 11
