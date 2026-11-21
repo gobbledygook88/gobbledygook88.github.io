@@ -59,4 +59,30 @@
 	"triggers": {
 		"crons": ["* * * * *"],
 	},
+	"env": {
+		// marcusmo.co.uk. CI deploys it on every merge to main (CLOUDFLARE_ENV=production
+		// at build time). Bindings aren't inherited from the top level (staging), so
+		// every one is repeated here, pointing at production's own resources (WEUR).
+		"production": {
+			"name": "biscuit-crumbs",
+			"d1_databases": [
+				{
+					"binding": "DB",
+					"database_name": "biscuit-crumbs",
+					"database_id": "aec84c16-7bf3-4b0d-8b3e-8a26f31ebd03",
+				},
+			],
+			"kv_namespaces": [{ "binding": "SESSION", "id": "382b49789a524cb0a06afcff2ea1b9bd" }],
+			"r2_buckets": [{ "binding": "MEDIA", "bucket_name": "biscuit-crumbs-media" }],
+			"durable_objects": {
+				"bindings": [{ "name": "EMDASH_ROOMS", "class_name": "EmDashRoom" }],
+			},
+			"exports": {
+				"EmDashRoom": { "type": "durable-object", "storage": "sqlite" },
+			},
+			"triggers": {
+				"crons": ["* * * * *"],
+			},
+		},
+	},
 }

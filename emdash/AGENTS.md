@@ -79,6 +79,18 @@ empty database: after setup, change the live schema through the admin, CLI or AP
   `site.css` skips anything inside `.leaflet-container`, which sizes its own tiles, markers and canvases.
 - Keep the look of the original site: minimal, centred, Oxygen, orange `--color-accent` links in posts.
 
+### Environments and deployment
+
+| Environment | Worker | Used for |
+| ----------- | ------ | -------- |
+| production | `biscuit-crumbs` (`env.production` in `wrangler.jsonc`; marcusmo.co.uk after cutover) | The live site. **All content is written here** |
+| staging | `biscuit-crumbs-staging` (top level of `wrangler.jsonc`) | Backs PR previews (`pr-<n>-biscuit-crumbs-staging…workers.dev`); its content is a test copy |
+
+Continuous deployment (`.github/workflows/emdash.yml`): a merge to `main` runs the tests, then migrates
+and deploys staging, then production (`CLOUDFLARE_ENV=production` at build time). Each environment has its
+own D1, R2 and KV; never point one at the other's. Schema changes made in an admin (fields, block types)
+are database state: apply them to production and staging, and keep `seed/seed.json` in step.
+
 ### Performance: Workers Free (10 ms CPU per request)
 
 The site runs on the Workers **Free** plan, which allows 10 ms of CPU per request (error 1102 beyond it).

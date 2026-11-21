@@ -1,7 +1,8 @@
 name: EmDash site
 
 # - Pull requests: a Workers Preview named pr-<number>, deleted when the PR closes
-# - main: migrate the staging D1 database, then deploy the staging Worker
+# - main (continuous deployment): tests, then staging, then production. Each
+#   deploy migrates its own D1 database first. Staging backs the PR previews.
 #
 # Previews (not version URLs: those aren't generated for Workers with Durable
 # Objects) use the `previews` block in emdash/wrangler.jsonc, which points at
@@ -221,6 +222,48 @@ jobs:
           pnpm exec emdash migrate --wrangler-config wrangler.jsonc \
             --expected-target-fingerprint "$fingerprint"
       - name: Deploy to staging
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: pnpm wrangler deploy --message "main@${GITHUB_SHA::7}"
+
+  deploy-production:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    # Staging first: it keeps the previews' database migrated and catches a bad deploy
+    needs: [deploy-staging]
+    runs-on: ubuntu-latest
+    environment:
+      name: emdash-production
+      url: https://biscuit-crumbs.marcusmo88.workers.dev
+    concurrency:
+      group: emdash-production
+      cancel-in-progress: false
+    env:
+      # Build for (and point wrangler at) env.production in wrangler.jsonc
+      CLOUDFLARE_ENV: production
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: emdash/.nvmrc
+          cache: pnpm
+          cache-dependency-path: emdash/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Apply database migrations
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          migration_status=$(pnpm exec emdash migrate --status --json --wrangler-config wrangler.jsonc --wrangler-env production)
+          echo "$migration_status" | jq '{target: .target.label, pending: .pending, unknownApplied: .unknownApplied}'
+          fingerprint=$(echo "$migration_status" | jq -r '.target.fingerprint')
+          pnpm exec emdash migrate --wrangler-config wrangler.jsonc --wrangler-env production \
+            --expected-target-fingerprint "$fingerprint"
+      - name: Deploy to production
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
