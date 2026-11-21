@@ -17,3 +17,7 @@ data.db-*
 # The repo root ignores all hidden dirs (.*/) — re-include EmDash's agent skills
 !.agents/
 !.claude/
+
+# Playwright
+test-results
+playwright-report
