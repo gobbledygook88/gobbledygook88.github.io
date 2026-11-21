@@ -1,0 +1,77 @@
+---
+/**
+ * A post's Portable Text body, with the site's own renderers for code and
+ * maths, styled like the old site's `.post` rules.
+ */
+import type { ComponentProps } from "astro/types";
+import { PortableText } from "emdash/ui";
+import CodeBlock from "./CodeBlock.astro";
+import MathFormula from "./MathFormula.astro";
+
+interface Props {
+	content: ComponentProps<typeof PortableText>["value"];
+}
+
+const { content } = Astro.props;
+---
+
+<div class="post">
+	<PortableText value={content} components={{ type: { code: CodeBlock, math: MathFormula } }} />
+</div>
+
+<style>
+	.post {
+		--font-code: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+		& :global(a) {
+			color: var(--color-accent);
+
+			&:hover,
+			&:focus-visible {
+				color: var(--color-text-strong);
+			}
+		}
+
+		& :global(:is(ul, ol)) {
+			padding-inline-start: 1.35em;
+		}
+
+		/* Inline code (code blocks are styled by CodeBlock) */
+		& :global(:not(pre) > code) {
+			padding: 0 0.2em;
+			border: 1px solid var(--color-border);
+			background-color: var(--color-code-background);
+			color: var(--color-code-text);
+			font-family: var(--font-code);
+			font-size: 0.9em;
+		}
+
+		& :global(:is(img, video, iframe)) {
+			max-inline-size: 100%;
+			block-size: auto;
+		}
+
+		/* Tables: plain and centred, as on the old site (overrides EmDash's grid style) */
+		& :global(.emdash-table) {
+			inline-size: auto;
+			margin-inline: auto;
+			font-size: inherit;
+		}
+
+		& :global(.emdash-table :is(th, td)) {
+			padding: 0 5px;
+			border: none;
+			background: none;
+			font-weight: normal;
+			vertical-align: middle;
+		}
+
+		& :global(.emdash-table tbody tr:is(:nth-child(even), :hover)) {
+			background: none;
+		}
+
+		& :global(h2) {
+			font-size: 1.25em;
+		}
+	}
+</style>

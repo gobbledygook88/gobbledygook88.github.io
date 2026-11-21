@@ -1,0 +1,23 @@
+---
+import { getEmDashEntry } from "emdash";
+import PostBody from "../../components/PostBody.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.rewrite("/404");
+
+const { entry: post, cacheHint } = await getEmDashEntry("posts", slug);
+if (!post) return Astro.rewrite("/404");
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+---
+
+<SiteLayout
+	title={post.data.title}
+	type="article"
+	content={{ collection: "posts", id: post.data.id, slug }}
+>
+	<article class="site">
+		<h1 {...post.edit.title}>{post.data.title}</h1>
+		<PostBody content={post.data.content} />
+	</article>
+</SiteLayout>

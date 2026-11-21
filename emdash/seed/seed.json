@@ -122,7 +122,7 @@
 			"slug": "posts",
 			"label": "Blog",
 			"labelSingular": "Blog post",
-			"urlPattern": "/posts/{slug}",
+			"urlPattern": "/blog/{slug}/",
 			"supports": [
 				"drafts",
 				"revisions",
@@ -164,7 +164,7 @@
 			"slug": "walks",
 			"label": "Walks",
 			"labelSingular": "Walk",
-			"urlPattern": "/walks/{slug}",
+			"urlPattern": "/walks/{slug}/",
 			"supports": [
 				"drafts",
 				"revisions",
@@ -339,7 +339,7 @@
 			"slug": "travel",
 			"label": "Travel",
 			"labelSingular": "Trip",
-			"urlPattern": "/travel/{slug}",
+			"urlPattern": "/travel/{slug}/",
 			"supports": [
 				"drafts",
 				"revisions",
@@ -631,7 +631,7 @@
 				{
 					"type": "custom",
 					"label": "Blog",
-					"url": "/posts"
+					"url": "/blog/"
 				}
 			]
 		}

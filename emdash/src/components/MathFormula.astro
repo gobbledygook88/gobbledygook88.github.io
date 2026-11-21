@@ -1,0 +1,27 @@
+---
+/**
+ * Portable Text `math` object, inline or as its own block. Typeset on the
+ * server as MathML, which browsers render natively: no MathJax, no fonts.
+ */
+import { renderMath } from "../lib/math";
+
+interface Props {
+	node: { latex?: string };
+	/** Set by the Portable Text renderer for objects inside a paragraph */
+	isInline?: boolean;
+}
+
+const { node, isInline = false } = Astro.props;
+if (!node?.latex) return null;
+
+const mathml = renderMath(node.latex, { display: !isInline });
+---
+
+{isInline ? <Fragment set:html={mathml} /> : <div class="math-block" set:html={mathml} />}
+
+<style>
+	.math-block {
+		margin: 1em 0;
+		overflow-x: auto;
+	}
+</style>

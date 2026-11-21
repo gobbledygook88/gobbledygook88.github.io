@@ -104,10 +104,14 @@ test.describe("Blog post", () => {
 
 		await page.goto("/blog/parallel-poisson-solver/");
 
-		const formulas = page.getByRole("article").getByRole("math");
-		await expect(formulas).toHaveCount(2);
-		await expect(formulas.first()).toHaveAttribute("display", "inline");
-		await expect(formulas.last()).toHaveAttribute("display", "block");
+		const story = page.getByRole("article");
+		await expect(story.getByRole("math")).toHaveCount(2);
+		// One formula sits within its sentence, the other is set on its own line
+		await expect(story.getByRole("paragraph").getByRole("math")).toHaveCount(1);
+		await expect(story.locator('math[display="block"]')).toHaveCount(1);
+		// Bold and blackboard letters as their own characters, which every browser shows
+		// (Chrome's MathML ignores the mathvariant attribute)
+		await expect(story.getByRole("paragraph").getByRole("math")).toContainText("𝐫∈ℝ");
 		expect(scripts.filter((url) => /mathjax|katex/i.test(url))).toEqual([]);
 	});
 
