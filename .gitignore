@@ -30,12 +30,6 @@ Thumbs.db
 *.tar
 *.zip
 
-# Ignore for Yeoman-Jekyll projects #
-app/_bower_components
-dist
-node_modules
-.tmp
-
 venv
 build
 __pycache__
