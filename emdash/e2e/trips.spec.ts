@@ -162,6 +162,19 @@ test.describe("Trip page", () => {
 		expect(overflow).toBeLessThanOrEqual(0);
 	});
 
+	test("keeps only the map in view as the reader scrolls the story on a phone", async ({ page }) => {
+		await page.setViewportSize({ width: 360, height: 740 });
+		await page.goto("/walks/seven-sisters/");
+		const map = page.getByRole("region", { name: "Map of the route" });
+		const summary = page.getByRole("list", { name: "Route summary" });
+		await expect(map).toBeVisible();
+
+		await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+
+		await expect.poll(async () => (await map.boundingBox())?.y).toBe(0);
+		await expect(summary).not.toBeInViewport();
+	});
+
 	test("keeps drafts private and shows the not-found page for unknown trips", async ({ page }) => {
 		expect((await page.goto("/walks/unfinished-walk/"))?.status()).toBe(404);
 		expect((await page.goto("/travel/no-such-trip/"))?.status()).toBe(404);
