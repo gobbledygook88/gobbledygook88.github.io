@@ -4,6 +4,7 @@
 
 export type Point = [x: number, y: number];
 export type Random = () => number;
+export type Between = (a: number, b: number) => number;
 
 export const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -32,6 +33,12 @@ export function createSeededRandom(seed: number): Random {
 		return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 	};
 }
+
+/** Picks values evenly at random between two bounds, using the given generator. */
+export const rangeFrom =
+	(random: Random): Between =>
+	(a, b) =>
+		lerp(a, b, random());
 
 /**
  * Midpoint displacement, the home page's original crumb trail: starting from a flat line, each

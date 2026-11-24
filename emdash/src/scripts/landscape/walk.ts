@@ -2,16 +2,16 @@
  * Brings a drawn landscape to life: a hiker walks the trail in a loop, pausing on the bridge,
  * and startles a few birds out of the forest on the way past.
  */
-import { approach, clamp, lerp, type Point, smoothstep } from "./maths";
-import { ABOVE_STREAM_LIFT, layerOf, perspective, screenY, VIEW_HEIGHT, VIEW_WIDTH } from "./projection";
-import { type Scene, TRAIL_END, TRAIL_START, type Tree } from "./scene";
+import { approach, lerp, type Point, rangeFrom, smoothstep } from "./maths";
+import { figureLayerOf, paintedGroups } from "./painting";
+import { perspective, VIEW_HEIGHT, VIEW_WIDTH } from "./projection";
+import type { Scene, TrailPoint, Tree } from "./scene";
 
 const HIKER_SIZE = 1.48;
 const WALK_SPEED = 32;
 const STEP_LENGTH = 4.4;
 const BRIDGE_PAUSE_SECONDS = 2.4;
 const REST_BETWEEN_LAPS_SECONDS = 1.5;
-const ROUTE_STEP = 2;
 
 const BIRD_SPAN = 3.8;
 const BIRD_CEILING_Y = 16;
@@ -23,11 +23,16 @@ export interface Walk {
 	stop(): void;
 }
 
+/** A place on the trail where something happens as the hiker passes, once per lap. */
+interface Waypoint {
+	x: number;
+	reach(here: TrailPoint): void;
+}
+
 export function startWalk(scene: Scene, svg: SVGSVGElement): Walk {
-	const layers = svg.querySelectorAll<SVGGElement>(".layer");
-	const flock = svg.querySelector<SVGGElement>(".flock");
+	const { layers, flock } = paintedGroups(svg);
 	const hiker = createHikerFigure();
-	const route = traceRoute(scene);
+	const route = scene.trail.path;
 	const birds: Bird[] = [];
 	const walk = {
 		distance: 0,
@@ -36,10 +41,25 @@ export function startWalk(scene: Scene, svg: SVGSVGElement): Walk {
 		stride: 1,
 		pauseLeft: 0,
 		restLeft: 0,
-		pausedOnBridge: false,
-		birdsFlushed: false,
 		layer: -1,
 	};
+
+	const waypoints: Waypoint[] = [
+		{
+			x: scene.trail.bridge.x,
+			reach: () => {
+				walk.pauseLeft = BRIDGE_PAUSE_SECONDS;
+			},
+		},
+		{ x: scene.forest.x - 30, reach: (here) => birds.push(...flushBirds(scene.trees, here.x)) },
+	];
+	let upcomingWaypoints: Waypoint[] = [];
+
+	function passWaypoints(here: TrailPoint) {
+		const reached = upcomingWaypoints.filter((waypoint) => here.x >= waypoint.x);
+		upcomingWaypoints = upcomingWaypoints.filter((waypoint) => here.x < waypoint.x);
+		for (const waypoint of reached) waypoint.reach(here);
+	}
 
 	/** Each lap starts just off the visible left edge and ends just past the right one. */
 	function startLap({ startInView = false } = {}) {
@@ -47,8 +67,7 @@ export function startWalk(scene: Scene, svg: SVGSVGElement): Walk {
 		const startX = startInView ? visible.left + 0.06 * (visible.right - visible.left) : visible.left - 20;
 		walk.distance = route.distanceAtX(startX);
 		walk.endDistance = route.distanceAtX(visible.right + 25);
-		walk.pausedOnBridge = startX >= scene.trail.bridge.x;
-		walk.birdsFlushed = startX >= scene.forest.x - 30;
+		upcomingWaypoints = waypoints.filter((waypoint) => waypoint.x > startX);
 	}
 
 	function moveHiker(dt: number) {
@@ -74,14 +93,7 @@ export function startWalk(scene: Scene, svg: SVGSVGElement): Walk {
 			walk.phase += (step / figureScale / STEP_LENGTH) * Math.PI;
 		}
 
-		if (!walk.pausedOnBridge && here.x >= scene.trail.bridge.x) {
-			walk.pausedOnBridge = true;
-			walk.pauseLeft = BRIDGE_PAUSE_SECONDS;
-		}
-		if (!walk.birdsFlushed && here.x >= scene.forest.x - 30) {
-			walk.birdsFlushed = true;
-			birds.push(...flushBirds(scene.trees, here.x));
-		}
+		passWaypoints(here);
 		if (walk.distance >= walk.endDistance) walk.restLeft = REST_BETWEEN_LAPS_SECONDS;
 
 		poseHiker(hiker, walk.phase, walk.stride);
@@ -89,7 +101,7 @@ export function startWalk(scene: Scene, svg: SVGSVGElement): Walk {
 			"transform",
 			`translate(${here.x.toFixed(2)},${here.y.toFixed(2)}) scale(${figureScale.toFixed(3)})`,
 		);
-		const layer = layerOf(here.z + ABOVE_STREAM_LIFT);
+		const layer = figureLayerOf(here.z);
 		if (layer !== walk.layer) {
 			layers[layer]?.appendChild(hiker.group);
 			walk.layer = layer;
@@ -122,39 +134,6 @@ function visibleRangeOf(svg: SVGSVGElement) {
 	return { left: (VIEW_WIDTH - visibleWidth) / 2, right: (VIEW_WIDTH + visibleWidth) / 2 };
 }
 
-/** The trail as the hiker walks it: positions on screen, measured by distance along the way. */
-function traceRoute({ trail }: Scene) {
-	const points: { x: number; y: number; z: number; distance: number }[] = [];
-	let distance = 0;
-	for (let x = TRAIL_START; x <= TRAIL_END; x += ROUTE_STEP) {
-		const z = trail.zAt(x);
-		const y = screenY(z, trail.surfaceAt(x));
-		const previous = points.at(-1);
-		if (previous) distance += Math.hypot(x - previous.x, y - previous.y);
-		points.push({ x, y, z, distance });
-	}
-
-	function at(target: number) {
-		const wanted = clamp(target, 0, distance);
-		let low = 0;
-		let high = points.length - 1;
-		while (high - low > 1) {
-			const middle = (low + high) >> 1;
-			if (points[middle].distance <= wanted) low = middle;
-			else high = middle;
-		}
-		const a = points[low];
-		const b = points[high];
-		const t = b.distance === a.distance ? 0 : (wanted - a.distance) / (b.distance - a.distance);
-		return { x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t), z: lerp(a.z, b.z, t) };
-	}
-
-	const distanceAtX = (x: number) =>
-		points[clamp(Math.round((x - TRAIL_START) / ROUTE_STEP), 0, points.length - 1)].distance;
-
-	return { at, length: distance, distanceAtX };
-}
-
 function createSvgElement<K extends keyof SVGElementTagNameMap>(name: K, className: string) {
 	const element = document.createElementNS(SVG_NS, name);
 	element.setAttribute("class", className);
@@ -171,25 +150,19 @@ type HikerPart = (typeof HIKER_PARTS)[number];
 interface HikerFigure {
 	group: SVGGElement;
 	/** Each part is drawn twice: a paper-coloured halo beneath, then the ink line */
-	parts: Record<HikerPart, SVGElement[]>;
+	parts: { name: HikerPart; halo: SVGPathElement; ink: SVGPathElement }[];
 }
 
 function createHikerFigure(): HikerFigure {
 	const group = createSvgElement("g", "hiker");
-	const halos: SVGElement[] = [];
-	const inks: SVGElement[] = [];
-	const parts = {} as Record<HikerPart, SVGElement[]>;
-	for (const name of HIKER_PARTS) {
-		const shape = name === "head" ? "circle" : "path";
-		const filled = name === "pack" || name === "head" ? `${name}` : "";
-		const halo = createSvgElement(shape, `halo ${filled}`.trim());
-		const ink = createSvgElement(shape, filled);
-		halos.push(halo);
-		inks.push(ink);
-		parts[name] = [halo, ink];
-	}
+	const parts = HIKER_PARTS.map((name) => ({
+		name,
+		halo: createSvgElement("path", `halo ${name}`),
+		ink: createSvgElement("path", name),
+	}));
 	// Halos go first so every ink line sits above every halo
-	for (const element of [...halos, ...inks]) group.appendChild(element);
+	for (const part of parts) group.appendChild(part.halo);
+	for (const part of parts) group.appendChild(part.ink);
 	return { group, parts };
 }
 
@@ -227,7 +200,7 @@ function poseHiker({ parts }: HikerFigure, phase: number, stride: number) {
 	const poleHand = fromAngle(poleElbow, 1.7, poleArmAngle + 1.0);
 	const poleTip: Point = [poleHand[0] + 1.5 + 0.8 * stride * Math.sin(phase), -lift];
 
-	const shapes: Record<Exclude<HikerPart, "head">, string> = {
+	const shapes: Record<HikerPart, string> = {
 		pole: line([[poleHand[0] - 0.3, poleHand[1] - 1.1], poleTip]),
 		armBack: line([shoulder, backElbow, backHand]),
 		legBack: line(backLeg),
@@ -240,15 +213,18 @@ function poseHiker({ parts }: HikerFigure, phase: number, stride: number) {
 		body: line([hip, shoulder, [0.95, -9.9]]),
 		legFront: line(frontLeg),
 		armFront: line([shoulder, poleElbow, poleHand]),
+		head: circle([1.05, -11.05 + lift], 1.25),
 	};
-	for (const [name, d] of Object.entries(shapes) as [HikerPart, string][]) {
-		for (const element of parts[name]) element.setAttribute("d", d);
+	for (const { name, halo, ink } of parts) {
+		halo.setAttribute("d", shapes[name]);
+		ink.setAttribute("d", shapes[name]);
 	}
-	for (const element of parts.head) {
-		element.setAttribute("cx", "1.05");
-		element.setAttribute("cy", (-11.05 + lift).toFixed(2));
-		element.setAttribute("r", "1.25");
-	}
+}
+
+/** A circle as path data, so the head can be posed like every other part. */
+function circle([cx, cy]: Point, r: number) {
+	const start = `${(cx - r).toFixed(2)},${cy.toFixed(2)}`;
+	return `M${start} a${r},${r} 0 1,0 ${2 * r},0 a${r},${r} 0 1,0 ${-2 * r},0 Z`;
 }
 
 // ---------------------------------------------------------------------------
@@ -265,10 +241,13 @@ interface Bird {
 	wing: number;
 	burstFlapRate: number;
 	cruiseFlapRate: number;
-	element?: SVGPathElement;
+	/** Joins the flock on screen once the bird's delay has passed */
+	element: SVGPathElement;
 }
 
-const randomBetween = (a: number, b: number) => a + (b - a) * Math.random();
+const randomBetween = rangeFrom(Math.random);
+
+const isFlying = (bird: Bird) => bird.element.isConnected;
 
 /** Five to seven birds burst from the tallest trees near the hiker, mostly heading one way. */
 function flushBirds(trees: Tree[], hikerX: number): Bird[] {
@@ -291,6 +270,7 @@ function flushBirds(trees: Tree[], hikerX: number): Bird[] {
 		wing: randomBetween(0, Math.PI * 2),
 		burstFlapRate: randomBetween(20, 26),
 		cruiseFlapRate: randomBetween(11, 14),
+		element: createSvgElement("path", "bird"),
 	}));
 }
 
@@ -299,16 +279,15 @@ function flushBirds(trees: Tree[], hikerX: number): Bird[] {
  * they shrink and fade rather than leaving the frame. Their wings never stop.
  */
 function moveBirds(birds: Bird[], flock: SVGGElement, dt: number) {
-	const flying = birds.filter((bird) => bird.element);
+	const flying = birds.filter(isFlying);
 	const centreX = flying.reduce((sum, bird) => sum + bird.x, 0) / (flying.length || 1);
 	const centreY = flying.reduce((sum, bird) => sum + bird.y, 0) / (flying.length || 1);
 
 	for (let i = birds.length - 1; i >= 0; i--) {
 		const bird = birds[i];
-		if (!bird.element) {
+		if (!isFlying(bird)) {
 			bird.delay -= dt;
 			if (bird.delay > 0) continue;
-			bird.element = createSvgElement("path", "bird");
 			flock.appendChild(bird.element);
 		}
 

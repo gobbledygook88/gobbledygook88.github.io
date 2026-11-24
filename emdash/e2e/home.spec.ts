@@ -166,7 +166,8 @@ test.describe("Home page landscape", () => {
 			if (landscapeNumber > 0) await tapEmptySpace(page);
 			await expect(landscape(page).locator(".stream-bank").first()).toBeAttached();
 			const valley = await measureValley(page);
-			const context = `landscape ${landscapeNumber}: ${JSON.stringify(valley)}`;
+			const seed = await landscape(page).getAttribute("data-seed");
+			const context = `landscape ${landscapeNumber} (seed ${seed}): ${JSON.stringify(valley)}`;
 
 			expect(valley.hilltopY, `hilltop stays inside the frame, ${context}`).toBeGreaterThan(20);
 			expect(valley.leftPeak.rise, `left hill rises above the dip, ${context}`).toBeGreaterThan(8);

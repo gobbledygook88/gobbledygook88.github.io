@@ -12,6 +12,7 @@ import {
 	midpointDisplace,
 	type Point,
 	type Random,
+	rangeFrom,
 	sampleArray,
 	sampleSmoothly,
 	smoothstep,
@@ -19,8 +20,8 @@ import {
 } from "./maths";
 import { perspective, ROW_COUNT, rowDepth, screenY, VIEW_WIDTH } from "./projection";
 
-export const TRAIL_START = -60;
-export const TRAIL_END = 1060;
+const TRAIL_START = -60;
+const TRAIL_END = 1060;
 const TRAIL_STEP = 2;
 const TRAIL_POINTS = (TRAIL_END - TRAIL_START) / TRAIL_STEP + 1;
 
@@ -29,7 +30,8 @@ const VALLEY_WIDTH = 45;
 const BRIDGE_ARCH = 0.022;
 const TREELINE = 0.78;
 
-interface Hill {
+/** A rounded rise in the ground, also used to say where trees grow thickest. */
+export interface Hill {
 	x: number;
 	z: number;
 	/** Spread across and into the scene */
@@ -55,8 +57,8 @@ interface StreamPoint {
 }
 
 export interface Stream {
+	/** Where the stream springs from */
 	from: { x: number; z: number };
-	to: { x: number; z: number };
 	xAt(z: number): number;
 	levelAt(z: number): number;
 	isFlowingAt(z: number): boolean;
@@ -72,21 +74,25 @@ export interface Bridge {
 	archAt(x: number): number;
 }
 
+export interface TrailPoint {
+	x: number;
+	y: number;
+	z: number;
+}
+
+/** The trail as drawn on screen, measured by distance along it. */
+export interface TrailPath {
+	length: number;
+	at(distance: number): TrailPoint;
+	distanceAtX(x: number): number;
+}
+
 export interface Trail {
 	zAt(x: number): number;
 	groundAt(x: number): number;
-	/** The height underfoot: the ground, or the bridge's arched deck */
-	surfaceAt(x: number): number;
 	isOnBridge(x: number): boolean;
 	bridge: Bridge;
-}
-
-export interface Forest {
-	x: number;
-	z: number;
-	sx: number;
-	sz: number;
-	frontZ: number;
+	path: TrailPath;
 }
 
 export interface Tree {
@@ -97,8 +103,8 @@ export interface Tree {
 	height: number;
 	width: number;
 	tiers: number;
-	/** Per-branch length multipliers, four for each side */
-	branchSpread: number[];
+	/** Branch length multipliers for each side, one per tier */
+	branchSpread: { right: number[]; left: number[] };
 }
 
 export interface Tuft {
@@ -122,9 +128,8 @@ export interface Sky {
 }
 
 export interface Scene {
-	seed: number;
 	stream: Stream;
-	forest: Forest;
+	forest: Hill;
 	trail: Trail;
 	trees: Tree[];
 	tufts: Tuft[];
@@ -132,39 +137,33 @@ export interface Scene {
 	heightAt(x: number, z: number): number;
 }
 
-type Between = (a: number, b: number) => number;
 type HeightField = (x: number, z: number) => number;
 
 export const randomSeed = () => Math.floor(Math.random() * 1_000_000);
 
 export function generateScene(seed: number): Scene {
 	const random = createSeededRandom(seed);
-	const between: Between = (a, b) => a + (b - a) * random();
+	const between = rangeFrom(random);
 
-	const hills = raiseHills(between);
+	const risenHills = raiseHills(random);
 	const detail = diamondSquare(random, 6, 0.55);
-	const baseHeight: HeightField = (x, z) => {
-		let hillTotal = 0;
-		for (const hill of Object.values(hills)) hillTotal += hillHeight(hill, x, z);
-		// A little rougher on the tops, gentler in the meadows
-		const roughness = 0.1 * (1 - 0.7 * z) + 0.1 * hillTotal;
-		return Math.max(0, 0.03 + 0.25 * (1 - z) ** 2 + hillTotal + roughness * detail(x / VIEW_WIDTH, z));
-	};
-	fitHillsInFrame(hills, baseHeight);
+	const terrainOver = (hills: Hills): HeightField => (x, z) => terrainHeight(hills, detail, x, z);
+	const hills = fitHillsInFrame(risenHills, terrainOver);
+	const baseHeight = terrainOver(hills);
 
-	const stream = layOutStream(random, between, hills, baseHeight);
+	const stream = layOutStream(random, hills, baseHeight);
 	const shapedHeight: HeightField = (x, z) => carveStreamValley(baseHeight(x, z), x, z, stream);
 
 	const forestZ = between(0.42, 0.5);
-	const forest: Forest = {
+	const forest: Hill = {
 		x: lerp(stream.from.x, hills.right.x, 0.55) + between(-5, 25),
 		z: forestZ,
 		sx: between(95, 125),
 		sz: 0.14,
-		frontZ: forestZ + 0.14 * 1.3,
+		amp: 1,
 	};
 
-	const trail = layOutTrail(random, between, { stream, forest, hills }, shapedHeight);
+	const trail = layOutTrail(random, { stream, forest, hills }, shapedHeight);
 	const heightAt: HeightField = (x, z) => {
 		const height = shapedHeight(x, z);
 		const trailZ = trail.zAt(x);
@@ -172,15 +171,23 @@ export function generateScene(seed: number): Scene {
 		return z > trailZ ? Math.min(height, trail.groundAt(x) + 1.2 * (z - trailZ)) : height;
 	};
 
-	const trees = plantTrees(random, between, { forest, hills, stream, trail, heightAt });
-	const tufts = scatterGrassTufts(between, { stream, trail, heightAt });
-	const sky = paintSky(between, hills);
+	const trees = plantTrees(random, { forest, hills, stream, trail, heightAt });
+	const tufts = scatterGrassTufts(random, { stream, trail, heightAt });
+	const sky = paintSky(random, hills);
 
-	return { seed, stream, forest, trail, trees, tufts, sky, heightAt };
+	return { stream, forest, trail, trees, tufts, sky, heightAt };
 }
 
 const hillHeight = (hill: Hill, x: number, z: number) =>
 	hill.amp * Math.exp(-(((x - hill.x) / hill.sx) ** 2) - (((z - hill.z) / hill.sz) ** 2));
+
+function terrainHeight(hills: Hills, detail: (u: number, v: number) => number, x: number, z: number) {
+	let hillTotal = 0;
+	for (const hill of Object.values(hills)) hillTotal += hillHeight(hill, x, z);
+	// A little rougher on the tops, gentler in the meadows
+	const roughness = 0.1 * (1 - 0.7 * z) + 0.1 * hillTotal;
+	return Math.max(0, 0.03 + 0.25 * (1 - z) ** 2 + hillTotal + roughness * detail(x / VIEW_WIDTH, z));
+}
 
 /** Narrows faster than the landscape around it, so the stream tapers to a thread near its spring. */
 export const streamHalfWidth = (z: number) => 6 * perspective(z) ** 2;
@@ -189,7 +196,8 @@ export const streamHalfWidth = (z: number) => 6 * perspective(z) ** 2;
  * Two hills frame the valley: a tall one on the right and one on the left at 45-52% of its
  * height, close enough to the middle that both peaks show on a phone. Low swells fill the edges.
  */
-function raiseHills(between: Between): Hills {
+function raiseHills(random: Random): Hills {
+	const between = rangeFrom(random);
 	const right = { x: between(625, 655), z: between(0.2, 0.26), sx: between(98, 110), sz: 0.2, amp: between(1.6, 1.8) };
 	const left = {
 		x: between(345, 370),
@@ -206,39 +214,48 @@ function raiseHills(between: Between): Hills {
 	};
 }
 
-/** Scales every hill down together, keeping their proportions, until the highest point clears the top edge. */
-function fitHillsInFrame(hills: Hills, baseHeight: HeightField) {
-	for (let attempt = 0; attempt < 40; attempt++) {
-		let highestY = Infinity;
-		for (let row = 0; row < ROW_COUNT; row++) {
-			const z = rowDepth(row);
-			for (let x = 0; x <= VIEW_WIDTH; x += 10) highestY = Math.min(highestY, screenY(z, baseHeight(x, z)));
-		}
-		if (highestY >= HILL_TOP_MARGIN) return;
-		for (const hill of Object.values(hills)) hill.amp *= 0.96;
-	}
+function scaleHills({ right, left, farLeft, farRight }: Hills, factor: number): Hills {
+	const scaled = (hill: Hill) => ({ ...hill, amp: hill.amp * factor });
+	return { right: scaled(right), left: scaled(left), farLeft: scaled(farLeft), farRight: scaled(farRight) };
 }
 
-/**
- * The dip in the skyline between the two hills, where the stream springs from. The skyline is
- * whichever row stands highest on screen at each x, so this also returns that row's depth.
- */
+/** Scales every hill down together, keeping their proportions, until the highest point clears the top edge. */
+function fitHillsInFrame(hills: Hills, terrainOver: (hills: Hills) => HeightField): Hills {
+	let fitted = hills;
+	for (let attempt = 0; attempt < 40; attempt++) {
+		const height = terrainOver(fitted);
+		let highestY = Infinity;
+		for (let x = 0; x <= VIEW_WIDTH; x += 10) highestY = Math.min(highestY, skylineAt(height, x).y);
+		if (highestY >= HILL_TOP_MARGIN) return fitted;
+		fitted = scaleHills(fitted, 0.96);
+	}
+	return fitted;
+}
+
+/** The highest point on screen at x, across every ridgeline, and the depth of the row it is on. */
+function skylineAt(height: HeightField, x: number) {
+	let skyline = { y: Infinity, z: 0 };
+	for (let row = 0; row < ROW_COUNT; row++) {
+		const z = rowDepth(row);
+		const y = screenY(z, height(x, z));
+		if (y < skyline.y) skyline = { y, z };
+	}
+	return skyline;
+}
+
+/** The dip in the skyline between the two hills, where the stream springs from. */
 function findSaddle(hills: Hills, baseHeight: HeightField) {
 	let dip = { x: lerp(hills.left.x, hills.right.x, 0.5), y: -Infinity, z: 0.3 };
 	for (let x = hills.left.x; x <= hills.right.x; x += 2) {
-		let skyline = { y: Infinity, z: 0 };
-		for (let row = 0; row < ROW_COUNT; row++) {
-			const z = rowDepth(row);
-			const y = screenY(z, baseHeight(x, z));
-			if (y < skyline.y) skyline = { y, z };
-		}
+		const skyline = skylineAt(baseHeight, x);
 		if (skyline.y > dip.y) dip = { x, ...skyline };
 	}
 	return dip;
 }
 
 /** A stream springs from just in front of the dip between the hills and winds towards the viewer. */
-function layOutStream(random: Random, between: Between, hills: Hills, baseHeight: HeightField): Stream {
+function layOutStream(random: Random, hills: Hills, baseHeight: HeightField): Stream {
+	const between = rangeFrom(random);
 	const saddle = findSaddle(hills, baseHeight);
 	const from = { x: saddle.x, z: clamp(saddle.z + between(0.02, 0.04), 0.24, 0.34) };
 	const to = { x: from.x - between(90, 170), z: 1.08 };
@@ -262,7 +279,7 @@ function layOutStream(random: Random, between: Between, hills: Hills, baseHeight
 		course.push({ z, x: xAt(z), y: screenY(z, levelAt(z) + 0.004), half: streamHalfWidth(z) * spring });
 	}
 
-	return { from, to, xAt, levelAt, course, isFlowingAt: (z) => z >= from.z && z <= to.z };
+	return { from, xAt, levelAt, course, isFlowingAt: (z) => z >= from.z && z <= to.z };
 }
 
 function carveStreamValley(height: number, x: number, z: number, stream: Stream) {
@@ -280,18 +297,19 @@ function carveStreamValley(height: number, x: number, z: number, stream: Stream)
 /** A footpath from the left edge, over the stream, along the forest and up the far shoulder. */
 function layOutTrail(
 	random: Random,
-	between: Between,
-	{ stream, forest, hills }: { stream: Stream; forest: Forest; hills: Hills },
+	{ stream, forest, hills }: { stream: Stream; forest: Hill; hills: Hills },
 	shapedHeight: HeightField,
 ): Trail {
+	const between = rangeFrom(random);
 	const bridgeZ = between(0.8, 0.84);
 	const bridgeX = stream.xAt(bridgeZ);
 	const halfSpan = streamHalfWidth(bridgeZ) + 8 * perspective(bridgeZ);
+	const forestFrontZ = forest.z + 1.3 * forest.sz;
 	const controls: Point[] = [
 		[TRAIL_START, between(0.84, 0.88)],
 		[bridgeX - between(90, 140), between(0.83, 0.87)],
 		[bridgeX, bridgeZ],
-		[Math.max(forest.x - 25, bridgeX + 60), Math.min(0.8, forest.frontZ + 0.09)],
+		[Math.max(forest.x - 25, bridgeX + 60), Math.min(0.8, forestFrontZ + 0.09)],
 		[hills.right.x + 150, between(0.6, 0.65)],
 		[hills.right.x + 260, between(0.48, 0.53)],
 		[TRAIL_END, between(0.4, 0.45)],
@@ -315,9 +333,49 @@ function layOutTrail(
 	const deckHeight = Math.max(groundAt(bridgeX - halfSpan), groundAt(bridgeX + halfSpan)) + 0.008;
 	const isOnBridge = (x: number) => Math.abs(x - bridgeX) <= halfSpan;
 	const archAt = (x: number) => BRIDGE_ARCH * Math.sin((Math.PI * (x - (bridgeX - halfSpan))) / (2 * halfSpan));
+	// The height underfoot: the ground, or the bridge's arched deck
 	const surfaceAt = (x: number) => (isOnBridge(x) ? deckHeight + archAt(x) : groundAt(x));
 
-	return { zAt, groundAt, surfaceAt, isOnBridge, bridge: { x: bridgeX, z: bridgeZ, halfSpan, deckHeight, archAt } };
+	return {
+		zAt,
+		groundAt,
+		isOnBridge,
+		bridge: { x: bridgeX, z: bridgeZ, halfSpan, deckHeight, archAt },
+		path: traceScreenPath(zAt, surfaceAt),
+	};
+}
+
+/** Follows the trail across the drawing, measuring how far along it each point lies on screen. */
+function traceScreenPath(zAt: (x: number) => number, surfaceAt: (x: number) => number): TrailPath {
+	const points: (TrailPoint & { distance: number })[] = [];
+	let length = 0;
+	for (let x = TRAIL_START; x <= TRAIL_END; x += TRAIL_STEP) {
+		const z = zAt(x);
+		const y = screenY(z, surfaceAt(x));
+		const previous = points.at(-1);
+		if (previous) length += Math.hypot(x - previous.x, y - previous.y);
+		points.push({ x, y, z, distance: length });
+	}
+
+	function at(distance: number): TrailPoint {
+		const wanted = clamp(distance, 0, length);
+		let low = 0;
+		let high = points.length - 1;
+		while (high - low > 1) {
+			const middle = (low + high) >> 1;
+			if (points[middle].distance <= wanted) low = middle;
+			else high = middle;
+		}
+		const a = points[low];
+		const b = points[high];
+		const t = b.distance === a.distance ? 0 : (wanted - a.distance) / (b.distance - a.distance);
+		return { x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t), z: lerp(a.z, b.z, t) };
+	}
+
+	const distanceAtX = (x: number) =>
+		points[clamp(Math.round((x - TRAIL_START) / TRAIL_STEP), 0, points.length - 1)].distance;
+
+	return { length, at, distanceAtX };
 }
 
 /** True when any part of a tree's outline would touch the stream on screen. */
@@ -332,21 +390,22 @@ function overlapsStream(stream: Stream, x: number, y: number, height: number, wi
 
 function plantTrees(
 	random: Random,
-	between: Between,
 	{
 		forest,
 		hills,
 		stream,
 		trail,
 		heightAt,
-	}: { forest: Forest; hills: Hills; stream: Stream; trail: Trail; heightAt: HeightField },
+	}: { forest: Hill; hills: Hills; stream: Stream; trail: Trail; heightAt: HeightField },
 ): Tree[] {
-	const copses = [
-		{ x: forest.x, z: forest.z, sx: forest.sx, sz: forest.sz, amp: 1 },
+	const between = rangeFrom(random);
+	const copses: Hill[] = [
+		forest,
 		{ x: hills.left.x + between(-50, 10), z: hills.left.z + between(0.08, 0.16), sx: between(45, 70), sz: 0.1, amp: 0.8 },
 		{ x: hills.right.x + between(170, 240), z: between(0.22, 0.34), sx: between(40, 60), sz: 0.08, amp: 0.7 },
 	];
 	const thinning = diamondSquare(random, 5, 0.6);
+	const branchSpreads = () => Array.from({ length: 4 }, () => between(0.9, 1.1));
 
 	const trees: Tree[] = [];
 	for (let row = 0.06; row < 0.85; row += 0.025) {
@@ -371,7 +430,7 @@ function plantTrees(
 			if (overlapsStream(stream, x, y, height, width)) continue;
 
 			const tiers = height > 17 ? 4 : height > 9 ? 3 : 2;
-			const branchSpread = Array.from({ length: 8 }, () => between(0.9, 1.1));
+			const branchSpread = { right: branchSpreads(), left: branchSpreads() };
 			trees.push({ x, z, y, height, width, tiers, branchSpread });
 		}
 	}
@@ -379,9 +438,10 @@ function plantTrees(
 }
 
 function scatterGrassTufts(
-	between: Between,
+	random: Random,
 	{ stream, trail, heightAt }: { stream: Stream; trail: Trail; heightAt: HeightField },
 ): Tuft[] {
+	const between = rangeFrom(random);
 	const tufts: Tuft[] = [];
 	for (let attempt = 0; attempt < 70 && tufts.length < 36; attempt++) {
 		const x = between(-10, 1010);
@@ -393,7 +453,8 @@ function scatterGrassTufts(
 	return tufts;
 }
 
-function paintSky(between: Between, hills: Hills): Sky {
+function paintSky(random: Random, hills: Hills): Sky {
+	const between = rangeFrom(random);
 	return {
 		sun: { x: hills.right.x + between(80, 140), y: between(22, 34), r: 10 },
 		clouds: [0, 1].map(() => ({

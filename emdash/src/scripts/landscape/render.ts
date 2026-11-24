@@ -6,18 +6,17 @@
 import { formatPoints, type Point, round1, smoothstep } from "./maths";
 import {
 	ABOVE_STREAM_LIFT,
+	flockGroup,
+	layerGroup,
 	layerOf,
-	perspective,
-	ROW_COUNT,
-	rowDepth,
-	screenY,
 	STREAM_LAYER_LIFT,
 	TRAIL_LAYER_LIFT,
-} from "./projection";
-import { type Scene, type Sky, TRAIL_END, TRAIL_START, type Tree, type Tuft } from "./scene";
+} from "./painting";
+import { perspective, ROW_COUNT, rowDepth, screenY } from "./projection";
+import type { Scene, Sky, Tree, Tuft } from "./scene";
 
 const ROW_SAMPLE_STEP = 8;
-const CRUMB_SPACING = 6;
+const CRUMB_SPACING = 6.4;
 const CLOUD_SHAPE = "M0,0 C-2,-5 5,-8 9,-5 C10,-11 21,-12 23,-6 C26,-9 33,-7 32,-2 C36,-2 37,0 37,0 Z";
 
 type Place = (z: number, markup: string) => void;
@@ -38,18 +37,21 @@ export function renderScene(scene: Scene): string {
 	const layerMarkup = layers
 		.map(({ ridge, items }) => {
 			const sortedItems = items.sort((a, b) => a.z - b.z).map((item) => item.markup);
-			return `<g class="layer">${ridge}${sortedItems.join("")}</g>`;
+			return layerGroup(`${ridge}${sortedItems.join("")}`);
 		})
 		.join("");
 
 	// The sun sets behind the hills; clouds drift in front of them
 	const { sun, clouds } = renderSky(scene.sky);
-	return `${sun}${layerMarkup}${clouds}<g class="flock"></g>`;
+	return `${sun}${layerMarkup}${clouds}${flockGroup()}`;
 }
 
 /** Distant things are drawn fainter, like haze, so the near ground stands forward. */
 const hazeOpacity = (z: number, nearest = 1, farthest = 0.4) =>
 	(farthest + (nearest - farthest) * smoothstep(0.1, 0.8, z)).toFixed(2);
+
+/** Ridgelines fade steadily towards the horizon, so the far hills recede. */
+const ridgeOpacity = (z: number) => (0.14 + 0.36 * z).toFixed(2);
 
 function renderSky({ sun, clouds }: Sky) {
 	const cloudMarkup = clouds.map(
@@ -75,8 +77,7 @@ function renderRidgeRow({ stream, heightAt }: Scene, z: number) {
 	xs.sort((a, b) => a - b);
 
 	const points = xs.map((x): Point => [x, screenY(z, heightAt(x, z))]);
-	const opacity = (0.14 + 0.36 * z).toFixed(2);
-	return `<path class="ridge" stroke-opacity="${opacity}" d="M-16,300 L${formatPoints(points)} L1016,300 Z"/>`;
+	return `<path class="ridge" stroke-opacity="${ridgeOpacity(z)}" d="M-16,300 L${formatPoints(points)} L1016,300 Z"/>`;
 }
 
 /** The stream is a ribbon between two banks that clears the ridgelines beneath it. */
@@ -112,18 +113,18 @@ function renderTree({ x, y, z, height, width, tiers, branchSpread }: Tree) {
 	const skirt = y - height * 0.14;
 	const tierHeight = (skirt - top) / tiers;
 
-	function side(direction: 1 | -1, spreadOffset: number) {
+	function side(direction: 1 | -1, spread: number[]) {
 		const points: Point[] = [];
 		for (let tier = 1; tier <= tiers; tier++) {
 			const tierY = top + tierHeight * tier;
-			const half = (width / 2) * (0.3 + (0.7 * tier) / tiers) * branchSpread[spreadOffset + tier - 1];
+			const half = (width / 2) * (0.3 + (0.7 * tier) / tiers) * spread[tier - 1];
 			points.push([x + direction * half, tierY]);
 			if (tier < tiers) points.push([x + direction * half * 0.45, tierY - tierHeight * 0.18]);
 		}
 		return points;
 	}
 
-	const outline = [...side(1, 0), ...side(-1, 4).reverse()];
+	const outline = [...side(1, branchSpread.right), ...side(-1, branchSpread.left).reverse()];
 	return (
 		`<path class="tree" stroke-opacity="${hazeOpacity(z)}" d="M${round1(x)},${round1(top)} L${formatPoints(outline)} Z ` +
 		`M${round1(x)},${round1(skirt)} L${round1(x)},${round1(y)}"/>`
@@ -142,26 +143,19 @@ function renderTuft({ x, y, z, size }: Tuft) {
 }
 
 /**
- * The trail is a line of crumbs placed by distance walked. Spacing and size shrink with depth,
- * and each crumb has its own small halo so it reads over the ridgelines.
+ * The trail is a line of crumbs placed by distance along it on screen. Spacing and size shrink
+ * with depth, and each crumb has its own small halo so it reads over the ridgelines.
  */
 function renderTrail({ trail }: Scene, place: Place) {
 	const crumbsByLayer = new Map<number, { z: number; points: Point[] }>();
-	let walked = 0;
-	let nextCrumbAt = 0;
-	let previous: Point | undefined;
-	for (let x = TRAIL_START; x <= TRAIL_END; x += 0.5) {
-		const z = trail.zAt(x);
-		const point: Point = [x, screenY(z, trail.surfaceAt(x))];
-		if (previous) walked += Math.hypot(point[0] - previous[0], point[1] - previous[1]);
-		previous = point;
-		if (walked < nextCrumbAt) continue;
-		nextCrumbAt = walked + CRUMB_SPACING * perspective(z);
+	for (let distance = 0; distance <= trail.path.length; ) {
+		const { x, y, z } = trail.path.at(distance);
+		distance += CRUMB_SPACING * perspective(z);
 		if (trail.isOnBridge(x)) continue;
 
 		const layer = layerOf(z + TRAIL_LAYER_LIFT);
 		const crumbs = crumbsByLayer.get(layer) ?? { z, points: [] };
-		crumbs.points.push(point);
+		crumbs.points.push([x, y]);
 		crumbsByLayer.set(layer, crumbs);
 	}
 
