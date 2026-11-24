@@ -54,7 +54,7 @@ and progress log live outside git in `.context/emdash-migration-plan.md` at the 
 
 | Page | Path | Notes |
 | ---- | ---- | ----- |
-| Home | `/` | Site name, section links, and the "crumb trail" line (`CrumbTrail.astro`) that redraws on tap |
+| Home | `/` | Site name, section links, and a procedural valley along the bottom (`Landscape.astro`, `scripts/landscape/`): two hills, a stream, a forest and a trail where a hiker walks and startles birds. Drawn in the browser from a random seed (generating it on the Worker would eat the Free plan's 10 ms CPU budget); a tap draws a new one |
 | 404  | any unknown path | Uses `SiteLayout` |
 | Blog | `/blog/` | Published posts, newest first |
 | Blog post | `/blog/[slug]/` | `PostBody.astro`: Portable Text with `CodeBlock` (plain `<pre><code>` from the server; `scripts/code-highlighter.ts` colours it in the browser with highlight.js, Solarized Light, loaded only on pages with code) and `MathFormula` (`math` objects with a `latex` string, inline or block; KaTeX to MathML in `src/lib/math.ts`) |
