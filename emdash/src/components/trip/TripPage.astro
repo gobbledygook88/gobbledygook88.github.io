@@ -2,7 +2,7 @@
 /**
  * A walk or travel entry: title across the top, then (on wide screens) the
  * map, video and route summary in a sticky column beside the story and
- * waypoints. On phones everything stacks.
+ * waypoints. On phones everything stacks and only the map stays in view.
  */
 import type { ContentEntry } from "emdash";
 import type { Walk } from "../../../emdash-env";
@@ -67,11 +67,17 @@ const video = data.video?.[0];
 </SiteLayout>
 
 <style>
+	/* On phones only the map stays in view: the aside steps out of the layout
+	   so the map can stick within the whole article, while the video and route
+	   summary scroll away with the story */
 	aside {
+		display: contents;
+	}
+
+	aside > :global(.route-map) {
 		position: sticky;
 		inset-block-start: 0;
 		z-index: 1;
-		background-color: var(--color-background);
 	}
 
 	.waypoints {
@@ -92,6 +98,19 @@ const video = data.video?.[0];
 
 		.trip > h1 {
 			grid-column: 1 / -1;
+		}
+
+		/* Beside the story there's room for the whole column to stay in view */
+		aside {
+			display: block;
+			position: sticky;
+			inset-block-start: 0;
+			z-index: 1;
+			background-color: var(--color-background);
+		}
+
+		aside > :global(.route-map) {
+			position: static;
 		}
 	}
 </style>
