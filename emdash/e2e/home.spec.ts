@@ -27,8 +27,8 @@ interface ValleyMeasurements {
 	hilltopY: number;
 	leftPeak: { x: number; rise: number; onScreenX: number };
 	rightPeak: { x: number; rise: number; onScreenX: number };
-	dipX: number;
-	springX: number;
+	/** How far the skyline above the stream's spring stands above the dip's lowest point */
+	springAboveDip: number;
 	treesTouchingStream: number;
 }
 
@@ -64,6 +64,8 @@ function measureValley(page: Page): Promise<ValleyMeasurements> {
 			.filter((p) => p.x > leftPeak.x && p.x < rightPeak.x)
 			.reduce((a, b) => (b.y > a.y ? b : a));
 
+		const skylineAboveSpring = outline.reduce((a, b) => (Math.abs(b.x - springX) < Math.abs(a.x - springX) ? b : a));
+
 		const toScreenX = (x: number) => new DOMPoint(x, 0).matrixTransform(svg.getScreenCTM() ?? undefined).x;
 
 		const streamPoints = banks.flat();
@@ -78,8 +80,7 @@ function measureValley(page: Page): Promise<ValleyMeasurements> {
 			hilltopY: highest(outline).y,
 			leftPeak: { x: leftPeak.x, rise: dip.y - leftPeak.y, onScreenX: toScreenX(leftPeak.x) },
 			rightPeak: { x: rightPeak.x, rise: dip.y - rightPeak.y, onScreenX: toScreenX(rightPeak.x) },
-			dipX: dip.x,
-			springX,
+			springAboveDip: dip.y - skylineAboveSpring.y,
 			treesTouchingStream,
 		};
 	});
@@ -174,7 +175,8 @@ test.describe("Home page landscape", () => {
 			expect(valley.rightPeak.rise, `right hill clearly taller, ${context}`).toBeGreaterThan(
 				1.6 * valley.leftPeak.rise,
 			);
-			expect(Math.abs(valley.springX - valley.dipX), `stream springs from the dip, ${context}`).toBeLessThan(40);
+			// The dip can be a flat valley floor, so the spring only needs to be at its level
+			expect(valley.springAboveDip, `stream springs from the dip, ${context}`).toBeLessThan(5);
 			for (const peak of [valley.leftPeak, valley.rightPeak]) {
 				expect(peak.onScreenX, `both hilltops on screen, ${context}`).toBeGreaterThan(0);
 				expect(peak.onScreenX, `both hilltops on screen, ${context}`).toBeLessThan(viewportWidth);

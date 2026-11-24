@@ -148,7 +148,7 @@ export function generateScene(seed: number): Scene {
 	const risenHills = raiseHills(random);
 	const detail = diamondSquare(random, 6, 0.55);
 	const terrainOver = (hills: Hills): HeightField => (x, z) => terrainHeight(hills, detail, x, z);
-	const hills = fitHillsInFrame(risenHills, terrainOver);
+	const hills = makeHillsStandOut(fitHillsInFrame(risenHills, terrainOver), terrainOver);
 	const baseHeight = terrainOver(hills);
 
 	const stream = layOutStream(random, hills, baseHeight);
@@ -230,6 +230,46 @@ function fitHillsInFrame(hills: Hills, terrainOver: (hills: Hills) => HeightFiel
 		fitted = scaleHills(fitted, 0.96);
 	}
 	return fitted;
+}
+
+/**
+ * Makes sure the scene reads as two hills: each hill must stand clearly above everything else
+ * on its side of the valley. Where it doesn't, the edge swell beside it is lowered and, for the
+ * left hill, the hill itself raised a little (never past 60% of the right hill).
+ */
+function makeHillsStandOut(hills: Hills, terrainOver: (hills: Hills) => HeightField): Hills {
+	let settled = hills;
+	for (let attempt = 0; attempt < 20; attempt++) {
+		const height = terrainOver(settled);
+		const middle = lerp(settled.left.x, settled.right.x, 0.5);
+		const leftStandsOut = standsOut(height, settled.left, 0, middle);
+		const rightStandsOut = standsOut(height, settled.right, middle, VIEW_WIDTH);
+		if (leftStandsOut && rightStandsOut) return settled;
+
+		const lowered = (swell: Hill) => ({ ...swell, amp: swell.amp * 0.8 });
+		const raisedLeft = { ...settled.left, amp: Math.min(settled.left.amp * 1.06, settled.right.amp * 0.6) };
+		settled = {
+			...settled,
+			left: leftStandsOut ? settled.left : raisedLeft,
+			farLeft: leftStandsOut ? settled.farLeft : lowered(settled.farLeft),
+			farRight: rightStandsOut ? settled.farRight : lowered(settled.farRight),
+		};
+	}
+	return settled;
+}
+
+/** True when the hill's top is clearly the highest point on the skyline between two x positions. */
+function standsOut(height: HeightField, hill: Hill, fromX: number, toX: number) {
+	const NEIGHBOURHOOD = 60;
+	const MARGIN = 6;
+	let hillTop = Infinity;
+	let elsewhereTop = Infinity;
+	for (let x = fromX; x <= toX; x += 8) {
+		const { y } = skylineAt(height, x);
+		if (Math.abs(x - hill.x) < NEIGHBOURHOOD) hillTop = Math.min(hillTop, y);
+		else elsewhereTop = Math.min(elsewhereTop, y);
+	}
+	return hillTop < elsewhereTop - MARGIN;
 }
 
 /** The highest point on screen at x, across every ridgeline, and the depth of the row it is on. */
