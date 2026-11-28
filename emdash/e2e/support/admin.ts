@@ -30,9 +30,16 @@ export async function createDraftWalk(page: Page, data: Record<string, unknown> 
 /**
  * Opens a walk in the editor with its settings sidebar showing (phones start
  * with it closed), and returns `control`, which is in that sidebar.
+ * `beforeSidebar` edits the form first, while the sidebar doesn't cover it.
  */
-export async function openWalkSidebar(page: Page, walkId: string, control: (page: Page) => Locator) {
+export async function openWalkSidebar(
+	page: Page,
+	walkId: string,
+	control: (page: Page) => Locator,
+	beforeSidebar?: (page: Page) => Promise<void>,
+) {
 	await page.goto(`/_emdash/admin/content/walks/${walkId}`);
+	await beforeSidebar?.(page);
 	const showSettings = page.getByRole("button", { name: "Show settings" });
 	await expect(showSettings.or(control(page)).first()).toBeVisible();
 	if (await showSettings.isVisible()) await showSettings.click();
