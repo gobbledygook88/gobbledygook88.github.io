@@ -11,6 +11,12 @@ const PHOTO_WIDTHS = [640, 960, 1280];
 /** The content column: 38em wide (see --content-width), the full screen on phones */
 const PHOTO_SIZES = "(min-width: 40em) 38em, 100vw";
 
+/**
+ * WebP quality. Cloudflare's default (85) made the imported ~700 px JPEGs
+ * bigger; at 75 they are 10–25% smaller and still look the same on the page.
+ */
+const PHOTO_QUALITY = 75;
+
 interface PhotoDimensions {
 	width?: number;
 	height?: number;
@@ -21,6 +27,7 @@ export interface PhotoSizing {
 	height: number;
 	widths: number[];
 	sizes: string;
+	quality: number;
 }
 
 /** Photos without stored dimensions can't be resized and are sent as they are. */
@@ -34,5 +41,6 @@ export function photoSizing({ width, height }: PhotoDimensions): PhotoSizing | u
 		height: Math.round((largestWidth * height) / width),
 		widths,
 		sizes: PHOTO_SIZES,
+		quality: PHOTO_QUALITY,
 	};
 }
