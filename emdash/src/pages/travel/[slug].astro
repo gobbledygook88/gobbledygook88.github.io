@@ -6,8 +6,9 @@ const { slug } = Astro.params;
 if (!slug) return Astro.rewrite("/404");
 
 const { entry: trip, cacheHint } = await getEmDashEntry("travel", slug);
-if (!trip) return Astro.rewrite("/404");
+// Set before a miss too, so publishing the entry clears a cached not-found page
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+if (!trip) return Astro.rewrite("/404");
 ---
 
 <TripPage trip={trip} collection="travel" />
