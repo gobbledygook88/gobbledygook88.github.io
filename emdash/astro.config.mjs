@@ -4,6 +4,7 @@ import react from "@astrojs/react";
 import { d1, r2 } from "@emdash-cms/cloudflare";
 import { defineConfig, fontProviders } from "astro/config";
 import emdash from "emdash/astro";
+import { tripEditorPlugin } from "./src/plugins/trip-editor/descriptor.ts";
 
 /**
  * Cache rendered pages in Cloudflare's cache so most visits don't run the
@@ -43,6 +44,7 @@ export default defineConfig({
 		emdash({
 			database: d1({ binding: "DB", session: "auto", coalesce: true }),
 			storage: r2({ binding: "MEDIA" }),
+			plugins: [tripEditorPlugin()],
 			// Logged-in editors get the cached public page, so load the toolbar client-side
 			toolbar: "client",
 		}),

@@ -70,6 +70,18 @@ See `seed/seed.json`: `posts` (blog), `walks` and `travel` (identical trip field
 blocks field of `waypoint` blocks), `pages`; taxonomies `category` and `tag`. The seed only applies to an
 empty database: after setup, change the live schema through the admin, CLI or API and keep the seed in step.
 
+### Trip editor plugin (admin)
+
+`src/plugins/trip-editor/` is the site's own native EmDash plugin, registered in `astro.config.mjs`
+(`descriptor.ts` builds the descriptor; its entrypoints are file paths, not a package). It adds a
+**Waypoints** panel to the walk and travel editor's sidebar ("Show settings" on phones). **Edit waypoints**
+opens a full-screen editor: the route map (from the form's `map_data`, unsaved uploads included) above
+the waypoint list. Tap the map to place the selected waypoint, drag pins, pick several photos at once with
+EmDash's media picker. Closing it puts the waypoints back into the form with `editorDraft.patch()`; the
+entry is saved as usual. EmDash refuses custom widgets on blocks fields, hence a panel; `editorDraft`
+needs EmDash ≥ 1.6. The stored `waypoints` value keeps the stock `waypoint` block shape, so the stock
+blocks editor still works alongside it.
+
 ### Styling
 
 - `src/styles/site.css`: cascade layers (`reset`, `base`, `layout`), design tokens on `:root`
@@ -112,5 +124,9 @@ Fixture content lives in `e2e/fixtures/*.json` (seed entries plus a `publishedAt
 a test-only seed, and `e2e/global-setup.ts` completes setup with content and sets publish dates.
 Fixture files (route GeoJSON, photos) use the fake host `https://fixtures.test/`; `e2e/support/network.ts`
 serves them, map tiles and video players from `e2e/fixtures/files/` so tests run offline.
+Admin tests (`e2e/waypoint-editor.spec.ts`) sign in with the session global setup saves after creating the
+admin account through the setup screens with Chrome's virtual passkey authenticator. Tests that change
+content use their own draft walks: created through the content API, or the per-project
+`waypoint-editing-<project>` fixtures where a route file is needed (the API only accepts media-library files).
 Write the test first (it must fail for the right reason), then implement. Describe behaviour a visitor
 sees, not implementation. CI runs them before deploying staging.
