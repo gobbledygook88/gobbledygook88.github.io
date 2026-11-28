@@ -32,6 +32,11 @@ export default defineConfig({
 	image: {
 		layout: "constrained",
 		responsiveStyles: true,
+		remotePatterns: [
+			{ protocol: "https", hostname: "marcusmo.co.uk", pathname: "/_emdash/api/media/file/**" },
+			{ protocol: "https", hostname: "**.marcusmo88.workers.dev", pathname: "/_emdash/api/media/file/**" },
+			{ protocol: "http", hostname: "localhost", pathname: "/_emdash/api/media/file/**" },
+		],
 	},
 	integrations: [
 		react(),

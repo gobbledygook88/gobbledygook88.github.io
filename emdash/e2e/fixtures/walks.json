@@ -89,7 +89,23 @@
 					"latitude": 50.7558,
 					"longitude": 0.1527,
 					"icon": "food",
-					"text": "Scones with a view."
+					"text": "Scones with a view.",
+					"images": [
+						{
+							"_key": "i1",
+							"image": {
+								"id": "fixture-scones",
+								"provider": "local",
+								"alt": "Scones on a plate",
+								"width": 2400,
+								"height": 1600,
+								"mimeType": "image/jpeg",
+								"meta": {
+									"storageKey": "fixture-scones-storage.jpg"
+								}
+							}
+						}
+					]
 				},
 				{
 					"_type": "waypoint",

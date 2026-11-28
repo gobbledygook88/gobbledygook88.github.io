@@ -6,6 +6,7 @@
  */
 import { Image } from "emdash/ui";
 import type { WalkWaypointsWaypointBlock } from "../../../emdash-env";
+import { photoSizing } from "../../lib/photo-sizes";
 import LocationIcon from "../../icons/location-dot-solid.svg";
 import UtensilsIcon from "../../icons/utensils-solid.svg";
 
@@ -44,7 +45,12 @@ const MarkerIcon = icon === "food" ? UtensilsIcon : LocationIcon;
 				{images.map(({ image, flex, new_row }) => (
 					<>
 						{new_row && <span class="row-break" />}
-						<Image image={image} style={flex ? `flex: ${flex}` : undefined} loading="lazy" />
+						<Image
+							image={image}
+							style={flex ? `flex: ${flex}` : undefined}
+							loading="lazy"
+							{...photoSizing(image)}
+						/>
 					</>
 				))}
 			</figure>
