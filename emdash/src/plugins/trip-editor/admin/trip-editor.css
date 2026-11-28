@@ -172,3 +172,76 @@
 	align-items: center;
 	gap: 0.25rem;
 }
+
+/* The Strava activity chooser */
+.trip-editor-chooser {
+	display: grid;
+	gap: 1rem;
+	padding: 1rem;
+	inline-size: min(40rem, 100vw - 1rem);
+	max-block-size: 90dvh;
+	overflow-y: auto;
+}
+
+.trip-editor-chooser-search {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 0.75rem;
+	align-items: end;
+}
+
+@media (max-width: 30rem) {
+	.trip-editor-chooser-search {
+		grid-template-columns: 1fr;
+	}
+}
+
+.trip-editor-chooser-note {
+	margin: 0;
+	color: var(--text-color-kumo-subtle, inherit);
+	font-size: 0.875rem;
+}
+
+.trip-editor-activities {
+	display: grid;
+	gap: 0.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.trip-editor-activities li {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 0.5rem;
+	border: 1px solid var(--color-kumo-line);
+	border-radius: 0.5rem;
+}
+
+.trip-editor-activity-details {
+	display: grid;
+	gap: 0.125rem;
+	min-inline-size: 0;
+	font-size: 0.875rem;
+}
+
+.trip-editor-activity-details strong {
+	overflow-wrap: anywhere;
+}
+
+.trip-editor-outline {
+	inline-size: 4.5rem;
+	block-size: 3rem;
+	border-radius: 0.25rem;
+	background: var(--color-kumo-recessed, transparent);
+}
+
+.trip-editor-outline path {
+	fill: none;
+	stroke: #ff7800;
+	stroke-width: 2;
+	stroke-linejoin: round;
+	stroke-linecap: round;
+}

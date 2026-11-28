@@ -82,6 +82,16 @@ entry is saved as usual. EmDash refuses custom widgets on blocks fields, hence a
 needs EmDash ≥ 1.6. The stored `waypoints` value keeps the stock `waypoint` block shape, so the stock
 blocks editor still works alongside it.
 
+A **Route** panel takes the route from Strava. **Connect Strava** signs the site in to the owner's account
+(OAuth; tokens in the plugin's KV, refreshed as needed). **Choose from Strava** finds the activity by pasted
+link (including the app's `strava.app.link` share links, followed on the server) or by date (walks and hikes
+that day). Choosing one uploads its GPS track as GeoJSON into the entry's media folder (`walk-<slug>`), sets
+`map_data`, and fills `distance`, `duration` and the route link where they're empty. Server code is in
+`src/plugins/trip-editor/strava/` and the plugin's routes (`plugin.ts`, under
+`/_emdash/api/plugins/trip-editor/strava/`). It needs the Worker secrets `STRAVA_CLIENT_ID` and
+`STRAVA_CLIENT_SECRET` (`wrangler secret put … --env production`); without them the panel says Strava isn't
+set up. The Strava app's callback domain is marcusmo.co.uk, so staging and previews can't connect.
+
 ### Styling
 
 - `src/styles/site.css`: cascade layers (`reset`, `base`, `layout`), design tokens on `:root`
@@ -128,5 +138,7 @@ Admin tests (`e2e/waypoint-editor.spec.ts`) sign in with the session global setu
 admin account through the setup screens with Chrome's virtual passkey authenticator. Tests that change
 content use their own draft walks: created through the content API, or the per-project
 `waypoint-editing-<project>` fixtures where a route file is needed (the API only accepts media-library files).
+Strava is replaced in tests by `e2e/support/fake-strava.mjs` (a second Playwright web server); `serve.sh`
+points the site at it with `STRAVA_ORIGIN` and test credentials.
 Write the test first (it must fail for the right reason), then implement. Describe behaviour a visitor
 sees, not implementation. CI runs them before deploying staging.
