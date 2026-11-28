@@ -1,8 +1,10 @@
 /**
- * Puts a Strava activity into the open walk or trip: its GPS track becomes the
- * route file (saved in the entry's media folder, like photos), and the
- * distance, duration and route link are filled in where they're still empty.
- * Nothing is saved: the editor saves the form as usual.
+ * Puts a route into the open walk or trip: it becomes the route file (saved in
+ * the entry's media folder, like photos), and the distance, duration and route
+ * link are filled in where they're still empty. Nothing is saved: the editor
+ * saves the form as usual.
+ *
+ * The route comes from a Strava activity or an uploaded GPX file.
  */
 import { createMediaFolder, fetchCollection, fetchMediaFolders, uploadMedia, type MediaItem } from "@emdash-cms/admin";
 import { activityRoute } from "./strava-api";
@@ -11,12 +13,21 @@ import { activityUrl, distanceText, durationText, routeFileName, type ActivitySu
 /** Media folders are named per entry: walk-<slug>, travel-<slug> */
 const FOLDER_PREFIX: Record<string, string> = { walks: "walk", travel: "travel" };
 
-interface EditorDraft {
+export interface EditorDraft {
 	get(): { revision: string; fields: Record<string, unknown> };
 	patch(
 		operations: { op: "set"; field: string; value: unknown }[],
 		options: { expectedRevision: string },
 	): { ok: true } | { ok: false; code: string; message: string };
+}
+
+export interface RouteForForm {
+	/** Shown to the editor and used for the file name */
+	name: string;
+	geoJson: unknown;
+	distanceMetres?: number;
+	movingSeconds?: number;
+	link?: { url: string; text: string };
 }
 
 async function folderFor(collection: string, slug: unknown): Promise<string | undefined> {
@@ -47,28 +58,39 @@ function fileValue(item: MediaItem) {
 
 const isEmpty = (value: unknown) => value === null || value === undefined || value === "";
 
-export async function putActivityRouteIntoForm(editorDraft: EditorDraft, collection: string, activity: ActivitySummary) {
-	const { route } = await activityRoute(activity);
-	const file = new File([JSON.stringify(route)], routeFileName(activity.name), { type: "application/geo+json" });
+export async function putRouteIntoForm(editorDraft: EditorDraft, collection: string, route: RouteForForm) {
+	const file = new File([JSON.stringify(route.geoJson)], routeFileName(route.name), { type: "application/geo+json" });
 	const { fields } = editorDraft.get();
 	const [folderId, fieldId] = await Promise.all([folderFor(collection, fields.slug), routeFieldId(collection)]);
 	const uploaded = await uploadMedia(file, { folderId, fieldId });
 
 	// Read the form again: it may have changed while the route uploaded
 	const current = editorDraft.get();
-	const fillIfEmpty = (field: string, value: string) =>
-		isEmpty(current.fields[field]) ? [{ op: "set" as const, field, value }] : [];
+	const fillIfEmpty = (field: string, value: string | undefined) =>
+		value !== undefined && isEmpty(current.fields[field]) ? [{ op: "set" as const, field, value }] : [];
 	// The route link and its text go together: keep a link that's already there, such as AllTrails
-	const routeLink = isEmpty(current.fields.gpx_url)
-		? [{ op: "set" as const, field: "gpx_url", value: activityUrl(activity.id) }, ...fillIfEmpty("gpx_url_text", "Strava")]
-		: [];
+	const routeLink =
+		route.link && isEmpty(current.fields.gpx_url)
+			? [{ op: "set" as const, field: "gpx_url", value: route.link.url }, ...fillIfEmpty("gpx_url_text", route.link.text)]
+			: [];
 	return editorDraft.patch(
 		[
 			{ op: "set", field: "map_data", value: fileValue(uploaded) },
-			...fillIfEmpty("distance", distanceText(activity.distanceMetres)),
-			...fillIfEmpty("duration", durationText(activity.movingSeconds)),
+			...fillIfEmpty("distance", route.distanceMetres === undefined ? undefined : distanceText(route.distanceMetres)),
+			...fillIfEmpty("duration", route.movingSeconds === undefined ? undefined : durationText(route.movingSeconds)),
 			...routeLink,
 		],
 		{ expectedRevision: current.revision },
 	);
+}
+
+export async function putActivityRouteIntoForm(editorDraft: EditorDraft, collection: string, activity: ActivitySummary) {
+	const { route } = await activityRoute(activity);
+	return putRouteIntoForm(editorDraft, collection, {
+		name: activity.name,
+		geoJson: route,
+		distanceMetres: activity.distanceMetres,
+		movingSeconds: activity.movingSeconds,
+		link: { url: activityUrl(activity.id), text: "Strava" },
+	});
 }

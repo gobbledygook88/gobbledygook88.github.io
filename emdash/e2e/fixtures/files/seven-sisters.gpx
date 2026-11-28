@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Biscuit Crumbs tests" xmlns="http://www.topografix.com/GPX/1/1">
+	<trk>
+		<name>Seven Sisters</name>
+		<trkseg>
+			<trkpt lat="50.7695" lon="0.2819"><ele>10</ele><time>2022-08-14T09:00:00Z</time></trkpt>
+			<trkpt lat="50.7378" lon="0.2421"><ele>11</ele><time>2022-08-14T09:50:00Z</time></trkpt>
+			<trkpt lat="50.7378" lon="0.2421"><ele>12</ele><time>2022-08-14T10:20:00Z</time></trkpt>
+			<trkpt lat="50.7412" lon="0.2032"><ele>13</ele><time>2022-08-14T11:05:00Z</time></trkpt>
+			<trkpt lat="50.7558" lon="0.1527"><ele>14</ele><time>2022-08-14T12:00:00Z</time></trkpt>
+			<trkpt lat="50.7713" lon="0.1395"><ele>15</ele><time>2022-08-14T12:40:00Z</time></trkpt>
+		</trkseg>
+	</trk>
+</gpx>
