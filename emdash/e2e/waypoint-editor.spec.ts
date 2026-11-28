@@ -1,5 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { EDITOR_SESSION } from "./serve-config";
+import { createDraftWalk, openWalkSidebar, walkIdBySlug } from "./support/admin";
 import { stubExternalAssets } from "./support/network";
 
 // Signed in as the site's admin (see global-setup.ts)
@@ -11,41 +12,10 @@ const PHOTOS = ["e2e/fixtures/files/scones.jpg", "e2e/fixtures/files/photo.png"]
  * The draft walk with a route that this project's tests edit (fixtures, one per
  * project, since the content API only takes route files from the media library).
  */
-async function walkWithRoute(page: Page) {
-	const slug = `waypoint-editing-${test.info().project.name}`;
-	const response = await page.request.get(`/_emdash/api/content/walks/${slug}`);
-	expect(response.ok(), await response.text()).toBe(true);
-	const body = await response.json();
-	return (body.data?.item ?? body.item ?? body.data).id as string;
-}
-
-/** A new draft walk without a route, so tests don't share state. */
-async function createDraftWalk(page: Page) {
-	const slug = `test-walk-${test.info().project.name}-${test.info().testId}`;
-	const response = await page.request.post("/_emdash/api/content/walks", {
-		headers: { "X-EmDash-Request": "1" },
-		data: {
-			slug,
-			data: {
-				title: "Seven Sisters again",
-				route_start: "Eastbourne",
-				route_end: "East Dean",
-				duration: "3 hours",
-			},
-		},
-	});
-	expect(response.ok(), await response.text()).toBe(true);
-	const body = await response.json();
-	return (body.data?.item ?? body.item ?? body.data).id as string;
-}
+const walkWithRoute = (page: Page) => walkIdBySlug(page, `waypoint-editing-${test.info().project.name}`);
 
 async function openWaypointEditor(page: Page, walkId: string) {
-	await page.goto(`/_emdash/admin/content/walks/${walkId}`);
-	// On phones the editor's sidebar, where the panel lives, starts closed
-	const showSettings = page.getByRole("button", { name: "Show settings" });
-	const editWaypoints = page.getByRole("button", { name: "Edit waypoints" });
-	await expect(showSettings.or(editWaypoints).first()).toBeVisible();
-	if (await showSettings.isVisible()) await showSettings.click();
+	const editWaypoints = await openWalkSidebar(page, walkId, (on) => on.getByRole("button", { name: "Edit waypoints" }));
 	await editWaypoints.click();
 	return page.getByRole("dialog", { name: "Waypoints" });
 }
