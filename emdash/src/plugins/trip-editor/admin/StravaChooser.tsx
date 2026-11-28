@@ -1,17 +1,30 @@
 /**
- * Finding the Strava activity a walk was recorded as: paste its link, or pick
- * the date to list the walks and hikes recorded that day.
+ * Finding the Strava activity a walk was recorded as: search its title (with a
+ * year or month to narrow it), paste its link, or pick its date.
+ *
+ * Title and date searches use the site's copy of the activity list, brought up
+ * to date each time the chooser opens; a pasted link asks Strava directly.
  */
 import { Button, Dialog, Input } from "@cloudflare/kumo";
 import * as React from "react";
 import { RouteOutline } from "./RouteOutline";
-import { activityById, activityByShareLink, StravaProblem, walksOnDate } from "./strava-api";
+import {
+	activityById,
+	activityByShareLink,
+	activityOutlines,
+	copiedActivities,
+	StravaProblem,
+	syncActivities,
+	walksOnDate,
+} from "./strava-api";
 import {
 	activityIdFrom,
 	dateText,
 	distanceText,
 	durationText,
 	isStravaShareLink,
+	isWalkOrHike,
+	matchesSearch,
 	type ActivitySummary,
 } from "./strava-activities";
 
@@ -21,60 +34,132 @@ interface StravaChooserProps {
 	onChoose: (activity: ActivitySummary) => Promise<void>;
 }
 
-type Search =
-	| { state: "idle"; hint: string }
-	| { state: "searching" }
-	| { state: "found"; activities: ActivitySummary[]; emptyMessage: string }
+const MOST_RESULTS = 20;
+/** Enough sync steps for years of activities, but not forever if Strava misbehaves */
+const MOST_SYNC_STEPS = 60;
+
+type ActivityList =
+	| { state: "updating"; count: number }
+	| { state: "ready"; activities: ActivitySummary[] }
 	| { state: "failed"; message: string };
 
-const START: Search = { state: "idle", hint: "Paste the activity's Strava link, or pick the date of the walk." };
+type Lookup =
+	| { state: "none" }
+	| { state: "searching" }
+	| { state: "found"; activities: ActivitySummary[] }
+	| { state: "failed"; message: string };
 
 function problemMessage(error: unknown): string {
 	return error instanceof StravaProblem ? error.message : "Strava couldn't be reached. Try again.";
 }
 
-function useActivitySearch() {
-	const [search, setSearch] = React.useState<Search>(START);
-	const latest = React.useRef(0);
+/** The copied activity list, brought up to date with Strava while the chooser is open. */
+function useActivityList(open: boolean): ActivityList {
+	const [list, setList] = React.useState<ActivityList>({ state: "updating", count: 0 });
+	React.useEffect(() => {
+		if (!open) return;
+		let cancelled = false;
+		setList({ state: "updating", count: 0 });
+		(async () => {
+			try {
+				for (let step = 0; step < MOST_SYNC_STEPS; step++) {
+					const { done, count } = await syncActivities();
+					if (cancelled) return;
+					setList({ state: "updating", count });
+					if (done) break;
+				}
+				const { activities } = await copiedActivities();
+				if (!cancelled) setList({ state: "ready", activities });
+			} catch (error) {
+				if (!cancelled) setList({ state: "failed", message: problemMessage(error) });
+			}
+		})();
+		return () => {
+			cancelled = true;
+		};
+	}, [open]);
+	return list;
+}
 
-	const run = React.useCallback(async (find: () => Promise<{ activities: ActivitySummary[] }>, emptyMessage: string) => {
-		const attempt = ++latest.current;
-		setSearch({ state: "searching" });
-		try {
-			const { activities } = await find();
-			if (attempt === latest.current) setSearch({ state: "found", activities, emptyMessage });
-		} catch (error) {
-			if (attempt === latest.current) setSearch({ state: "failed", message: problemMessage(error) });
-		}
-	}, []);
-
-	const searchText = (text: string) => {
+/** A single activity from a pasted link, which Strava is asked for directly. */
+function useLinkLookup(text: string): Lookup {
+	const [lookup, setLookup] = React.useState<Lookup>({ state: "none" });
+	React.useEffect(() => {
 		const id = activityIdFrom(text);
-		if (id) return run(() => activityById(id), "");
-		if (isStravaShareLink(text)) return run(() => activityByShareLink(text.trim()), "");
-		latest.current++;
-		setSearch(text.trim() ? { state: "idle", hint: "That doesn't look like a Strava activity link." } : START);
-	};
+		const shareLink = !id && isStravaShareLink(text) ? text.trim() : undefined;
+		if (!id && !shareLink) return setLookup({ state: "none" });
+		let cancelled = false;
+		setLookup({ state: "searching" });
+		(id ? activityById(id) : activityByShareLink(shareLink!)).then(
+			({ activities }) => !cancelled && setLookup({ state: "found", activities }),
+			(error) => !cancelled && setLookup({ state: "failed", message: problemMessage(error) }),
+		);
+		return () => {
+			cancelled = true;
+		};
+	}, [text]);
+	return lookup;
+}
 
-	const searchDate = (date: string) => {
-		if (!date) return setSearch(START);
-		run(() => walksOnDate(date), `No walks or hikes were recorded on ${dateText(`${date}T12:00:00Z`)}.`);
-	};
+/** Walks on a date, from Strava, for while the copied list is still being fetched. */
+function useDateLookup(date: string, needed: boolean): Lookup {
+	const [lookup, setLookup] = React.useState<Lookup>({ state: "none" });
+	React.useEffect(() => {
+		if (!date || !needed) return setLookup({ state: "none" });
+		let cancelled = false;
+		setLookup({ state: "searching" });
+		walksOnDate(date).then(
+			({ activities }) => !cancelled && setLookup({ state: "found", activities }),
+			(error) => !cancelled && setLookup({ state: "failed", message: problemMessage(error) }),
+		);
+		return () => {
+			cancelled = true;
+		};
+	}, [date, needed]);
+	return lookup;
+}
 
-	return { search, searchText, searchDate, reset: () => setSearch(START) };
+/** Route outlines for the activities being shown, fetched once each. */
+function useOutlines(activities: ActivitySummary[]): Record<string, string> {
+	const [outlines, setOutlines] = React.useState<Record<string, string>>({});
+	const missing = activities.filter((activity) => !activity.polyline && !(activity.id in outlines)).map((activity) => activity.id);
+	const missingKey = missing.join(",");
+	React.useEffect(() => {
+		if (!missingKey) return;
+		activityOutlines(missing).then(
+			({ outlines: found }) => setOutlines((current) => ({ ...current, ...found })),
+			() => {},
+		);
+	}, [missingKey]); // eslint-disable-line react-hooks/exhaustive-deps
+	return outlines;
 }
 
 export function StravaChooser({ open, onOpenChange, onChoose }: StravaChooserProps) {
-	const { search, searchText, searchDate, reset } = useActivitySearch();
 	const [text, setText] = React.useState("");
 	const [date, setDate] = React.useState("");
+	const [includeOthers, setIncludeOthers] = React.useState(false);
+	const list = useActivityList(open);
+	const linkLookup = useLinkLookup(text);
+	const dateLookup = useDateLookup(date, list.state !== "ready");
 
 	React.useEffect(() => {
 		if (open) return;
 		setText("");
 		setDate("");
-		reset();
-	}, [open]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [open]);
+
+	const wanted = (activity: ActivitySummary) => includeOthers || isWalkOrHike(activity);
+	const results = ((): Lookup | { state: "note"; message: string } => {
+		if (linkLookup.state !== "none") return linkLookup;
+		if (date) {
+			if (list.state !== "ready") return dateLookup;
+			return { state: "found", activities: list.activities.filter((a) => a.startedAt.startsWith(date) && wanted(a)) };
+		}
+		if (!text.trim()) return { state: "note", message: "Search the title, paste the activity's Strava link, or pick the date of the walk." };
+		if (list.state === "failed") return { state: "failed", message: `Title search isn't available: ${list.message}` };
+		if (list.state === "updating") return { state: "note", message: "Fetching your Strava activities to search…" };
+		return { state: "found", activities: list.activities.filter((a) => matchesSearch(a, text) && wanted(a)) };
+	})();
 
 	return (
 		<Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -83,12 +168,11 @@ export function StravaChooser({ open, onOpenChange, onChoose }: StravaChooserPro
 				<div className="trip-editor-chooser-search">
 					<Input
 						label="Search"
-						placeholder="Paste a Strava link"
+						placeholder="Words from the title, or a Strava link"
 						value={text}
 						onChange={(event) => {
 							setText(event.target.value);
 							setDate("");
-							void searchText(event.target.value);
 						}}
 					/>
 					<Input
@@ -98,27 +182,66 @@ export function StravaChooser({ open, onOpenChange, onChoose }: StravaChooserPro
 						onChange={(event) => {
 							setDate(event.target.value);
 							setText("");
-							searchDate(event.target.value);
 						}}
 					/>
 				</div>
-				<SearchResults search={search} onChoose={onChoose} />
+				<label className="trip-editor-checkbox">
+					<input type="checkbox" checked={includeOthers} onChange={(event) => setIncludeOthers(event.target.checked)} />
+					Include runs, rides and other activities
+				</label>
+				<ActivityListStatus list={list} />
+				<SearchResults results={results} date={date} onChoose={onChoose} />
 			</Dialog>
 		</Dialog.Root>
 	);
 }
 
-function SearchResults({ search, onChoose }: { search: Search; onChoose: StravaChooserProps["onChoose"] }) {
-	if (search.state === "idle") return <p className="trip-editor-chooser-note">{search.hint}</p>;
-	if (search.state === "searching") return <p className="trip-editor-chooser-note">Searching Strava…</p>;
-	if (search.state === "failed") return <p role="alert">{search.message}</p>;
-	if (search.activities.length === 0) return <p className="trip-editor-chooser-note">{search.emptyMessage}</p>;
+function ActivityListStatus({ list }: { list: ActivityList }) {
+	if (list.state !== "updating") return null;
+	const fetched = list.count ? ` ${list.count} so far.` : "";
+	return <p className="trip-editor-chooser-note">Updating your Strava activities from Strava…{fetched}</p>;
+}
+
+function SearchResults({
+	results,
+	date,
+	onChoose,
+}: {
+	results: Lookup | { state: "note"; message: string };
+	date: string;
+	onChoose: StravaChooserProps["onChoose"];
+}) {
+	if (results.state === "none") return null;
+	if (results.state === "note") return <p className="trip-editor-chooser-note">{results.message}</p>;
+	if (results.state === "searching") return <p className="trip-editor-chooser-note">Searching Strava…</p>;
+	if (results.state === "failed") return <p role="alert">{results.message}</p>;
+	if (results.activities.length === 0) {
+		const where = date ? `on ${dateText(`${date}T12:00:00Z`)}` : "that match";
+		return <p className="trip-editor-chooser-note">No activities {where}.</p>;
+	}
+	return <ActivityResults activities={results.activities} onChoose={onChoose} />;
+}
+
+function ActivityResults({ activities, onChoose }: { activities: ActivitySummary[]; onChoose: StravaChooserProps["onChoose"] }) {
+	const shown = activities.slice(0, MOST_RESULTS);
+	const outlines = useOutlines(shown);
 	return (
-		<ul className="trip-editor-activities" aria-label="Strava activities">
-			{search.activities.map((activity) => (
-				<ActivityResult key={activity.id} activity={activity} onChoose={onChoose} />
-			))}
-		</ul>
+		<>
+			<ul className="trip-editor-activities" aria-label="Strava activities">
+				{shown.map((activity) => (
+					<ActivityResult
+						key={activity.id}
+						activity={{ ...activity, polyline: activity.polyline ?? outlines[activity.id] ?? null }}
+						onChoose={onChoose}
+					/>
+				))}
+			</ul>
+			{activities.length > shown.length && (
+				<p className="trip-editor-chooser-note">
+					Showing the newest {shown.length} of {activities.length}. Add words, a year or a month to narrow it.
+				</p>
+			)}
+		</>
 	);
 }
 

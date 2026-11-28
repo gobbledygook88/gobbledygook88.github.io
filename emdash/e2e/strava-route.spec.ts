@@ -67,4 +67,27 @@ test.describe("Route from Strava", () => {
 		await expect(chooser.getByRole("listitem")).toHaveCount(1);
 		await expect(chooser.getByRole("listitem")).toContainText("Seven Sisters");
 	});
+
+	test("finds a walk by words from its title, however long ago", async ({ page }) => {
+		const walkId = await createDraftWalk(page);
+		const chooser = await openStravaChooser(page, walkId);
+
+		await chooser.getByLabel("Search").fill("stepping stones");
+		await expect(chooser.getByRole("listitem")).toHaveCount(1);
+		await expect(chooser.getByRole("listitem")).toContainText("Box Hill and the stepping stones");
+		await expect(chooser.getByRole("listitem")).toContainText("2 May 2021");
+	});
+
+	test("narrows a search to a year, and to walks and hikes unless runs and rides are wanted", async ({ page }) => {
+		const walkId = await createDraftWalk(page);
+		const chooser = await openStravaChooser(page, walkId);
+
+		await chooser.getByLabel("Search").fill("2022");
+		await expect(chooser.getByRole("listitem")).toHaveCount(1);
+		await expect(chooser.getByRole("listitem")).toContainText("Seven Sisters");
+
+		await chooser.getByLabel("Include runs, rides and other activities").check();
+		await expect(chooser.getByRole("listitem")).toHaveCount(2);
+		await expect(chooser.getByRole("listitem").nth(1)).toContainText("Morning run");
+	});
 });

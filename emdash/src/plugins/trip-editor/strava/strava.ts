@@ -30,10 +30,12 @@ interface SignIn {
 	expiresAt: number;
 }
 
-interface StravaActivity {
+export interface StravaActivity {
 	id: number;
 	name: string;
 	sport_type: string;
+	/** UTC */
+	start_date: string;
 	start_date_local: string;
 	distance: number;
 	moving_time: number;
@@ -209,13 +211,18 @@ export async function findActivity(ctx: PluginContext, id: string): Promise<Acti
 	return summarise(await stravaGet<StravaActivity>(ctx, `/activities/${encodeURIComponent(id)}`));
 }
 
+/** One page of the athlete's activities, newest first unless `after` is given. */
+export function listActivities(ctx: PluginContext, query: Record<string, string>): Promise<StravaActivity[]> {
+	return stravaGet<StravaActivity[]>(ctx, "/athlete/activities", query);
+}
+
 const HOUR_SECONDS = 3600;
 
 /** The walks and hikes that started on a local date ("2022-08-14"), in any timezone. */
 export async function walksOnDate(ctx: PluginContext, date: string): Promise<ActivitySummary[]> {
 	const midnightUtc = Date.parse(`${date}T00:00:00Z`) / 1000;
 	// Local midnight is between UTC-12 and UTC+14; filter on the local date below
-	const activities = await stravaGet<StravaActivity[]>(ctx, "/athlete/activities", {
+	const activities = await listActivities(ctx, {
 		after: String(midnightUtc - 14 * HOUR_SECONDS),
 		before: String(midnightUtc + 36 * HOUR_SECONDS),
 		per_page: "50",

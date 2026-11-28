@@ -62,12 +62,13 @@ function listActivities(query) {
 	const after = Number(query.get("after") ?? 0);
 	const before = Number(query.get("before") ?? Number.MAX_SAFE_INTEGER);
 	const perPage = Number(query.get("per_page") ?? 30);
+	const page = Number(query.get("page") ?? 1);
 	return ACTIVITIES.filter((item) => {
 		const started = Date.parse(item.start_date) / 1000;
 		return started > after && started < before;
 	})
 		.toSorted((a, b) => Date.parse(b.start_date) - Date.parse(a.start_date))
-		.slice(0, perPage)
+		.slice((page - 1) * perPage, page * perPage)
 		.map(summary);
 }
 

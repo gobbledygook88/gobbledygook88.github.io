@@ -83,9 +83,11 @@ needs EmDash ≥ 1.6. The stored `waypoints` value keeps the stock `waypoint` bl
 blocks editor still works alongside it.
 
 A **Route** panel takes the route from Strava. **Connect Strava** signs the site in to the owner's account
-(OAuth; tokens in the plugin's KV, refreshed as needed). **Choose from Strava** finds the activity by pasted
-link (including the app's `strava.app.link` share links, followed on the server) or by date (walks and hikes
-that day). Choosing one uploads its GPS track as GeoJSON into the entry's media folder (`walk-<slug>`), sets
+(OAuth; tokens in the plugin's KV, refreshed as needed). **Choose from Strava** finds the activity by words from its
+title (plus a year or month name), by pasted link (including the app's `strava.app.link` share links,
+followed on the server) or by date; walks and hikes only unless runs and rides are included. Title and
+date searches use a copy of the activity list in the plugin's storage (`strava/activity-index.ts`), synced one
+Strava page per request (10 ms CPU) each time the chooser opens. Choosing one uploads its GPS track as GeoJSON into the entry's media folder (`walk-<slug>`), sets
 `map_data`, and fills `distance`, `duration` and the route link where they're empty. Server code is in
 `src/plugins/trip-editor/strava/` and the plugin's routes (`plugin.ts`, under
 `/_emdash/api/plugins/trip-editor/strava/`). It needs the Worker secrets `STRAVA_CLIENT_ID` and
