@@ -1,5 +1,6 @@
 import { definePlugin, pluginResponse, type RouteContext } from "emdash";
 import { TRIP_EDITOR_ID, TRIP_EDITOR_VERSION, type TripEditorOptions } from "./identity";
+import { ACTIVITY_STORAGE, allActivities, clearIndex, outlinesOf, syncStep } from "./strava/activity-index";
 import {
 	activityIdFromShareLink,
 	connectedAthlete,
@@ -20,6 +21,7 @@ import {
 const EDITOR_PERMISSION = "content:edit_own";
 const ACTIVITY_ID = /^\d{1,20}$/;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
+const MAX_OUTLINES = 50;
 
 function queryValue(ctx: RouteContext, name: string): string {
 	const value = (ctx.input as Record<string, unknown> | undefined)?.[name];
@@ -46,6 +48,7 @@ export function createPlugin(options: TripEditorOptions) {
 		id: TRIP_EDITOR_ID,
 		version: TRIP_EDITOR_VERSION,
 		admin: { entry: options.adminEntry },
+		storage: ACTIVITY_STORAGE,
 		routes: {
 			"strava/status": {
 				methods: ["GET"],
@@ -65,6 +68,7 @@ export function createPlugin(options: TripEditorOptions) {
 				permission: EDITOR_PERMISSION,
 				handler: async (ctx) => {
 					await disconnect(ctx);
+					await clearIndex(ctx);
 					return { disconnected: true };
 				},
 			},
@@ -85,6 +89,25 @@ export function createPlugin(options: TripEditorOptions) {
 							body: { kind: "text", value: `${message}. Go back to the editor and try Connect Strava again.` },
 						});
 					}
+				},
+			},
+			// The copy of the activity list that title search uses (strava/activity-index.ts)
+			"strava/sync": {
+				methods: ["POST"],
+				permission: EDITOR_PERMISSION,
+				handler: (ctx) => stravaResult(() => syncStep(ctx)),
+			},
+			"strava/activities": {
+				methods: ["GET"],
+				permission: EDITOR_PERMISSION,
+				handler: async (ctx) => ({ activities: await allActivities(ctx) }),
+			},
+			"strava/outlines": {
+				methods: ["GET"],
+				permission: EDITOR_PERMISSION,
+				handler: async (ctx) => {
+					const ids = queryValue(ctx, "ids").split(",").filter((id) => ACTIVITY_ID.test(id)).slice(0, MAX_OUTLINES);
+					return { outlines: await outlinesOf(ctx, ids) };
 				},
 			},
 			"strava/activity": {

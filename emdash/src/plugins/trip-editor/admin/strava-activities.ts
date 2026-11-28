@@ -7,10 +7,13 @@ import type { ActivitySummary } from "../strava/strava";
 
 export type { ActivitySummary };
 
-/** The activity ID in a pasted link ("strava.com/activities/123…") or a bare number. */
+/**
+ * The activity ID in a pasted link ("strava.com/activities/123…") or a bare
+ * ID. Strava's IDs are long, so a short number such as a year is a search.
+ */
 export function activityIdFrom(text: string): string | undefined {
 	const trimmed = text.trim();
-	if (/^\d+$/.test(trimmed)) return trimmed;
+	if (/^\d{6,}$/.test(trimmed)) return trimmed;
 	return trimmed.match(/strava\.com\/activities\/(\d+)/)?.[1];
 }
 
@@ -71,4 +74,43 @@ export function routeFileName(name: string): string {
 		.replace(/[^a-z0-9]+/g, "-")
 		.replace(/^-|-$/g, "");
 	return `${slug || "strava-route"}.geojson`;
+}
+
+const WALKING_TYPES = new Set(["Walk", "Hike"]);
+
+export function isWalkOrHike(activity: ActivitySummary): boolean {
+	return WALKING_TYPES.has(activity.sportType);
+}
+
+const MONTHS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+
+const normalise = (text: string) =>
+	text
+		.toLowerCase()
+		.normalize("NFKD")
+		.replace(/[\u0300-\u036f]/g, "");
+
+/** The month (0–11) a word names, if it's a month name or its first three letters */
+function monthNamed(word: string): number | undefined {
+	if (word.length < 3) return undefined;
+	const index = MONTHS.findIndex((month) => month.startsWith(word));
+	return index >= 0 ? index : undefined;
+}
+
+/**
+ * Whether an activity matches a search: every word must be in its title, or
+ * be the year ("2019") or month ("june", "jun") it was recorded.
+ */
+export function matchesSearch(activity: ActivitySummary, search: string): boolean {
+	const title = normalise(activity.name);
+	const started = new Date(Date.parse(activity.startedAt));
+	return normalise(search)
+		.split(/\s+/)
+		.filter(Boolean)
+		.every((word) => {
+			if (title.includes(word)) return true;
+			if (/^\d{4}$/.test(word)) return started.getUTCFullYear() === Number(word);
+			const month = monthNamed(word);
+			return month !== undefined && started.getUTCMonth() === month;
+		});
 }

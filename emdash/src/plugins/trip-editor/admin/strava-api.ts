@@ -54,3 +54,12 @@ export const walksOnDate = (date: string) =>
 
 export const activityRoute = (activity: ActivitySummary) =>
 	call<{ route: unknown }>(`route?id=${activity.id}&name=${encodeURIComponent(activity.name)}`);
+
+/** Copies one more page of the activity list from Strava; `done` once it's up to date. */
+export const syncActivities = () => call<{ done: boolean; count: number }>("sync", post({}));
+
+/** The copied activity list, newest first, without route outlines */
+export const copiedActivities = () => call<{ activities: ActivitySummary[] }>("activities");
+
+export const activityOutlines = (ids: number[]) =>
+	call<{ outlines: Record<string, string> }>(`outlines?ids=${ids.join(",")}`);
