@@ -100,6 +100,11 @@ took ~500 ms for one post). Rendered pages are cached at the edge (`cache` + `ro
 `astro.config.mjs`); every new public route needs a rule tagged with its collection so EmDash purges it
 on publish. Check CPU with `wrangler tail biscuit-crumbs-staging --format json` (`cpuTime`, `outcome`).
 
+Photos are uploaded full size and resized on request by Cloudflare Images (the adapter's `IMAGES` binding,
+served from `/_image`). Astro only resizes media-library URLs on hosts listed in `image.remotePatterns`
+(`astro.config.mjs`). The free plan allows 5,000 distinct resized versions a month, so
+`src/lib/photo-sizes.ts` caps each photo at three widths (640, 960, 1280), never above the original.
+
 ### Testing
 
 Outside-in Playwright tests in `e2e/` drive the built Worker (`e2e/serve.sh`) on desktop and mobile.

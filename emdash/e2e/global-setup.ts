@@ -10,6 +10,8 @@ interface FixtureEntry {
 
 const FIXTURES_DIR = new URL("./fixtures/", import.meta.url);
 const MAX_SETUP_ATTEMPTS = 20;
+/** The MEDIA bucket the test server uses (the top level of wrangler.jsonc) */
+const MEDIA_BUCKET = "biscuit-crumbs-media-staging";
 
 /**
  * Runs once the test server is up (Playwright starts it first), before any test.
@@ -24,6 +26,7 @@ export default async function globalSetup(config: FullConfig) {
 
 	await applySeedContent(baseURL);
 	setPublishDates();
+	storeMediaLibraryPhotos();
 }
 
 async function applySeedContent(baseURL: string) {
@@ -45,6 +48,35 @@ async function applySeedContent(baseURL: string) {
 		if (result.seedComplete) return;
 	}
 	throw new Error(`Seed content still incomplete after ${MAX_SETUP_ATTEMPTS} setup requests`);
+}
+
+/**
+ * Puts the fixture photos that live in the media library into the local R2
+ * bucket. Unlike fixtures.test photos, the Worker fetches these itself to
+ * resize them, so a browser-side stub can't stand in for them.
+ */
+function storeMediaLibraryPhotos() {
+	const photos = [{ storageKey: "fixture-scones-storage.jpg", file: "scones.jpg", contentType: "image/jpeg" }];
+	for (const { storageKey, file, contentType } of photos) {
+		execFileSync(
+			"pnpm",
+			[
+				"wrangler",
+				"r2",
+				"object",
+				"put",
+				`${MEDIA_BUCKET}/${storageKey}`,
+				"--file",
+				new URL(`files/${file}`, FIXTURES_DIR).pathname,
+				"--content-type",
+				contentType,
+				"--local",
+				"--persist-to",
+				STATE_DIR,
+			],
+			{ stdio: "ignore" },
+		);
+	}
 }
 
 function setPublishDates() {

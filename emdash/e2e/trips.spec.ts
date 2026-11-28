@@ -122,6 +122,27 @@ test.describe("Trip page", () => {
 		expect(lighthouseBox!.y).toBeGreaterThan(cliffsBox!.y + cliffsBox!.height);
 	});
 
+	test("sends photos at a size that fits the page, not the full-size original", async ({ page }) => {
+		await page.goto("/walks/seven-sisters/");
+
+		// The fixture photo is a 2400 px wide original in the media library
+		const scones = page.getByRole("region", { name: "Tea room" }).getByRole("img", { name: "Scones on a plate" });
+		await scones.scrollIntoViewIfNeeded();
+		await expect.poll(() => scones.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth)).toBeTruthy();
+
+		// naturalWidth is scaled by the screen's pixel density, so measure the file the browser chose
+		const { loadedWidth, shownWidth } = await scones.evaluate(async (image: HTMLImageElement) => {
+			const photo = await createImageBitmap(await (await fetch(image.currentSrc)).blob());
+			return {
+				loadedWidth: photo.width,
+				shownWidth: image.getBoundingClientRect().width * window.devicePixelRatio,
+			};
+		});
+		expect(loadedWidth).toBeLessThan(2400);
+		// Still sharp: at least as many pixels as the screen shows, within one size step
+		expect(loadedWidth).toBeGreaterThanOrEqual(Math.min(shownWidth, 1280) * 0.75);
+	});
+
 	test("shows waypoints without coordinates, without marking them on the map", async ({ page }) => {
 		await page.goto("/walks/seven-sisters/");
 		const map = page.getByRole("region", { name: "Map of the route" });
