@@ -15,7 +15,8 @@ export async function walkIdBySlug(page: Page, slug: string) {
 
 /** A new draft walk of the test's own, without a route, so tests don't share state. */
 export async function createDraftWalk(page: Page, data: Record<string, unknown> = {}) {
-	const slug = `test-walk-${test.info().project.name}-${test.info().testId}`;
+	// A retry runs against the same database, so it needs a walk of its own too
+	const slug = `test-walk-${test.info().project.name}-${test.info().testId}-${test.info().retry}`;
 	const response = await page.request.post("/_emdash/api/content/walks", {
 		headers: { "X-EmDash-Request": "1" },
 		data: {
@@ -26,6 +27,9 @@ export async function createDraftWalk(page: Page, data: Record<string, unknown> 
 	expect(response.ok(), await response.text()).toBe(true);
 	return idFrom(await response.json()).id;
 }
+
+/** The admin can take a while to load on a busy CI runner */
+const ADMIN_LOAD_TIMEOUT = 15_000;
 
 /**
  * Opens a walk in the editor with its settings sidebar showing (phones start
@@ -40,8 +44,14 @@ export async function openWalkSidebar(
 ) {
 	await page.goto(`/_emdash/admin/content/walks/${walkId}`);
 	await beforeSidebar?.(page);
+	return showSidebar(page, control);
+}
+
+/** Shows the settings sidebar of the editor already open, and returns `control` in it. */
+export async function showSidebar(page: Page, control: (page: Page) => Locator) {
 	const showSettings = page.getByRole("button", { name: "Show settings" });
-	await expect(showSettings.or(control(page)).first()).toBeVisible();
+	await expect(showSettings.or(control(page)).first()).toBeVisible({ timeout: ADMIN_LOAD_TIMEOUT });
 	if (await showSettings.isVisible()) await showSettings.click();
+	await expect(control(page)).toBeVisible({ timeout: ADMIN_LOAD_TIMEOUT });
 	return control(page);
 }

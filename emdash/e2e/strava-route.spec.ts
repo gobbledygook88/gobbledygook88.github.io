@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { EDITOR_SESSION } from "./serve-config";
-import { createDraftWalk, openWalkSidebar } from "./support/admin";
+import { createDraftWalk, openWalkSidebar, showSidebar } from "./support/admin";
 import { stubExternalAssets } from "./support/network";
 
 // Signed in as the site's admin (see global-setup.ts). Strava is the fake in
@@ -18,8 +18,8 @@ async function openStravaChooser(page: Page, walkId: string) {
 		const signedIn = page.waitForResponse((response) => response.url().includes("/strava/callback"));
 		await control.click();
 		expect((await signedIn).status()).toBe(302);
-		await page.waitForLoadState();
-		await openWalkSidebar(page, walkId, stravaControl);
+		// Only the returned page can offer this: the one we left was offering to connect
+		await showSidebar(page, (on) => on.getByRole("button", { name: "Choose from Strava" }));
 	}
 	await page.getByRole("button", { name: "Choose from Strava" }).click();
 	return page.getByRole("dialog", { name: "Choose a Strava activity" });
