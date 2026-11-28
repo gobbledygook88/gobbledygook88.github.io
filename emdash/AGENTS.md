@@ -54,7 +54,7 @@ and progress log live outside git in `.context/emdash-migration-plan.md` at the 
 
 | Page | Path | Notes |
 | ---- | ---- | ----- |
-| Home | `/` | Site name, section links, and the "crumb trail" line (`CrumbTrail.astro`) that redraws on tap |
+| Home | `/` | Site name, section links, and a procedural valley along the bottom (`Landscape.astro`, `scripts/landscape/`): two hills, a stream, a forest and a trail where a hiker walks and startles birds. Drawn in the browser from a random seed (generating it on the Worker would eat the Free plan's 10 ms CPU budget); a tap draws a new one |
 | 404  | any unknown path | Uses `SiteLayout` |
 | Blog | `/blog/` | Published posts, newest first |
 | Blog post | `/blog/[slug]/` | `PostBody.astro`: Portable Text with `CodeBlock` (plain `<pre><code>` from the server; `scripts/code-highlighter.ts` colours it in the browser with highlight.js, Solarized Light, loaded only on pages with code) and `MathFormula` (`math` objects with a `latex` string, inline or block; KaTeX to MathML in `src/lib/math.ts`) |
@@ -69,6 +69,30 @@ URLs must match the old site (`/<section>/<slug>/`, as set in each collection's 
 See `seed/seed.json`: `posts` (blog), `walks` and `travel` (identical trip fields plus a `waypoints`
 blocks field of `waypoint` blocks), `pages`; taxonomies `category` and `tag`. The seed only applies to an
 empty database: after setup, change the live schema through the admin, CLI or API and keep the seed in step.
+
+### Trip editor plugin (admin)
+
+`src/plugins/trip-editor/` is the site's own native EmDash plugin, registered in `astro.config.mjs`
+(`descriptor.ts` builds the descriptor; its entrypoints are file paths, not a package). It adds a
+**Waypoints** panel to the walk and travel editor's sidebar ("Show settings" on phones). **Edit waypoints**
+opens a full-screen editor: the route map (from the form's `map_data`, unsaved uploads included) above
+the waypoint list. Tap the map to place the selected waypoint, drag pins, pick several photos at once with
+EmDash's media picker. Closing it puts the waypoints back into the form with `editorDraft.patch()`; the
+entry is saved as usual. EmDash refuses custom widgets on blocks fields, hence a panel; `editorDraft`
+needs EmDash ≥ 1.6. The stored `waypoints` value keeps the stock `waypoint` block shape, so the stock
+blocks editor still works alongside it.
+
+A **Route** panel takes the route from Strava. **Connect Strava** signs the site in to the owner's account
+(OAuth; tokens in the plugin's KV, refreshed as needed). **Choose from Strava** finds the activity by words from its
+title (plus a year or month name), by pasted link (including the app's `strava.app.link` share links,
+followed on the server) or by date; walks and hikes only unless runs and rides are included. Title and
+date searches use a copy of the activity list in the plugin's storage (`strava/activity-index.ts`), synced one
+Strava page per request (10 ms CPU) each time the chooser opens. Choosing one uploads its GPS track as GeoJSON into the entry's media folder (`walk-<slug>`), sets
+`map_data`, and fills `distance`, `duration` and the route link where they're empty. Server code is in
+`src/plugins/trip-editor/strava/` and the plugin's routes (`plugin.ts`, under
+`/_emdash/api/plugins/trip-editor/strava/`). It needs the Worker secrets `STRAVA_CLIENT_ID` and
+`STRAVA_CLIENT_SECRET` (`wrangler secret put … --env production`); without them the panel says Strava isn't
+set up. The Strava app's callback domain is marcusmo.co.uk, so staging and previews can't connect.
 
 ### Styling
 
@@ -100,6 +124,11 @@ took ~500 ms for one post). Rendered pages are cached at the edge (`cache` + `ro
 `astro.config.mjs`); every new public route needs a rule tagged with its collection so EmDash purges it
 on publish. Check CPU with `wrangler tail biscuit-crumbs-staging --format json` (`cpuTime`, `outcome`).
 
+Photos are uploaded full size and resized on request by Cloudflare Images (the adapter's `IMAGES` binding,
+served from `/_image`). Astro only resizes media-library URLs on hosts listed in `image.remotePatterns`
+(`astro.config.mjs`). The free plan allows 5,000 distinct resized versions a month, so
+`src/lib/photo-sizes.ts` caps each photo at three widths (640, 960, 1280), never above the original.
+
 ### Testing
 
 Outside-in Playwright tests in `e2e/` drive the built Worker (`e2e/serve.sh`) on desktop and mobile.
@@ -107,5 +136,11 @@ Fixture content lives in `e2e/fixtures/*.json` (seed entries plus a `publishedAt
 a test-only seed, and `e2e/global-setup.ts` completes setup with content and sets publish dates.
 Fixture files (route GeoJSON, photos) use the fake host `https://fixtures.test/`; `e2e/support/network.ts`
 serves them, map tiles and video players from `e2e/fixtures/files/` so tests run offline.
+Admin tests (`e2e/waypoint-editor.spec.ts`) sign in with the session global setup saves after creating the
+admin account through the setup screens with Chrome's virtual passkey authenticator. Tests that change
+content use their own draft walks: created through the content API, or the per-project
+`waypoint-editing-<project>` fixtures where a route file is needed (the API only accepts media-library files).
+Strava is replaced in tests by `e2e/support/fake-strava.mjs` (a second Playwright web server); `serve.sh`
+points the site at it with `STRAVA_ORIGIN` and test credentials.
 Write the test first (it must fail for the right reason), then implement. Describe behaviour a visitor
 sees, not implementation. CI runs them before deploying staging.

@@ -1,0 +1,178 @@
+---
+/**
+ * A procedural valley along the bottom of the home page: two hills, a stream springing from the
+ * dip between them, a forest, and a trail where a hiker walks and startles birds. It is drawn
+ * in the browser (generating it on the Worker would take most of the request's CPU budget),
+ * so the server sends an empty frame of the right size. Each tap draws a new landscape.
+ */
+import { VIEW_HEIGHT, VIEW_WIDTH } from "../scripts/landscape/projection";
+---
+
+<svg
+	class="landscape"
+	data-testid="landscape"
+	viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`}
+	preserveAspectRatio="xMidYMax slice"
+	aria-hidden="true"
+	focusable="false"
+>
+</svg>
+
+<script>
+	import { renderScene } from "../scripts/landscape/render";
+	import { generateScene, randomSeed } from "../scripts/landscape/scene";
+	import { startWalk, type Walk } from "../scripts/landscape/walk";
+
+	const svg = document.querySelector<SVGSVGElement>(".landscape");
+	let walk: Walk | undefined;
+
+	function drawLandscape(frame: SVGSVGElement, seed: number) {
+		walk?.stop();
+		const scene = generateScene(seed);
+		frame.dataset.seed = String(seed);
+		frame.innerHTML = renderScene(scene);
+		walk = startWalk(scene, frame);
+	}
+
+	if (svg) {
+		drawLandscape(svg, randomSeed());
+		document.addEventListener("click", () => drawLandscape(svg, randomSeed()));
+	}
+</script>
+
+<style is:global>
+	/* Global, because the scene is drawn into the frame in the browser rather than by this component */
+
+	/* On phones it keeps a readable height and crops its sides rather than shrinking */
+	.landscape {
+		position: fixed;
+		inset-inline: 0;
+		inset-block-end: 0;
+		inline-size: 100%;
+		block-size: max(240px, 26vw);
+		color: var(--color-text-strong);
+		pointer-events: none;
+
+		--paper: var(--color-background);
+		--ink: var(--color-text-strong);
+
+		/* Line widths stay the same on every screen however much the drawing is scaled */
+		& * {
+			vector-effect: non-scaling-stroke;
+		}
+
+		/* Ridgelines stay quiet so the trees, stream, trail and hiker carry the picture */
+		& .ridge {
+			fill: var(--paper);
+			stroke: var(--ink);
+			stroke-width: 0.6px;
+			stroke-linejoin: round;
+		}
+
+		& .ground {
+			fill: var(--paper);
+		}
+
+		& .sun,
+		& .cloud path {
+			fill: var(--paper);
+			stroke: var(--ink);
+			stroke-width: 0.8px;
+			stroke-opacity: 0.6;
+		}
+
+		& .cloud {
+			animation: landscape-cloud-drift linear infinite;
+		}
+
+		& .stream-bank {
+			fill: none;
+			stroke: var(--ink);
+			stroke-width: 0.7px;
+			stroke-linejoin: round;
+		}
+
+		& .tree {
+			fill: var(--paper);
+			stroke: var(--ink);
+			stroke-width: 0.8px;
+			stroke-linejoin: round;
+		}
+
+		& .tuft {
+			fill: none;
+			stroke: var(--ink);
+			stroke-width: 0.8px;
+			stroke-linecap: round;
+		}
+
+		& .trail-halo {
+			fill: none;
+			stroke: var(--paper);
+			stroke-linecap: round;
+		}
+
+		& .trail {
+			fill: none;
+			stroke: var(--ink);
+			stroke-linecap: round;
+		}
+
+		& .bridge path {
+			stroke: var(--ink);
+			stroke-linecap: round;
+			stroke-linejoin: round;
+		}
+
+		& .bridge-deck {
+			fill: var(--paper);
+			stroke-width: 0.8px;
+		}
+
+		& .bridge-seams {
+			fill: none;
+			stroke-width: 0.5px;
+			stroke-opacity: 0.45;
+		}
+
+		& .bridge-rail {
+			fill: none;
+			stroke-width: 0.8px;
+		}
+
+		& .hiker path {
+			fill: none;
+			stroke: var(--ink);
+			stroke-width: 1.15px;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+		}
+
+		& .hiker .halo {
+			stroke: var(--paper);
+			stroke-width: 3.2px;
+		}
+
+		& .hiker .pack,
+		& .hiker .head {
+			fill: var(--paper);
+		}
+
+		& .bird {
+			fill: none;
+			stroke: var(--ink);
+			stroke-width: 1.1px;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+		}
+	}
+
+	@keyframes landscape-cloud-drift {
+		from {
+			transform: translateX(-120px);
+		}
+		to {
+			transform: translateX(1120px);
+		}
+	}
+</style>

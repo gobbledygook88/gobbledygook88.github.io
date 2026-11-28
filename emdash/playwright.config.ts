@@ -1,5 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
-import { PORT, STATE_DIR } from "./e2e/serve-config";
+import { FAKE_STRAVA_PORT, PORT, STATE_DIR } from "./e2e/serve-config";
 
 /**
  * Outside-in tests: drive the real built Worker (`wrangler dev`) in a browser.
@@ -22,10 +22,17 @@ export default defineConfig({
 		{ name: "desktop", use: { ...devices["Desktop Chrome"] } },
 		{ name: "mobile", use: { ...devices["Pixel 7"] } },
 	],
-	webServer: {
-		command: `./e2e/serve.sh ${PORT} ${STATE_DIR}`,
-		url: `http://localhost:${PORT}/`,
-		timeout: 180_000,
-		reuseExistingServer: !process.env.CI,
-	},
+	webServer: [
+		{
+			command: `node e2e/support/fake-strava.mjs ${FAKE_STRAVA_PORT}`,
+			port: FAKE_STRAVA_PORT,
+			reuseExistingServer: !process.env.CI,
+		},
+		{
+			command: `./e2e/serve.sh ${PORT} ${STATE_DIR} ${FAKE_STRAVA_PORT}`,
+			url: `http://localhost:${PORT}/`,
+			timeout: 180_000,
+			reuseExistingServer: !process.env.CI,
+		},
+	],
 });
